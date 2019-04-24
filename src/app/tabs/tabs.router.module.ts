@@ -26,15 +26,15 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab3',
+        path: 'profile',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../profile/profile.module#ProfilePageModule'
           }
         ]
       },
-      { path: 'tab4', loadChildren: '../tab4/tab4.module#Tab4PageModule' },
+      { path: 'vehicles', loadChildren: '../vehicles/vehicles.module#VehiclesPageModule' },
       {
         path: '',
         redirectTo: '/tabs/main',
