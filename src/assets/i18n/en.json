@@ -1,0 +1,27 @@
+{
+  "APP_TITLE": "CarCare",
+  "VEHICLE": {
+    "state": {
+      "care": {
+        "label": "care"
+      },
+      "test": {
+        "label": "test"
+      },
+      "wash": {
+        "label": "wash"
+      },
+      "fuel": {
+        "label": "fuel"
+      }
+    }
+  },
+  "MainPage": {
+    "state_title": "Hi john! The state of your vehicle:",
+    "spendingMoney_title": "Your spending month on vehicle:",
+    "updateDetails_title": "What do you want to update?"
+  },
+  "ArchivePage": {
+    "title": "Vehicle history"
+  }
+}

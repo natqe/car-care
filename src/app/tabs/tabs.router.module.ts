@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TabsPage } from './tabs.page';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { TabsPage } from './tabs.page'
 
 const routes: Routes = [
   {
@@ -8,20 +8,20 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'main',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../main/main.module#MainPageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'archive',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../archive/archive.module#ArchivePageModule'
           }
         ]
       },
@@ -34,16 +34,17 @@ const routes: Routes = [
           }
         ]
       },
+      { path: 'tab4', loadChildren: '../tab4/tab4.module#Tab4PageModule' },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/main',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/main',
     pathMatch: 'full'
   }
 ];
@@ -54,4 +55,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule {  }

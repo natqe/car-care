@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary" class="ion-no-border">
+    <ion-title>
+      {{ 'ArchivePage.title' | language }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-thumbnail class="ion-circle-radius relative">
+          <ion-fab-button class="absolute no-events size-parent"></ion-fab-button>
+          <ion-img class="absolute size-parent"
+            src="https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17">
+          </ion-img>
+        </ion-thumbnail>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-tab-bar class="ion-no-border">
+    <ion-tab-button *ngFor="let state of vehicle.state | keyvalue" class="ion-no-padding" [attr.data-label]="state.key"
+      layout="icon-hide" routerLink="/tabs/archive/{{state.key}}">
+      <ion-label class="font-size-medium bold ion-text-uppercase text-over">
+        {{ state.value.label | language }}
+      </ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-header>
+
+<ion-content>
+  <ion-router-outlet animated="false"></ion-router-outlet>
+</ion-content>

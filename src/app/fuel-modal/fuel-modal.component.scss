@@ -1,0 +1,29 @@
+ion-item {
+  width: 70% !important;
+  // transition: 50ms ease-in-out;
+}
+
+ion-fab-button {
+  // transition: 100ms ease-in-out;
+}
+
+@media(min-height: 510px) {
+     form {
+    ion-item {
+      bottom: 40% !important;
+      width: 90% !important;
+    }
+
+    ion-fab-button {
+      &:not(.rtl) {
+        right: 46% !important;
+        transform: translateX(50%) translateY(-150%);
+      }
+
+      &.rtl {
+        left: 46% !important;
+        transform: translateX(-50%) translateY(-150%);
+      }
+    }
+  }
+}

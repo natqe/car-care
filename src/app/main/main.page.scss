@@ -1,0 +1,71 @@
+ion-content {
+  --distance-start: 1.625rem;
+
+  > ion-item {
+    --padding-start: var(--distance-start);
+    --min-height: 32.5vh;
+
+    > ion-thumbnail {
+      --size: 20vh;
+      height: var(--size);
+      width: var(--size);
+      position: relative;
+    }
+
+    > ion-label {
+      margin-bottom: 6.25vh;
+    }
+  }
+
+  > article {
+    height: 22.5vh;
+    margin-left: var(--distance-start);
+    margin-right: var(--distance-start);
+
+    main {
+      flex-wrap: wrap;
+
+      > p {
+        width: 45%;
+        padding-top: .75rem;
+        padding-bottom: .75rem;
+        margin: 0;
+
+        > ion-icon {
+          margin: 0 .5rem;
+        }
+
+        > ion-note {
+          vertical-align: super;
+        }
+      }
+    }
+  }
+
+  > ion-toolbar {
+    max-height: 7.5vh;
+    --padding-start: var(--distance-start);
+  }
+
+  > section {
+    height: 27.5vh;
+
+    > ion-text {
+      margin-left: var(--distance-start);
+      margin-right: var(--distance-start);
+    }
+
+    > ion-fab {
+      width: 100%;
+
+      > ion-fab-button:after {
+        content: attr(data-label);
+        color: var(--ion-color-medium);
+        margin-top: .5rem;
+        text-transform: uppercase;
+        display: inline-flex;
+        font-size: .625rem;
+      }
+    }
+  }
+}

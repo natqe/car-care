@@ -1,5 +1,7 @@
 {
   "name": "car-care",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
