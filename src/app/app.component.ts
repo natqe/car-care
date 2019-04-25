@@ -26,11 +26,13 @@ export class AppComponent {
    */
   async initializeApp() {
 
-    const { platform, statusBar, splashScreen } = this
+    const   { platform, statusBar, splashScreen } = this
 
     await platform.ready()
 
-    statusBar.hide()
+    if (platform.is(`ios`)) statusBar.overlaysWebView(false)
+
+    statusBar.backgroundColorByHexString(getComputedStyle(document.documentElement).getPropertyValue('--ion-color-primary'))
 
     splashScreen.hide()
 
