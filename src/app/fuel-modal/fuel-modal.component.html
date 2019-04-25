@@ -2,23 +2,36 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="modalController.dismiss()">
-        <ion-icon name="close" size="large" color="dark"></ion-icon>
+        <ion-icon name="close" class="font-size-super" color="medium"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-item slot="end" lines="none">
-      <ion-datetime [(ngModel)]="date" slot="end" color="dark"></ion-datetime>
-      <ion-icon name="calendar" slot="end" color="dark"></ion-icon>
+      <ion-datetime [(ngModel)]="date" slot="end" class="color-medium"></ion-datetime>
+      <ion-icon name="calendar" slot="end" color="medium"></ion-icon>
     </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form (submit)="$event.preventDefault(); form.valid && save(form)" #form="ngForm">
-    <ion-item class="fixed ion-margin-bottom bottom start ion-margin-horizontal">
+    <ion-text color="primary" class="font-size-plus ion-margin-start margin-top-large block ion-padding-top">how much did it cost?
+    </ion-text>
+    <ion-item class="margin-horizontal margin-top-large ion-padding-top">
       <ion-input required ngModel name="bla" type="number"></ion-input>
     </ion-item>
-    <ion-fab-button [class.rtl]="platform.isRTL" class="fixed ion-margin-bottom bottom end  ion-margin-horizontal" color="secondary" [disabled]="!form.valid" (click)="form.valid && save(form)" slot="end">
-        <ion-icon name="checkmark" color="primary"></ion-icon>
+    <ion-item lines="none">
+      <ion-select interface="action-sheet">
+        <ion-select-option selected>
+          USE
+        </ion-select-option>
+        <ion-select-option>
+          BLA
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-fab-button [class.rtl]="platform.isRTL" color="secondary" [disabled]="!form.valid" (click)="form.valid && save(form)"
+      slot="end">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
     </ion-fab-button>
     <ion-input type="submit" hidden></ion-input>
   </form>

@@ -1,19 +1,19 @@
 <ion-content>
-  <ion-buttons class="absolute end margin-top-tiny">
+  <ion-buttons class="absolute end margin-top-tiny margin-horizontal-tiny-ios">
     <ion-label class="margin-horizontal-small bold" color="secondary">
       {{ 'APP_TITLE'| language }}
     </ion-label>
     <ion-button color="medium">
-      <ion-icon name="more" size="large"></ion-icon>
+      <ion-icon name="more" class="font-size-super"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-item (click)="$event" button lines="none" detail="false" routerLink="/vehicle">
-    <ion-thumbnail slot="start" class="ion-circle-radius">
+    <ion-avatar slot="start">
       <ion-fab-button class="absolute no-events size-parent" mode="ios"></ion-fab-button>
       <ion-img class="absolute size-parent"
         src="https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17">
       </ion-img>
-    </ion-thumbnail>
+    </ion-avatar>
     <ion-label class="flex flex-column ion-align-self-end margin-horizontal-tiny" color="medium">
       <ion-text class="bold">Afraim, Dialim s3</ion-text>
       <ion-note>44-896-30</ion-note>

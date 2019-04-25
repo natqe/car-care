@@ -1,26 +1,39 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
+import { SplashScreen } from '@ionic-native/splash-screen/ngx'
+import { StatusBar } from '@ionic-native/status-bar/ngx'
+import { Platform } from '@ionic/angular'
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-
+/**
+ * @classdesc Control app component
+ * @returns instance
+ * @author Natan Farkash
+ */
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
+    private readonly platform: Platform,
+    private readonly splashScreen: SplashScreen,
+    private readonly statusBar: StatusBar) {
+    this.initializeApp()
+  }
+  /**
+   * @description Do your things after app initialize
+   * @author Natan Farkash
+   */
+  async initializeApp() {
+
+    const { platform, statusBar, splashScreen } = this
+
+    await platform.ready()
+
+    statusBar.hide()
+
+    splashScreen.hide()
+
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
 }

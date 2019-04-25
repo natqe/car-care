@@ -32,6 +32,9 @@ html {
   }
 
   &.ios {
+    .margin-horizontal-tiny-ios{
+      @extend .margin-horizontal-tiny;
+    }
   }
 }
 
@@ -53,6 +56,11 @@ ion-tab-bar {
   flex: 1;
 }
 
+.margin-horizontal {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
 .margin-horizontal-small {
   margin-right: .75rem;
   margin-left: .75rem;
@@ -61,6 +69,10 @@ ion-tab-bar {
 .margin-horizontal-tiny {
   margin-right: .625rem;
   margin-left: .625rem;
+}
+
+.margin-top-large {
+  margin-top: 1.5rem;
 }
 
 .margin-top-tiny {
@@ -75,8 +87,20 @@ ion-tab-bar {
   text-overflow: unset !important;
 }
 
+.color-medium{
+  color: var(--ion-color-medium) !important;
+}
+
+.font-size-super {
+  font-size: 1.75rem !important;
+}
+
 .font-size-large {
   font-size: 1.5rem !important;
+}
+
+.font-size-plus{
+  font-size: 1.125rem;
 }
 
 .font-size {

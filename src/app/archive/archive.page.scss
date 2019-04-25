@@ -1,7 +1,9 @@
-ion-thumbnail {
+ion-avatar {
   --size: 1.75rem;
+  height: var(--size);
+  width: var(--size);
 }
 
-ion-content{
+ion-content {
   --offset-top: 1px !important;
 }

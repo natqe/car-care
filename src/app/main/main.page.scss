@@ -5,7 +5,7 @@ ion-content {
     --padding-start: var(--distance-start);
     --min-height: 32.5vh;
 
-    > ion-thumbnail {
+    > ion-avatar {
       --size: 20vh;
       height: var(--size);
       width: var(--size);

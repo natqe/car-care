@@ -1,29 +1,39 @@
-ion-item {
-  width: 70% !important;
-  // transition: 50ms ease-in-out;
-}
+form {
 
-ion-fab-button {
-  // transition: 100ms ease-in-out;
-}
+  // > ion-label {
+  //   margin-bottom: 2.5rem;
+  // }
+  > ion-item:first-of-type {
+    --padding-start: 0;
+    --inner-padding-end: 0;
 
-@media(min-height: 510px) {
-     form {
-    ion-item {
-      bottom: 40% !important;
-      width: 90% !important;
+    @media(max-height: 510px) {
+      width: 70%;
+      position: absolute;
+      bottom: 1rem;
     }
+  }
 
-    ion-fab-button {
-      &:not(.rtl) {
-        right: 46% !important;
-        transform: translateX(50%) translateY(-150%);
-      }
+  > ion-fab-button {
+    position: absolute;
+    left: 50%;
+    bottom: 35%;
+    transform: translateX(-50%);
+    @media(max-height: 510px) {
+      bottom: 1rem;
+      right: 1rem;
+      left: unset;
+      transform: unset;
 
       &.rtl {
-        left: 46% !important;
-        transform: translateX(-50%) translateY(-150%);
+        right: unset;
+        left: 1rem;
       }
     }
+
+    &.rtl {
+      transform: translateX(50%);
+    }
+
   }
 }
