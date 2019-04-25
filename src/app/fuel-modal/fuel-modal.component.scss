@@ -1,23 +1,24 @@
 form {
+  > ion-item{
+    &:first-of-type {
+      --padding-start: 0;
+      --inner-padding-end: 0;
 
-  // > ion-label {
-  //   margin-bottom: 2.5rem;
-  // }
-  > ion-item:first-of-type {
-    --padding-start: 0;
-    --inner-padding-end: 0;
+      @media(max-height: 510px) {
+        width: 70%;
+        position: absolute;
+        bottom: 1rem;
+      }
+    }
+    &:last-of-type{
 
-    @media(max-height: 510px) {
-      width: 70%;
-      position: absolute;
-      bottom: 1rem;
     }
   }
 
   > ion-fab-button {
     position: absolute;
     left: 50%;
-    bottom: 35%;
+    bottom: 30%;
     transform: translateX(-50%);
     @media(max-height: 510px) {
       bottom: 1rem;

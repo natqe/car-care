@@ -4,7 +4,10 @@
 /** Ionic CSS Variables **/
 :root {
 
-  font-size: calc(1vh + 1vw + 6px);
+  --vh-1: calc(var(--vh, 100vh) / 100);
+  --vw-1: calc(var(--vw, 100vw) / 100);
+
+  font-size: calc(var(--vh-1) + var(--vw-1) + 6px);
 
   --ion-color-primary: #477FC0;
   --ion-color-primary-rgb: 71,127,192;
@@ -27,12 +30,12 @@
   --ion-color-tertiary-shade: #d49c96;
   --ion-color-tertiary-tint: #f2b9b3;
 
-  --ion-color-success: #65E698;
-  --ion-color-success-rgb: 101,230,152;
+  --ion-color-success: #7FCE5E;
+  --ion-color-success-rgb: 127,206,94;
   --ion-color-success-contrast: #000000;
   --ion-color-success-contrast-rgb: 0,0,0;
-  --ion-color-success-shade: #59ca86;
-  --ion-color-success-tint: #74e9a2;
+  --ion-color-success-shade: #70b553;
+  --ion-color-success-tint: #8cd36e;
 
   --ion-color-warning: #FFE472;
   --ion-color-warning-rgb: 255,228,114;

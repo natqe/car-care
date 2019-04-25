@@ -44,6 +44,15 @@ ion-tab-bar {
   --color-selected: var(--ion-color-dark);
 }
 
+.width-content{
+  width: fit-content !important;
+}
+
+.margin-horizontal-auto{
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .bottom {
   bottom: 0 !important;
 }

@@ -5,7 +5,8 @@ ion-header {
   width: 100vw;
 
   > ion-toolbar {
-    --background: transparent;
+    --background: linear-gradient(var(--ion-color-dark), transparent);
+    height: 10vh;
   }
 }
 

@@ -23,5 +23,8 @@
   },
   "ArchivePage": {
     "title": "Vehicle history"
+  },
+  "FuelModalComponent":{
+    "price_title": "How much did it cost?"
   }
 }

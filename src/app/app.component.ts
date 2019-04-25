@@ -21,18 +21,24 @@ export class AppComponent {
     this.initializeApp()
   }
   /**
-   * @description Do your things after app initialize
+   * @description Do some things after app initialize
    * @author Natan Farkash
    */
   async initializeApp() {
 
-    const   { platform, statusBar, splashScreen } = this
+    const
+      { platform, statusBar, splashScreen } = this,
+      { documentElement } = document
 
     await platform.ready()
 
+    documentElement.style.setProperty(`--vh`, `${platform.height()}px`)
+
+    documentElement.style.setProperty(`--vw`, `${platform.width()}px`)
+
     if (platform.is(`ios`)) statusBar.overlaysWebView(false)
 
-    statusBar.backgroundColorByHexString(getComputedStyle(document.documentElement).getPropertyValue('--ion-color-primary'))
+    statusBar.backgroundColorByHexString(getComputedStyle(documentElement).getPropertyValue('--ion-color-primary'))
 
     splashScreen.hide()
 

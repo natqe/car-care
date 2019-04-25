@@ -14,13 +14,15 @@
 
 <ion-content>
   <form (submit)="$event.preventDefault(); form.valid && save(form)" #form="ngForm">
-    <ion-text color="primary" class="font-size-plus ion-margin-start margin-top-large block ion-padding-top">how much did it cost?
+    <ion-text color="primary" class="font-size-plus ion-margin-start margin-top-large block ion-padding-top bold">
+      {{ 'FuelModalComponent.price_title' | language }}
     </ion-text>
-    <ion-item class="margin-horizontal margin-top-large ion-padding-top">
+    <ion-item class="margin-horizontal margin-top-large ion-padding-top ion-text-center">
       <ion-input required ngModel name="bla" type="number"></ion-input>
     </ion-item>
-    <ion-item lines="none">
-      <ion-select interface="action-sheet">
+    <ion-item class="ion-margin-top ion-padding-top width-content margin-horizontal-auto" lines="none">
+      <ion-label color="primary">What currency?</ion-label>
+      <ion-select>
         <ion-select-option selected>
           USE
         </ion-select-option>
