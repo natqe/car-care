@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { IonicModule } from '@ionic/angular'
 import { CareModalComponent } from '../care-modal/care-modal.component'
 import { FuelModalComponent } from '../fuel-modal/fuel-modal.component'
@@ -20,7 +20,8 @@ const
     ...entryComponents
   ],
   imports = [
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 
 @NgModule({

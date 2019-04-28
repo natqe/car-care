@@ -1,9 +1,11 @@
-ion-avatar {
-  --size: 1.75rem;
-  height: var(--size);
-  width: var(--size);
+ion-toolbar {
+  > ion-fab-button {
+    --size: 1.75rem;
+    height: var(--size);
+    width: var(--size);
+  }
+  &.md{
+    --padding-bottom:.8rem;
+  }
 }
 
-ion-content {
-  --offset-top: 1px !important;
-}

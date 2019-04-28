@@ -32,9 +32,9 @@ export class AppComponent {
 
     await platform.ready()
 
-    documentElement.style.setProperty(`--vh`, `${platform.height()}px`)
+    documentElement.style.setProperty(`--initial-vh`, `${platform.height()}px`)
 
-    documentElement.style.setProperty(`--vw`, `${platform.width()}px`)
+    documentElement.style.setProperty(`--initial-vw`, `${platform.width()}px`)
 
     if (platform.is(`ios`)) statusBar.overlaysWebView(false)
 

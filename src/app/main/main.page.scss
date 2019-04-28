@@ -2,14 +2,14 @@ ion-content {
   --distance-start: 1.625rem;
 
   > ion-item {
-    --padding-start: var(--distance-start);
+    --padding-start: 0;
     --min-height: 32.5vh;
 
-    > ion-avatar {
+    > ion-fab-button {
       --size: 20vh;
       height: var(--size);
       width: var(--size);
-      position: relative;
+      margin: 0 var(--distance-start);
     }
 
     > ion-label {

@@ -4,10 +4,10 @@
 /** Ionic CSS Variables **/
 :root {
 
-  --vh-1: calc(var(--vh, 100vh) / 100);
-  --vw-1: calc(var(--vw, 100vw) / 100);
+  --initial-1vh: calc(var(--initial-vh) / 100);
+  --initial-1vw: calc(var(--initial-vw) / 100);
 
-  font-size: calc(var(--vh-1) + var(--vw-1) + 6px);
+  font-size: calc(var(--initial-1vh) + var( --initial-1vw) + 6px);
 
   --ion-color-primary: #477FC0;
   --ion-color-primary-rgb: 71,127,192;
@@ -71,6 +71,8 @@
   --ion-color-light-contrast-rgb: 0,0,0;
   --ion-color-light-shade: #c9cdd8;
   --ion-color-light-tint: #e7ebf7;
+
+  --ion-background-color: var(--ion-color-primary-contrast);
 
   --ion-margin: 1rem;
   --ion-padding: 1rem;

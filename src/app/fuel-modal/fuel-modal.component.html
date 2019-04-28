@@ -1,37 +1,34 @@
 <ion-header class="no-shadow">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="modalController.dismiss()">
-        <ion-icon name="close" class="font-size-super" color="medium"></ion-icon>
+      <ion-button (click)="modalController.dismiss()"  color="medium">
+        <ion-icon name="close" class="font-size-super"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-item slot="end" lines="none">
-      <ion-datetime [(ngModel)]="date" slot="end" class="color-medium"></ion-datetime>
+    <ion-item slot="end" lines="none"  [formGroup]="this">
+      <ion-datetime formControlName="date" slot="end" class="color-medium"></ion-datetime>
       <ion-icon name="calendar" slot="end" color="medium"></ion-icon>
     </ion-item>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (submit)="$event.preventDefault(); form.valid && save(form)" #form="ngForm">
+  <form (submit)="$event.preventDefault(); valid && save()" [formGroup]="this">
     <ion-text color="primary" class="font-size-plus ion-margin-start margin-top-large block ion-padding-top bold">
       {{ 'FuelModalComponent.price_title' | language }}
     </ion-text>
-    <ion-item class="margin-horizontal margin-top-large ion-padding-top ion-text-center">
-      <ion-input required ngModel name="bla" type="number"></ion-input>
+    <ion-item class="margin-horizontal margin-top-large ion-padding-top">
+      <ion-input clearInput  formControlName="price" type="number"></ion-input>
     </ion-item>
-    <ion-item class="ion-margin-top ion-padding-top width-content margin-horizontal-auto" lines="none">
-      <ion-label color="primary">What currency?</ion-label>
-      <ion-select>
-        <ion-select-option selected>
-          USE
-        </ion-select-option>
-        <ion-select-option>
-          BLA
-        </ion-select-option>
+    <ion-item class="ion-no-padding ion-margin-top ion-padding-top width-content margin-horizontal-auto" lines="none">
+      <ion-label color="primary">
+        {{ 'FuelModalComponent.currency_title' | language }}
+      </ion-label>
+      <ion-select formControlName="currency" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language" class="min-width-content">
+        <ion-select-option *ngFor="let i of ['USE', 'BLA']" [value]="i">{{ i }} </ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-fab-button [class.rtl]="platform.isRTL" color="secondary" [disabled]="!form.valid" (click)="form.valid && save(form)"
+    <ion-fab-button [class.rtl]="platform.isRTL" color="secondary" [disabled]="!valid" (click)="save()"
       slot="end">
       <ion-icon name="checkmark" color="primary"></ion-icon>
     </ion-fab-button>

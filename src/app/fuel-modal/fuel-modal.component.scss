@@ -1,17 +1,24 @@
 form {
-  > ion-item{
+  > ion-item {
     &:first-of-type {
       --padding-start: 0;
       --inner-padding-end: 0;
-
       @media(max-height: 510px) {
-        width: 70%;
+        width: 50%;
         position: absolute;
         bottom: 1rem;
       }
     }
-    &:last-of-type{
 
+    &:last-of-type {
+      @media(max-height: 510px) {
+        position: absolute;
+        bottom: 1rem;
+        left: 55%;
+        > ion-label {
+          display: none;
+        }
+      }
     }
   }
 

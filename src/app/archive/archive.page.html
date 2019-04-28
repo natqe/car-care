@@ -1,18 +1,11 @@
 <ion-header>
-  <ion-toolbar color="primary" class="ion-no-border">
-    <ion-title color="light">
+  <ion-toolbar color="primary" class="ion-no-border ion-no-padding">
+    <ion-title color="light" class="padding-horizontal-md">
       {{ 'ArchivePage.title' | language }}
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-avatar class="relative">
-          <ion-fab-button class="absolute no-events size-parent"></ion-fab-button>
-          <ion-img class="absolute size-parent"
-            src="https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17">
-          </ion-img>
-        </ion-avatar>
-      </ion-button>
-    </ion-buttons>
+    <ion-fab-button slot="end" class="ion-margin"
+    style="--background: url(https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17) center / cover no-repeat; --background-activated: var(--background);">
+  </ion-fab-button>
   </ion-toolbar>
   <ion-tab-bar class="ion-no-border">
     <ion-tab-button *ngFor="let state of vehicle.state | keyvalue" class="ion-no-padding" [attr.data-label]="state.key"

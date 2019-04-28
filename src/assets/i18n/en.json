@@ -1,5 +1,7 @@
 {
   "APP_TITLE": "Vehicles",
+  "CANCEL_TEXT":"Cancel",
+  "OK_TEXT":"OK",
   "VEHICLE": {
     "state": {
       "care": {
@@ -17,14 +19,15 @@
     }
   },
   "MainPage": {
-    "state_title": "Hi john! The state of your vehicle:",
+    "state_title": "Hi {{ firstName }}! The state of your vehicle:",
     "spendingMoney_title": "Your spending month on vehicle:",
     "updateDetails_title": "What do you want to update?"
   },
   "ArchivePage": {
     "title": "Vehicle history"
   },
-  "FuelModalComponent":{
-    "price_title": "How much did it cost?"
+  "FuelModalComponent": {
+    "price_title": "How much did it cost?",
+    "currency_title": "What currency?"
   }
 }
