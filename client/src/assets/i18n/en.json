@@ -1,0 +1,60 @@
+{
+  "APP_TITLE": "Vehicles",
+  "CANCEL_TEXT": "Cancel",
+  "OK_TEXT": "OK",
+  "monthNames": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "VEHICLE": {
+    "state": {
+      "care": {
+        "label": "care"
+      },
+      "test": {
+        "label": "test"
+      },
+      "wash": {
+        "label": "wash"
+      },
+      "fuel": {
+        "label": "fuel"
+      }
+    }
+  },
+  "MainPage": {
+    "state_title": "Hi {{ firstName }}! The state of your vehicle:",
+    "spendingMoney_title": "Your spending month on vehicle:",
+    "updateDetails_title": "What do you want to update?"
+  },
+  "ArchivePage": {
+    "title": "Vehicle history"
+  },
+  "FuelModalComponent": {
+    "price_title": "How much did it cost?",
+    "currency_title": "What currency?"
+  },
+  "ProfilePage": {
+    "form_image_label": "Uploading a new image",
+    "form_fullName_label": "Full name",
+    "form_currency_label": "Currency",
+    "form_language_label": "Language",
+    "form_submit_label": "Save Changes",
+    "vehicleList_title": "My Vehicles:",
+    "vehicleList_add_title": "Add new vehicle"
+  },
+  "VehiclePage": {
+    "button_public": "Advertise your vehicle for sale",
+    "article_UpOnTheRoad_prefix":"Up on the road in "
+  }
+}

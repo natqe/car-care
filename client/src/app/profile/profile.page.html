@@ -1,0 +1,80 @@
+<ion-header class="fixed top left width-parent" no-border>
+  <ion-toolbar class="ion-background-gradient-dark-transparent">
+    <ion-buttons slot="end">
+      <ion-button color="light">
+        <ion-icon name="more" class="font-size-super"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="relative">
+    <ion-img class="object-cover object-center shadow-cover img-section"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToj7_9ChVX2Ow8vKgJSppEHSTKfnWBIufEveRJQ0rS-uqaNk3g"></ion-img>
+    <div class="flex-column ion-justify-content-around ion-align-items-center absolute-middle height-parent-half">
+      <ion-fab-button color="light">
+        <ion-icon name="camera" size="large" color="dark"></ion-icon>
+      </ion-fab-button>
+      <ion-note color="light">{{ 'ProfilePage.form_image_label' | language }}</ion-note>
+    </div>
+  </section>
+  <form [formGroup]="this">
+    <ion-list>
+      <ion-item class="ion-margin">
+        <ion-label position="floating">
+          {{ 'ProfilePage.form_fullName_label' | language }}
+        </ion-label>
+        <ion-input [formControlName]="controlsNames.FULL_NAME"></ion-input>
+      </ion-item>
+      <ion-item class="ion-margin" button detail="false">
+        <ion-label position="floating">
+          {{ 'ProfilePage.form_currency_label' | language }}
+        </ion-label>
+        <ion-select [formControlName]="controlsNames.CURRENCY" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
+          <ion-select-option *ngFor="let item of currency | keyvalue" [value]="item.key">{{ item.key }} </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="ion-margin" button detail="false">
+        <ion-label position="floating">
+          {{ 'ProfilePage.form_language_label' | language }}
+        </ion-label>
+        <ion-select [formControlName]="controlsNames.LANGUAGE" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
+          <ion-select-option *ngFor="let item of language | keyvalue" [value]="item.key">{{ item.value.label }} </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="save()" *ngIf="valueChange && valid" type="submit" color="tertiary" expand="full" size="large"
+      class="ion-no-margin fixed width-parent bottom index-1">
+      <ion-label class="md-font-size">
+        {{ 'ProfilePage.form_submit_label' | language }}
+      </ion-label>
+    </ion-button>
+  </form>
+  <ion-list [style.marginBottom]="valueChange && valid ? '4.5rem' : '1rem'">
+    <ion-list-header>
+      <ion-label class="font-size-plus" color="dark">
+        {{ 'ProfilePage.vehicleList_title' | language }}
+      </ion-label>
+    </ion-list-header>
+    <ion-item-group>
+      <ion-item *ngFor="let i of [1,2,3]" lines="none" button routerLink="/vehicle" class="ion-inner-padding-vertical-tiny">
+        <ion-fab-button slot="start" class="no-events ion-no-margin margin-end-large" mode="ios" size="small"
+          style='--background: url(https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17) center / cover no-repeat'>
+        </ion-fab-button>
+        <ion-label color="dark"> Afraim, Dialim s3 </ion-label>
+        <ion-buttons slot="end" class="height-parent">
+          <ion-button class="height-parent" color="medium">
+            <ion-icon name="create" class="font-size-large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-item lines="none" button class="ion-inner-padding-vertical-tiny">
+        <ion-fab-button slot="start" class="no-events ion-no-margin margin-end-large" mode="ios" size="small">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-label color="dark">{{ 'ProfilePage.vehicleList_add_title' | language }}</ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

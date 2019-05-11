@@ -1,0 +1,13 @@
+ion-toolbar {
+  > ion-fab-button {
+    --size: 1.75rem;
+    height: var(--size);
+    width: var(--size);
+  }
+}
+
+ion-tab-bar{
+  &.md {
+    // transform: translateY(-1%);
+  }
+}

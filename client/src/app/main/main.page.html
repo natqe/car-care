@@ -1,0 +1,49 @@
+<ion-content>
+  <ion-buttons class="absolute end padding-top-tiny">
+    <ion-label class="bold" color="secondary">
+      {{ 'APP_TITLE'| language }}
+    </ion-label>
+    <ion-button color="medium" class="padding-horizontal-tiny">
+      <ion-icon name="more" class="font-size-super"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-item button lines="none" detail="false" routerLink="/vehicle">
+    <ion-fab-button slot="start" class="no-events" mode="ios"
+      style='--background: url(https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17) center / cover no-repeat'>
+    </ion-fab-button>
+    <ion-label class="flex flex-column ion-align-self-end" color="medium">
+      <ion-text class="bold">Dialim s3</ion-text>
+      <ion-note>44-896-30</ion-note>
+    </ion-label>
+  </ion-item>
+  <article>
+    <ion-text color="primary" class="bold">
+      {{ 'MainPage.state_title' | language: { firstName: 'john' } }}
+    </ion-text>
+    <main class="flex margin-top-tiny">
+      <p *ngFor="let state of vehicle.state | keyvalue">
+        <ion-icon [src]="state.value.icon.src" [name]="state.value.icon.name" color="medium" class="font-size-large"></ion-icon>
+        <ion-note color="medium">19/03/2019</ion-note>
+      </p>
+    </main>
+  </article>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-label>
+      <span>{{ 'MainPage.spendingMoney_title' | language }}</span>
+      <span>&nbsp;&nbsp;&nbsp;</span>
+      <span>850</span>
+      <span>$</span>
+    </ion-label>
+  </ion-toolbar>
+  <section class="flex-column ion-justify-content-evenly">
+    <ion-text color="primary" class="bold block">
+      {{ 'MainPage.updateDetails_title' | language }}
+    </ion-text>
+    <ion-fab class="flex ion-justify-content-evenly relative">
+      <ion-fab-button color="secondary" *ngFor="let state of vehicle.state | keyvalue" [attr.data-label]="state.value.label | language"
+        (click)="openUpdateModal(state.value)">
+        <ion-icon [src]="state.value.icon.src" [name]="state.value.icon.name" color="primary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </section>
+</ion-content>

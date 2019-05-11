@@ -1,0 +1,60 @@
+{
+  "APP_TITLE": "Vehicles",
+  "CANCEL_TEXT": "בטל",
+  "OK_TEXT": "אוקי",
+  "monthNames": [
+    "ינואר",
+    "פברואר",
+    "מרץ",
+    "אפריל",
+    "מאי",
+    "יוני",
+    "יולי",
+    "אוגוסט",
+    "ספטמבר",
+    "אוקטובר",
+    "נובמבר",
+    "דצמבר"
+  ],
+  "VEHICLE": {
+    "state": {
+      "care": {
+        "label": "טיפול"
+      },
+      "test": {
+        "label": "טסט"
+      },
+      "wash": {
+        "label": "שטיפה"
+      },
+      "fuel": {
+        "label": "דלק"
+      }
+    }
+  },
+  "MainPage": {
+    "state_title": "הי {{ firstName }}! המצב של הרכב שלך:",
+    "spendingMoney_title": "ההוצאות שלך החודש על הרכב:",
+    "updateDetails_title": "מה בא לך לעדכן?"
+  },
+  "ArchivePage": {
+    "title": "היסטוריית הרכב"
+  },
+  "FuelModalComponent": {
+    "price_title": "?בכמה תדלקת",
+    "currency_title": "What currency?"
+  },
+  "ProfilePage": {
+    "form_image_label": "העלאת תמונה חדשה",
+    "form_fullName_label": "שם מלא",
+    "form_currency_label": "המטבע שלי",
+    "form_language_label": "שפה",
+    "form_submit_label": "שמירת שינויים",
+    "vehicleList_title": "הרכבים שלי:",
+    "vehicleList_add_title": "הוסף רכב חדש"
+  },
+  "VehiclePage":{
+    "button_public": "פרסום הרכב למכירה",
+    "article_UpOnTheRoad_prefix":"עלה לכביש ב - "
+  }
+}

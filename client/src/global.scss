@@ -1,0 +1,391 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+html {
+  &:not([dir=rtl]) {
+    .start {
+      left: 0 !important;
+    }
+
+    .end {
+      right: 0 !important;
+    }
+
+    .margin-start-large {
+      margin-left: 1.5rem !important;
+    }
+
+    .margin-end-large {
+      margin-right: 1.5rem !important;
+    }
+  }
+
+  &[dir=rtl] {
+    .start {
+      right: 0;
+    }
+
+    .end {
+      left: 0 !important;
+    }
+
+    .margin-start-large {
+      margin-right: 1.5rem !important;
+    }
+
+    .margin-end-large {
+      margin-left: 1.5rem !important;
+    }
+
+    .item-has-focus .label-floating.sc-ion-label-ios-h,
+    .item-has-focus.label-floating.sc-ion-label-ios-h,
+    .item-has-placeholder .label-floating.sc-ion-label-ios-h,
+    .item-has-placeholder.label-floating.sc-ion-label-ios-h,
+    .item-has-value .label-floating.sc-ion-label-ios-h,
+    .item-has-value.label-floating.sc-ion-label-ios-h {
+      @extend .font-size-small;
+      transform: translateZ(0) scale(1);
+    }
+
+    .item-has-focus .label-floating.sc-ion-label-md-h,
+    .item-has-focus.label-floating.sc-ion-label-md-h,
+    .item-has-placeholder .label-floating.sc-ion-label-md-h,
+    .item-has-placeholder.label-floating.sc-ion-label-md-h,
+    .item-has-value .label-floating.sc-ion-label-md-h,
+    .item-has-value.label-floating.sc-ion-label-md-h {
+      @extend .font-size-small;
+      transform: translate3d(0,50%,0) scale(1);
+    }
+  }
+}
+
+.md.md-font-size{
+  @extend .font-size;
+}
+
+.ios.ios-font-size{
+  @extend .font-size;
+}
+
+.ion-padding-start-plus {
+  --padding-start: 1.25rem;
+}
+
+.object-cover {
+  object-fit: cover !important;
+}
+
+.object-center {
+  object-position: center !important;
+}
+
+.shadow-cover {
+  &-week::before,
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgba(var(--ion-color-dark-rgb), .5);
+    // box-shadow: inset 0 0 300px 0 rgba(var(--ion-color-dark-rgb), .75);
+    position: absolute;
+  }
+
+  &-week::before {
+    background: rgba(var(--ion-color-dark-rgb), .25);
+  }
+}
+
+.padding-horizontal-tiny {
+  padding-right: .625rem;
+  padding-left: .625rem;
+}
+
+.margin-horizontal-tiny-ios.ios {
+  @extend .margin-horizontal-tiny;
+}
+
+.padding-horizontal-tiny-ios.ios {
+  @extend .padding-horizontal-tiny;
+}
+
+.padding-horizontal-md.md {
+  @extend .padding-horizontal;
+}
+
+ion-tab-bar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-secondary);
+  --color-selected: var(--ion-color-dark);
+}
+
+.padding-horizontal {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.min-width-content {
+  min-width: fit-content !important;
+}
+
+.width-content {
+  width: fit-content !important;
+}
+
+.margin-horizontal-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.bottom {
+  bottom: 0 !important;
+}
+
+.fixed {
+  position: fixed !important;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.margin-horizontal {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.margin-horizontal-small {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+
+.margin-horizontal-tiny {
+  margin-right: .625rem;
+  margin-left: .625rem;
+}
+
+.margin-vertical-tiny {
+  margin-top: .625rem;
+  margin-bottom: .625rem;
+}
+
+.ion-inner-padding-vertical-tiny {
+  --inner-padding-top: .625rem;
+  --inner-padding-bottom: .625rem;
+}
+
+.margin-top-large {
+  margin-top: 1.5rem;
+}
+
+.margin-top-tiny {
+  margin-top: .625rem;
+}
+
+.padding-top-tiny {
+  padding-top: .625rem;
+}
+
+.ion-background-transparent {
+  --background: transparent !important;
+}
+
+.background-primary {
+  background-color: var(--ion-color-primary);
+}
+
+.text-over {
+  text-overflow: unset !important;
+}
+
+.color-medium {
+  color: var(--ion-color-medium) !important;
+}
+
+.font-size-super {
+  font-size: 1.75rem !important;
+}
+
+.font-size-large {
+  font-size: 1.5rem !important;
+}
+
+.font-size-plus {
+  font-size: 1.125rem;
+}
+
+.font-size {
+  font-size: 1rem !important;
+}
+
+.font-size-medium {
+  font-size: .875rem !important;
+}
+
+.font-size-small {
+  font-size: .75rem;
+}
+
+.font-size-tiny {
+  font-size: .625rem;
+}
+
+.no-outline {
+  outline: unset;
+}
+
+.border-bottom-medium {
+  border-bottom: var(--ion-color-medium) 2px solid;
+}
+
+ion-tab-button {
+  @extend .no-outline;
+}
+
+.ion-no-border {
+  --border-width: 0 !important;
+  --border: unset !important;
+}
+
+.no-shadow {
+  > ion-toolbar {
+    @extend .ion-no-border;
+  }
+
+  &:after {
+    display: none !important;
+  }
+}
+
+.ion-circle-radius {
+  --border-radius: 50%;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.vw100 {
+  width: 100vw;
+}
+
+.block {
+  display: block !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.absolute {
+  position: absolute !important;
+}
+
+.width-parent {
+  width: 100% !important;
+}
+
+.height-parent {
+  height: 100% !important;
+}
+
+.height-parent-half {
+  height: 50% !important;
+}
+
+.size-parent {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.size-x2 {
+  --size-x2: 2rem;
+  height: var(--size-x2) !important;
+  width: var(--size-x2) !important;
+}
+
+.size-x5 {
+  --size-x5: 5rem;
+  height: var(--size-x5) !important;
+  width: var(--size-x5) !important;
+}
+
+.no-events {
+  pointer-events: none !important;
+}
+
+.top {
+  top: 0 !important;
+}
+
+.left {
+  left: 0 !important;
+}
+
+.top-half {
+  top: 50%;
+}
+
+.left-half {
+  left: 50%;
+}
+
+.minus-self-half-top-left {
+  transform: translate(-50%, -50%) !important;
+}
+
+.minus-self-half-top {
+  transform: translateY(-50%) !important;
+}
+
+.absolute-middle {
+  @extend .absolute, .minus-self-half-top-left, .top-half, .left-half;
+}
+
+.content-box {
+  box-sizing: content-box !important;
+}
+
+.item-input,
+.item-select {
+  --border-width: .1rem;
+  --inner-border-width: 0;
+  --border-radius: .5rem;
+  --border-color: var(--ion-color-light);
+  --inner-padding-start: 1rem;
+  --padding-start: 0;
+}
+
+.index-1 {
+  z-index: 1;
+}
+
+.img-section {
+  height: calc(var(--initial-1vh) * 27.5) !important;
+}
+
+.ion-min-height-1\/6-screen {
+  --min-height: 16.6666666666666666667vh !important;
+}
+
+.ion-background-gradient-dark-transparent{
+  --background: linear-gradient(to bottom, rgba(var(--ion-color-dark-rgb), .6) 5%, rgba(var(--ion-color-dark-rgb), .4), transparent);
+}

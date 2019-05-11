@@ -1,0 +1,47 @@
+<ion-header class="fixed top left width-parent" no-border>
+  <ion-toolbar class="ion-background-gradient-dark-transparent">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button size="large" color="light">
+        <ion-icon name="create" class="font-size-large"></ion-icon>
+      </ion-button>
+      <ion-button color="light">
+        <ion-icon name="more" class="font-size-super"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-slides>
+    <ion-slide>
+      <ion-img class="object-cover object-center img-section"
+        src="https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17">
+      </ion-img>
+    </ion-slide>
+  </ion-slides>
+  <ion-item lines="none"
+    class="ion-background-transparent minus-self-half-top ion-min-height-1/6-screen ion-padding-start-plus  index-1" mode="ios">
+    <ion-fab-button slot="start" class="no-events size-x5" mode="ios"
+      style='--background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdR07acFgN5Ji9LSYi9ljaw6IDJ59hyHZQL17P3FjkZFKMSUIbxA) center / cover no-repeat'>
+    </ion-fab-button>
+    <ion-label class="flex flex-column ion-align-self-end" color="medium">
+      <ion-text class="bold">Dialim s3</ion-text>
+      <ion-note>44-896-30</ion-note>
+    </ion-label>
+  </ion-item>
+  <article>
+    <p>
+        {{ 'VehiclePage.article_UpOnTheRoad_prefix' | language }}{{ 'monthNames.1' | language }} 2014
+    </p>
+    <p></p>
+    <p></p>
+  </article>
+  <ion-button color="tertiary" expand="full" size="large" class="ion-no-margin width-parent bottom absolute">
+    <ion-label class="md-font-size">
+      {{ 'VehiclePage.button_public' | language }}
+    </ion-label>
+  </ion-button>
+</ion-content>

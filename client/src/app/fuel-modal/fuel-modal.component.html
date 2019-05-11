@@ -1,0 +1,37 @@
+<ion-header class="no-shadow">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="modalController.dismiss()"  color="medium">
+        <ion-icon name="close" class="font-size-super"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item slot="end" lines="none"  [formGroup]="this">
+      <ion-datetime [formControlName]="controlsNames.DATE" slot="end" class="color-medium"></ion-datetime>
+      <ion-icon name="calendar" slot="end" color="medium"></ion-icon>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (submit)="$event.preventDefault(); valid && save()" [formGroup]="this" class="flex-column height-parent ion-justify-content-evenly">
+    <ion-text color="primary" class="absolute bold ion-margin top ion-padding-top">
+      {{ 'FuelModalComponent.price_title' | language }}
+    </ion-text>
+    <ion-item lines="inset">
+      <ion-input clearInput  [formControlName]="controlsNames.PRICE" type="number"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="width-content">
+      <ion-label color="primary">
+        {{ 'FuelModalComponent.currency_title' | language }}
+      </ion-label>
+      <ion-select [formControlName]="controlsNames.CURRENCY" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language" class="min-width-content">
+        <ion-select-option *ngFor="let i of ['USE', 'BLA']" [value]="i">{{ i }} </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-fab-button class="ion-align-self-center" [class.rtl]="platform.isRTL" color="secondary" [disabled]="!valid" (click)="save()"
+      slot="end">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-fab-button>
+    <ion-input type="submit" hidden></ion-input>
+  </form>
+</ion-content>

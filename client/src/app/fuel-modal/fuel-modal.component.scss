@@ -1,0 +1,48 @@
+form {
+  > ion-item {
+    &:first-of-type {
+      // --padding-start: 0;
+      // --inner-padding-end: 0;
+      @media(max-height: 510px) {
+        width: 50%;
+        position: absolute;
+        bottom: 1rem;
+      }
+    }
+
+    &:last-of-type {
+      @media(max-height: 510px) {
+        position: absolute;
+        bottom: 1rem;
+        left: 55%;
+        > ion-label {
+          display: none;
+        }
+      }
+    }
+  }
+
+  > ion-fab-button {
+    // position: absolute;
+    // left: 50%;
+    // bottom: 30%;
+    // transform: translateX(-50%);
+    @media(max-height: 510px) {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      left: unset;
+      transform: unset;
+
+      &.rtl {
+        right: unset;
+        left: 1rem;
+      }
+    }
+
+    // &.rtl {
+    //   transform: translateX(50%);
+    // }
+
+  }
+}
