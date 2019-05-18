@@ -1,6 +1,11 @@
-import { BehaviorSubject } from 'rxjs'
+import isEqual from 'lodash/isEqual'
+import uniqWith from 'lodash/uniqWith'
+import { Observable, Subscriber } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
+import { Platform } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
+import { CountryService } from '../country/country.service'
 import { ECurrency, USD } from './currency.enum'
 
 @Injectable({
@@ -8,30 +13,46 @@ import { ECurrency, USD } from './currency.enum'
 })
 export class CurrencyService {
 
-  constructor(private readonly storage: Storage) {
-    this.init()
-  }
+  private currentSubscriber: Subscriber<ECurrency>
+
+  constructor(
+    private readonly platform: Platform,
+    private readonly storage: Storage,
+    private readonly countryService: CountryService) { }
 
   private readonly storageKey = `currency`
 
-  readonly current = new BehaviorSubject(USD)
+  readonly all = this.countryService.all.pipe(map(value => uniqWith(value.flatMap(({ currencies }) => currencies), isEqual)))
 
-  private async init() {
+  readonly current = new Observable<ECurrency>((subscriber) => {
 
-    const
-      { storageKey, storage, current } = this,
-      fromStorage = await storage.get(storageKey)
+    const { platform, storageKey, storage } = this
 
-    if (!fromStorage) storage.set(storageKey, USD)
-    else current.next(fromStorage)
+    this.currentSubscriber = subscriber
 
-  }
+    platform.ready().then(async () => {
+
+      let value = await storage.get(storageKey)
+
+      if (!value) {
+
+        value = USD
+
+        storage.get(storageKey)
+
+      }
+
+      subscriber.next(value)
+
+    })
+
+  })
 
   setCurrent(value: ECurrency) {
 
-    const { storageKey, storage, current } = this
+    const { storageKey, storage, currentSubscriber } = this
 
-    current.next(value)
+    currentSubscriber.next(value)
 
     return storage.set(storageKey, value)
 

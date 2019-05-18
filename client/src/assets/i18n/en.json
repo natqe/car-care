@@ -32,6 +32,17 @@
       }
     }
   },
+  "WelcomeStartPage": {
+    "title": "Hey what's going on?",
+    "content_middle_1": "We will summarize and become matters, the goal is not to dig :)",
+    "content_middle_2": "So the things you can do on the platform:",
+    "content_footer": "It is possible to update expenses on fuel, test and rinsing"
+  },
+  "WelcomeEndPage": {
+    "title": "When the vehicle gets older or just decide to split up",
+    "content_middle_1": "You can advertise for sale or find a new member on wheels",
+    "content_footer": "This is all in a big way, the rest is how it will flow to you if necessary"
+  },
   "MainPage": {
     "state_title": "Hi {{ firstName }}! The state of your vehicle:",
     "spendingMoney_title": "Your spending month on vehicle:",

@@ -1,10 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep'
 import isEqual from 'lodash/isEqual'
-import { first } from 'rxjs/operators'
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { USD } from '../currency/currency.enum'
-import { Currency } from '../currency/currency.model'
 import { CurrencyService } from '../currency/currency.service'
 import { Language } from '../language/language.model'
 import { LanguageService } from '../language/language.service'
@@ -23,7 +21,8 @@ export class ProfilePage extends FormGroup {
 
   private initialValue
 
-  constructor(currencyService: CurrencyService,
+  constructor(
+    readonly currencyService: CurrencyService,
     private readonly languageService: LanguageService) {
 
     super({
@@ -39,8 +38,6 @@ export class ProfilePage extends FormGroup {
   }
 
   readonly controlsNames = { CURRENCY, FULL_NAME, LANGUAGE }
-
-  readonly currency = new Currency
 
   readonly language = new Language
 

@@ -1,0 +1,23 @@
+<ion-content fullscreen>
+  <ion-text color="dark" class="font-size-large margin-horizontal-auto table bold margin-top-5">?מה מספר הטלפון שלך</ion-text>
+  <ion-note color="dark" class="margin-horizontal-auto table margin-top-1/2 ion-padding-bottom">
+    אנחנו נשלח לך קוד סודי בהודעה סמס
+  </ion-note>
+  <form [formGroup]="this" class="flex ion-justify-content-center" dir="ltr">
+    <ion-item lines="none" class="width-content inline-block ion-margin-end">
+      <ion-select [formControlName]="controlsNames.PREFIX" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language"
+        class="min-width-content color-primary ion-no-padding">
+        <ion-select-option *ngFor="let callingCode of countryService.callingCodes | async" [value]="callingCode"><span>+</span> <span>{{ callingCode }}</span></ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="width-parent-1/2 inline-block">
+      <ion-input [formControlName]="controlsNames.PHONE" type="tel" clearInput inputmode="numeric" color="primary">
+      </ion-input>
+    </ion-item>
+  </form>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="secondary" routerLink="/auth/auth-code">
+      <ion-icon name="arrow-round-forward" color="primary"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

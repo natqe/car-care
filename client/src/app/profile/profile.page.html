@@ -32,7 +32,7 @@
           {{ 'ProfilePage.form_currency_label' | language }}
         </ion-label>
         <ion-select [formControlName]="controlsNames.CURRENCY" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
-          <ion-select-option *ngFor="let item of currency | keyvalue" [value]="item.key">{{ item.key }} </ion-select-option>
+          <ion-select-option *ngFor="let currency of currencyService.all | async" [value]="currency.code">{{ currency.code }} </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item class="ion-margin" button detail="false">

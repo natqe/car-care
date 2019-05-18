@@ -1,0 +1,3 @@
+// interface Location {
+//   previousUrl: string
+// }

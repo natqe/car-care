@@ -1,7 +1,12 @@
-import { config } from 'dotenv'
+import 'dotenv/config'
+import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 
-config()
+NestFactory.create(AppModule).then(app => {
 
-NestFactory.create(AppModule).then(app => app.listen(process.env.PORT))
+  app.useGlobalPipes(new ValidationPipe())
+
+  app.listen(process.env.PORT)
+
+})

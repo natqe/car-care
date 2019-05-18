@@ -1,11 +1,11 @@
 import { Column, Entity, ManyToOne, OneToMany, OneToOne } from 'typeorm'
 import { CareEntity } from './care.entity'
 import { FuelEntity } from './fuel.entity'
+import { PersonEntity } from './person.entity'
 import { SaleEntity } from './sale.entity'
 import { TestEntity } from './test.entity'
-import { UserEntity } from './user.entity'
 import { WashEntity } from './wash.entity'
-import { WithImageEntity } from './with-image.absrtact-entity'
+import { WithImageEntity } from './with-image.abstract-entity'
 
 @Entity()
 export class VehicleEntity extends WithImageEntity {
@@ -29,7 +29,7 @@ export class VehicleEntity extends WithImageEntity {
   gallery: Array<string>
 
   @Column(`text`)
-  user: UserEntity['_id'] | UserEntity
+  user: PersonEntity['_id'] | PersonEntity
 
   @Column()
   license: string

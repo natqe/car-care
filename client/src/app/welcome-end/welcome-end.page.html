@@ -1,0 +1,29 @@
+<ion-header class="fixed vw100 top left" no-border>
+  <ion-toolbar class="ion-background-transparent">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="welcome" text="" color="primary"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen class="onboarding">
+  <ion-avatar class="size-x17">
+    <ion-img src="assets/images/vehicle-front.jpeg"></ion-img>
+  </ion-avatar>
+  <article
+    class="flex-column ion-align-items-center ion-justify-content-between height-parent-2/9 ion-margin-horizontal ion-padding-horizontal">
+    <ion-text color="primary" class="font-size-plus bold">
+      {{ 'WelcomeEndPage.title' | language }}
+    </ion-text>
+    <ion-text color="dark" class="ion-text-center">
+        {{ 'WelcomeEndPage.content_middle_1' | language }}
+    </ion-text>
+    <ion-text color="dark" class="ion-text-center font-size-plus">
+        {{ 'WelcomeEndPage.content_footer' | language }}
+    </ion-text>
+  </article>
+  <ion-fab horizontal="center" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary" routerLink="/auth/auth-phone" (click)="saveWelcomeEnd()">
+      <ion-icon name="checkmark" color="primary"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

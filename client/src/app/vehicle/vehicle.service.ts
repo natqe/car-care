@@ -9,7 +9,7 @@ export class VehicleService {
 
   constructor(private readonly vehiclesService: VehiclesService) { }
 
-  item(id: Vehicle['id']) {
+  item(id) {
 
   }
 

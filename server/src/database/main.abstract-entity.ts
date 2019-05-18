@@ -1,19 +1,26 @@
+import { Field, ID, ObjectType } from 'type-graphql'
 import { BaseEntity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm'
 
-export abstract class MainEntity extends BaseEntity {
+@ObjectType()
+export abstract class Main extends BaseEntity {
 
-  readonly _type = this.constructor.name.toUpperCase().replace(`ENTITY`, ``)
-
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
-  _id: string
+  readonly _id: string
 
+  @Field()
   @CreateDateColumn()
-  _createDate: Date
+  readonly _createDate: Date
 
+  @Field()
   @UpdateDateColumn()
-  _updateDate: Date
+  readonly _updateDate: Date
 
+  @Field()
   @VersionColumn()
-  _version: number
+  readonly _version: number
+
+  @Field()
+  readonly _type: string = this.constructor.name
 
 }
