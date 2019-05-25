@@ -6,14 +6,14 @@ import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
 
 const production = process.env.NODE_ENV === 'production'
-console.log(123)
+console.log(process.env.DATABASE_URL)
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
       entities: [`${!production ? 'src' : 'dist'}/**/**.entity.${!production ? `t` : `j`}s`],
-      synchronize: !production,
+      synchronize: !production || true,
       logging: true,
       ssl: production,
       // dropSchema: true
