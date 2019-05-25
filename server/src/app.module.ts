@@ -6,7 +6,7 @@ import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
 
 const production = process.env.NODE_ENV === 'production'
-console.log(process.env.DATABASE_URL)
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({

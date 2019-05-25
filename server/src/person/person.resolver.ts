@@ -22,7 +22,7 @@ export class PersonResolver {
     if (!session[ESession.personId]) session[ESession.personId] = get(await Person.findOne(phoneData, { select: [EMain._id] }), EMain._id) ||
       get(await Person.create(phoneData).save(), EMain._id)
     session[ESession.verificationCode] = numericCode()
-
+Logger.log(session[ESession.verificationCode], `createPerson.verificationCode`)
     return !!session[ESession.personId]
 
   }
