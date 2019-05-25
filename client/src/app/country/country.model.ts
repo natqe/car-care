@@ -1,16 +1,24 @@
-export class Country {
-  currencies: Array<{
+import { Nation } from '../nation/nation.abstract'
+
+export enum ECounty {
+  currencies = 'currencies',
+  languages = 'languages',
+  callingCodes = 'callingCodes',
+  population = 'population'
+}
+
+export class Country extends Nation {
+  readonly [ECounty.currencies]: Array<{
     code: string
     name: string
     symbol: string
   }>
-  languages: Array<{
+ readonly [ECounty.languages]: Array<{
     iso639_1: string
     iso639_2: string
     name: string
     nativeName: string
   }>
-  callingCodes?: Array<string>
-  population?: number
-  timezones?: Array<string>
+  readonly [ECounty.callingCodes]?: Array<number>
+  readonly [ECounty.population]?: number
 }

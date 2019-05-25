@@ -6,7 +6,17 @@
 """Date custom scalar type"""
 scalar Date
 
+type Main {
+  _id: ID!
+  _createDate: Date!
+  _updateDate: Date!
+  _version: Float!
+  _type: String!
+}
+
 type Mutation {
+  createPerson(phone: Float!, callingCode: Float!): Boolean!
+  confirmPerson(verificationCode: String!): Boolean
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
 }
@@ -17,20 +27,23 @@ input NewRecipeInput {
   ingredients: [String!]!
 }
 
-type PersonEntity {
+type Person {
+  _id: ID!
+  _createDate: Date!
+  _updateDate: Date!
+  _version: Float!
+  _type: String!
+  image: String!
+  phone: Float!
+  callingCode: Float!
   vehicles: [String!]!
   fullName: String!
   language: String!
   currency: String!
 }
 
-type Phone {
-  value: String!
-  verificationCode: String!
-}
-
 type Query {
-  phone(id: String!): Phone!
+  isConfirmPerson: Boolean
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }
@@ -45,4 +58,13 @@ type Recipe {
 
 type Subscription {
   recipeAdded: Recipe!
+}
+
+type WithImageEntity {
+  _id: ID!
+  _createDate: Date!
+  _updateDate: Date!
+  _version: Float!
+  _type: String!
+  image: String!
 }

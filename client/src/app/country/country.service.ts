@@ -1,6 +1,6 @@
 import isEqual from 'lodash/isEqual'
 import maxBy from 'lodash/maxBy'
-import uniq from 'lodash/uniq'
+import remove from 'lodash/remove'
 import uniqWith from 'lodash/uniqWith'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Platform } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
-import { Country } from './country.model'
+import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
+import { ENation } from '../nation/nation.abstract'
+import { Country, ECounty } from './country.model'
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +30,23 @@ export class CountryService {
 
     platform.ready().then(async () => {
 
-      let value:Array<Country> = await storage.get(keyStorage)
+      let value: Array<Country> = await storage.get(keyStorage)
 
       if (!value) {
 
-        value = await httpClient.get(`https://restcountries.eu/rest/v2/all?fields=callingCodes;population;timezones;currencies;languages;`).toPromise() as Array<Country>
+        value = await httpClient.get<typeof value>(`https://restcountries.eu/rest/v2/all?fields=name;nativeName;callingCodes;population;currencies;languages;flag`).toPromise()
 
-        value.sort((a, b)=> b.population - a.population)
+        for (const { callingCodes } of value) {
+
+          for (let index = 0;index < callingCodes.length;++index) callingCodes[index] = +(callingCodes[index] as any).replace(/\s+/g, ``)
+
+          remove(callingCodes, callingCode => !callingCode)
+
+        }
+
+        remove(value, ({ callingCodes, population }) => !callingCodes.length || !population)
+
+        value.sort((a, b) => b.population - a.population)
 
         storage.set(keyStorage, value)
 
@@ -50,7 +62,15 @@ export class CountryService {
 
   readonly languages = this.all.pipe(map(value => uniqWith(value.flatMap(({ languages }) => languages.filter(Boolean)), isEqual)))
 
-  readonly callingCodes = this.all.pipe(map(value => uniq(value.flatMap(({ callingCodes }) => callingCodes.map(callingCode => callingCode.replace(/\s+/g, ``)).filter(Boolean))).sort((a, b)=> +a - +b)))
+  readonly callingCodes = this.all
+    .pipe(map(
+      countries => countries.flatMap((country) => country[ECounty.callingCodes].map(value => (<CallingCode>{
+        [ECallingCode.value]: value,
+        [ENation.flag]: country[ENation.flag],
+        [ENation.nativeName]: country[ENation.nativeName],
+        [ENation.name]: country[ENation.name]
+      })))
+    ))
 
   readonly default = this.all.pipe(
     map(value => {

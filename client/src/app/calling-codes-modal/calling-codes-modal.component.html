@@ -1,0 +1,29 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-searchbar animated autocorrect autocomplete spellcheck #searchBar
+      [placeholder]="'CallingCodesModalComponent.searchbar_placeholder' | language"></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()">
+        {{ 'CANCEL_TEXT' | language }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item-group>
+      <ion-item
+        *ngFor="let i of countryService.callingCodes | async | filterBy: [ECallingCode.value, ENation.nativeName, ENation.name] : searchBar.value?.replace('+', '')"
+        button (click)="modalController.dismiss(i)">
+        <ion-avatar slot="start">
+          <img [src]="i[ENation.flag]">
+        </ion-avatar>
+        <ion-label [class.bold]="isSelected(i)" [color]="isSelected(i) ? 'primary': 'dark'">
+          <span>{{ i[ENation.nativeName] }}</span>
+          <span>&nbsp;</span>
+          <span dir="ltr">(+{{ i[ECallingCode.value] }})</span>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

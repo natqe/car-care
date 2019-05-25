@@ -16,7 +16,7 @@ export class WelcomeGuard implements CanActivate {
 
     const
       { storage, navController } = this,
-      nextUrl = `/auth/auth-phone`
+      nextUrl = `/auth/phone`
 
     if (!await storage.get(`welcome-end`)) return true
     else navController.navigateRoot(nextUrl)

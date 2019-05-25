@@ -12,7 +12,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { CurrencyService } from './currency/currency.service'
+import { GraphQLModule } from './graphql.module'
 import { LanguageService } from './language/language.service'
+import { PersonService } from './person/person.service'
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +33,8 @@ import { LanguageService } from './language/language.service'
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    GraphQLModule
   ],
   providers: [
     StatusBar,
@@ -39,6 +42,7 @@ import { LanguageService } from './language/language.service'
     LanguageService,
     TranslateService,
     CurrencyService,
+    PersonService,
     Keyboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

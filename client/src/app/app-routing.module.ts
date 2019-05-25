@@ -15,7 +15,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: '', redirectTo: '/welcome/welcome-start', pathMatch: 'full' },
+  { path: '', redirectTo: '/welcome/welcome-start', pathMatch: 'full' }
 ]
 
 @NgModule({

@@ -18,7 +18,8 @@
     "lib": [
       "es2018",
       "esnext",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ]
   }
 }

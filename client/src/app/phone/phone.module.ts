@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
-import { SharedModule } from '../shared/shared.module'
-import { AuthPhonePage } from './auth-phone.page'
+import { SharedModule } from '../shared.module'
+import { PhonePage } from './phone.page'
 
 const routes: Routes = [
   {
     path: '',
-    component: AuthPhonePage
+    component: PhonePage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
-  declarations: [AuthPhonePage]
+  declarations: [PhonePage]
 })
-export class AuthPhonePageModule {}
+export class PhonePageModule {}

@@ -2,6 +2,7 @@
   "APP_TITLE": "Vehicles",
   "CANCEL_TEXT": "Cancel",
   "OK_TEXT": "OK",
+  "GENERAL_ERROR": "An error is occurred",
   "monthNames": [
     "January",
     "February",
@@ -43,6 +44,16 @@
     "content_middle_1": "You can advertise for sale or find a new member on wheels",
     "content_footer": "This is all in a big way, the rest is how it will flow to you if necessary"
   },
+  "PhonePage": {
+    "title": "?What is your number",
+    "note": "We will send you a secret code in the SMS message",
+    "form_phone_placeholder": "Enter your number"
+  },
+  "VerificationCodePage": {
+    "title": "Enter your PIN",
+    "note": "Sent to a phone number - {{ phone }}",
+    "form_code_placeholder": ""
+  },
   "MainPage": {
     "state_title": "Hi {{ firstName }}! The state of your vehicle:",
     "spendingMoney_title": "Your spending month on vehicle:",
@@ -50,10 +61,6 @@
   },
   "ArchivePage": {
     "title": "Vehicle history"
-  },
-  "FuelModalComponent": {
-    "price_title": "How much did it cost?",
-    "currency_title": "What currency?"
   },
   "ProfilePage": {
     "form_image_label": "Uploading a new image",
@@ -66,6 +73,13 @@
   },
   "VehiclePage": {
     "button_public": "Advertise your vehicle for sale",
-    "article_UpOnTheRoad_prefix":"Up on the road in "
+    "article_UpOnTheRoad_prefix": "Up on the road in "
+  },
+  "CallingCodesModalComponent": {
+    "searchbar_placeholder": "Search"
+  },
+  "FuelModalComponent": {
+    "price_title": "How much did it cost?",
+    "currency_title": "What currency?"
   }
 }

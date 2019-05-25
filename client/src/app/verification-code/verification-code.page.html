@@ -1,0 +1,30 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth/phone"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="this" (ngSubmit)="handleSubmit()">
+    <ion-text color="dark" class="font-size-large margin-horizontal-auto table bold margin-top-5">
+      {{ 'VerificationCodePage.title' |language }}</ion-text>
+    <ion-note *ngIf="personService.value | async as person" color="dark"
+      class="margin-horizontal-auto table margin-top-1/2 ion-padding-bottom">
+      {{ 'VerificationCodePage.note' | language : { phone: '+' + person[EPerson.callingCode] + person[EPerson.phone] } }}
+    </ion-note>
+    <ion-item class="padding-horizontal-large ion-margin-top">
+      <ion-input [formControlName]="EControlsNames.code" type="tel" inputMode="numeric" style="letter-spacing: 2rem"
+        [placeholder]="'VerificationCodePage.form_code_placeholder'|language" color="primary"
+        class="bold ion-text-center font-size-large">
+      </ion-input>
+    </ion-item>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button type="submit" color="secondary" (click)="handleSubmit()" [disabled]="invalid" class="bottom">
+        <ion-icon name="arrow-round-forward" color="primary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-input type="submit" hidden [disabled]="invalid"></ion-input>
+  </form>
+</ion-content>

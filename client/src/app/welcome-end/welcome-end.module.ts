@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared.module'
 import { WelcomeEndPage } from './welcome-end.page'
 
 const routes: Routes = [

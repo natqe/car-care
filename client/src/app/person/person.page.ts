@@ -13,11 +13,11 @@ const
   LANGUAGE = `language`
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: 'profile.page.html',
-  styleUrls: ['profile.page.scss']
+  selector: 'app-person',
+  templateUrl: 'person.page.html',
+  styleUrls: ['person.page.scss']
 })
-export class ProfilePage extends FormGroup {
+export class PersonPage extends FormGroup {
 
   private initialValue
 

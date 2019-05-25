@@ -1,0 +1,39 @@
+import { NgArrayPipesModule } from 'ngx-pipes'
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { IonicModule } from '@ionic/angular'
+import { CallingCodesModalComponent } from './calling-codes-modal/calling-codes-modal.component'
+import { CareModalComponent } from './care-modal/care-modal.component'
+import { FuelModalComponent } from './fuel-modal/fuel-modal.component'
+import { LanguagePipe } from './language/language.pipe'
+import { TestModalComponent } from './test-modal/test-modal.component'
+import { UtilPipe } from './util/util.pipe'
+import { WashModalComponent } from './wash-modal/wash-modal.component'
+
+const
+  entryComponents = [
+    FuelModalComponent,
+    CareModalComponent,
+    TestModalComponent,
+    WashModalComponent,
+    CallingCodesModalComponent
+  ],
+  components = [
+    LanguagePipe,
+    UtilPipe,
+    ...entryComponents
+  ],
+  imports = [
+    FormsModule,
+    ReactiveFormsModule,
+    NgArrayPipesModule
+  ]
+
+@NgModule({
+  declarations: [...components],
+  entryComponents: [...entryComponents],
+  imports: [CommonModule, IonicModule, ...imports],
+  exports: [...components, ...imports]
+})
+export class SharedModule { }

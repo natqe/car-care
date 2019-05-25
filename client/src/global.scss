@@ -126,6 +126,11 @@ html {
   @extend .padding-horizontal;
 }
 
+.padding-horizontal-large {
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+}
+
 ion-tab-bar {
   --background: var(--ion-color-primary);
   --color: var(--ion-color-secondary);
@@ -139,6 +144,14 @@ ion-tab-bar {
 
 .min-width-content {
   min-width: fit-content !important;
+}
+
+.max-width-content {
+  max-width: fit-content !important;
+}
+
+.max-width-unset {
+  max-width: unset !important;
 }
 
 .width-parent-1\/2 {
@@ -242,7 +255,7 @@ ion-tab-bar {
   background-color: var(--ion-color-primary);
 }
 
-.color-primary{
+.color-primary {
   color: var(--ion-color-primary);
 }
 
@@ -395,6 +408,12 @@ ion-tab-button {
   width: 100% !important;
 }
 
+.size-x1\&1\/2 {
+  --size: 1.5rem;
+  height: var(--size) !important;
+  width: var(--size) !important;
+}
+
 .size-x2 {
   --size-x2: 2rem;
   height: var(--size-x2) !important;
@@ -417,6 +436,10 @@ ion-tab-button {
   --size-x17: 17rem;
   height: var(--size-x17) !important;
   width: var(--size-x17) !important;
+}
+
+.flex-1 {
+  flex: 1 1 !important;
 }
 
 .no-events {
@@ -457,7 +480,7 @@ ion-tab-button {
 
 .item-input,
 .item-select {
-  --border-width: .1rem;
+  --border-width: .1rem !important;
   --inner-border-width: 0;
   --border-radius: .5rem;
   --border-color: var(--ion-color-light);
@@ -492,4 +515,12 @@ ion-content.onboarding {
       margin-bottom: 2.25rem;
     }
   }
+}
+
+.action-sheet-group {
+  overflow: auto !important;
+}
+
+ion-fab-button.bottom {
+  margin-bottom: 2.75rem;
 }

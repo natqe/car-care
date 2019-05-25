@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { PhoneResolver } from './phone/phone.resolver'
+import { IContext } from './context/context.interface'
+import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
 
 const production = process.env.NODE_ENV === 'production'
@@ -14,16 +15,21 @@ const production = process.env.NODE_ENV === 'production'
       entities: [`${!production ? 'src' : 'dist'}/**/**.entity.${!production ? `t` : `j`}s`],
       synchronize: !production,
       logging: !production,
-      ssl: production
+      ssl: production,
+      // dropSchema: true
     }),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'schema.gql',
-      playground: !production
+      autoSchemaFile: `schema.gql`,
+      playground: !production,
+      context({ req: { session } }): IContext {
+        return { session }
+      },
+      cors: false
     }),
     RecipesModule
   ],
   controllers: [],
-  providers: [PhoneResolver],
+  providers: [PersonResolver],
 })
-export class AppModule {}
+export class AppModule { }

@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       { path: 'main', children: [{ path: '', loadChildren: '../main/main.module#MainPageModule' }] },
       { path: 'archive', children: [{ path: '', loadChildren: '../archive/archive.module#ArchivePageModule' }] },
-      { path: 'profile', children: [{ path: '', loadChildren: '../profile/profile.module#ProfilePageModule' }] },
+      { path: 'person', children: [{ path: '', loadChildren: '../person/person.module#PersonPageModule' }] },
       { path: 'vehicles', loadChildren: '../vehicles/vehicles.module#VehiclesPageModule' },
       { path: '', redirectTo: '/tabs/main', pathMatch: 'full' }
     ]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { NavController } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
 
 @Component({
@@ -8,10 +9,18 @@ import { Storage } from '@ionic/storage'
 })
 export class WelcomeEndPage implements OnInit {
 
-  constructor(private readonly storage: Storage) { }
+  constructor(
+    private readonly navController: NavController,
+    private readonly storage: Storage) { }
 
-  saveWelcomeEnd() {
-    this.storage.set(`welcome-end`, true)
+  async handleEnd() {
+
+    const { storage, navController } = this
+
+    storage.set(`welcome-end`, true)
+
+    navController.navigateRoot(`/auth/phone`)
+
   }
 
   ngOnInit() {

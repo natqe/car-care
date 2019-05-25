@@ -3,17 +3,17 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
-import { SharedModule } from '../shared/shared.module'
-import { ProfilePage } from './profile.page'
+import { SharedModule } from '../shared.module'
+import { PersonPage } from './person.page'
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: ProfilePage }]),
+    RouterModule.forChild([{ path: '', component: PersonPage }]),
     SharedModule
   ],
-  declarations: [ProfilePage]
+  declarations: [PersonPage]
 })
-export class ProfilePageModule {}
+export class PersonPageModule {}

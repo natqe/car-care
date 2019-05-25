@@ -2,6 +2,7 @@
   "APP_TITLE": "Vehicles",
   "CANCEL_TEXT": "בטל",
   "OK_TEXT": "אוקי",
+  "GENERAL_ERROR": "התרחשה שגיאה",
   "monthNames": [
     "ינואר",
     "פברואר",
@@ -43,6 +44,16 @@
     "content_middle_1": "אפשר לפרסם למכירה או לחילופין למצוא חבר חדש על גלגלים",
     "content_footer": "זהו בגדול, השאר זה איך שיזרום לך אם צריך, אפשר לתקשר אתנו במייל"
   },
+  "PhonePage": {
+    "title": "?מה מספר הטלפון שלך",
+    "note": "אנחנו נשלח לך קוד סודי בהודעה סמס",
+    "form_phone_placeholder": "הקלד את מספרך"
+  },
+  "VerificationCodePage": {
+    "title": "הכנס/י את הקוד הסודי",
+    "note": "שנשלח לטלפון מספר - {{ phone }}",
+    "form_code_placeholder": ""
+  },
   "MainPage": {
     "state_title": "הי {{ firstName }}! המצב של הרכב שלך:",
     "spendingMoney_title": "ההוצאות שלך החודש על הרכב:",
@@ -50,10 +61,6 @@
   },
   "ArchivePage": {
     "title": "היסטוריית הרכב"
-  },
-  "FuelModalComponent": {
-    "price_title": "?בכמה תדלקת",
-    "currency_title": "What currency?"
   },
   "ProfilePage": {
     "form_image_label": "העלאת תמונה חדשה",
@@ -67,5 +74,12 @@
   "VehiclePage": {
     "button_public": "פרסום הרכב למכירה",
     "article_UpOnTheRoad_prefix": "עלה לכביש ב - "
+  },
+  "CallingCodesModalComponent": {
+    "searchbar_placeholder": "חפש"
+  },
+  "FuelModalComponent": {
+    "price_title": "?בכמה תדלקת",
+    "currency_title": "What currency?"
   }
 }
