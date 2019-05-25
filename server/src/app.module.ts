@@ -6,7 +6,7 @@ import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
 
 const production = process.env.NODE_ENV === 'production'
-
+console.log(123)
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -14,7 +14,7 @@ const production = process.env.NODE_ENV === 'production'
       url: process.env.DATABASE_URL,
       entities: [`${!production ? 'src' : 'dist'}/**/**.entity.${!production ? `t` : `j`}s`],
       synchronize: !production,
-      logging: !production || true,
+      logging: true,
       ssl: production,
       // dropSchema: true
     }),
