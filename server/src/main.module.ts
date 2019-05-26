@@ -1,5 +1,5 @@
 import * as plivo from 'plivo'
-import { Module } from '@nestjs/common'
+import { Logger, Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { PLIVO_CLIENT, production } from './config/constants'
@@ -36,7 +36,7 @@ import { RecipesModule } from './recipes/recipes.module'
     LanguageService,
     {
       provide: PLIVO_CLIENT,
-      useFactory: plivo.RestAPI
+      useClass: plivo.Client
     }
   ],
 })
