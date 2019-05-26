@@ -36,7 +36,7 @@ import { RecipesModule } from './recipes/recipes.module'
     LanguageService,
     {
       provide: PLIVO_CLIENT,
-      useClass: plivo.Client
+      useClass: plivo.RestAPI
     }
   ],
 })
