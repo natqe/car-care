@@ -10,12 +10,12 @@ type Main {
   _id: ID!
   _createDate: Date!
   _updateDate: Date!
-  _version: Float!
+  _version: Int!
   _type: String!
 }
 
 type Mutation {
-  createPerson(phone: Float!, callingCode: Float!): Boolean!
+  createPerson(phone: Int!, callingCode: Int!): Boolean!
   confirmPerson(verificationCode: String!): Boolean
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
@@ -31,11 +31,11 @@ type Person {
   _id: ID!
   _createDate: Date!
   _updateDate: Date!
-  _version: Float!
+  _version: Int!
   _type: String!
   image: String!
-  phone: Float!
-  callingCode: Float!
+  phone: Int!
+  callingCode: Int!
   vehicles: [String!]!
   fullName: String!
   language: String!
@@ -60,11 +60,11 @@ type Subscription {
   recipeAdded: Recipe!
 }
 
-type WithImageEntity {
+type WithImage {
   _id: ID!
   _createDate: Date!
   _updateDate: Date!
-  _version: Float!
+  _version: Int!
   _type: String!
   image: String!
 }

@@ -1,7 +1,37 @@
-import { Field, ObjectType } from 'type-graphql'
+import { Field, Int, ObjectType } from 'type-graphql'
 import { Column, Entity } from 'typeorm'
 import { VehicleEntity } from '../database/vehicle.entity'
 import { WithImage } from '../with-image/with-image.abstract'
+
+@ObjectType()
+@Entity()
+export class Person extends WithImage {
+
+  @Field(()=> Int)
+  @Column()
+  readonly phone: number
+
+  @Field(()=> Int)
+  @Column()
+  readonly callingCode: number
+
+  @Field(() => [String])
+  @Column(`text`, { array: true, nullable: true })
+  readonly vehicles?: Array<VehicleEntity['_id']> | Array<VehicleEntity>
+
+  @Field()
+  @Column({ nullable: true })
+  readonly fullName?: string
+
+  @Field()
+  @Column({ nullable: true })
+  readonly language?: string
+
+  @Field()
+  @Column({ nullable: true })
+  readonly currency?: string
+
+}
 
 export enum EPerson {
   phone = 'phone',
@@ -10,34 +40,4 @@ export enum EPerson {
   fullName = 'fullName',
   language = 'language',
   currency = 'currency'
-}
-
-@ObjectType()
-@Entity()
-export class Person extends WithImage {
-
-  @Field()
-  @Column()
-  readonly [EPerson.phone]: number
-
-  @Field()
-  @Column()
-  readonly [EPerson.callingCode]: number
-
-  @Field(() => [String])
-  @Column(`text`, { array: true, nullable: true })
-  readonly [EPerson.vehicles]?: Array<VehicleEntity['_id']> | Array<VehicleEntity>
-
-  @Field()
-  @Column({ nullable: true })
-  readonly [EPerson.fullName]?: string
-
-  @Field()
-  @Column({ nullable: true })
-  readonly [EPerson.language]?: string
-
-  @Field()
-  @Column({ nullable: true })
-  readonly [EPerson.currency]?: string
-
 }

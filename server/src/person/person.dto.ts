@@ -1,20 +1,20 @@
-import { ArgsType, Field } from 'type-graphql'
-import { ESession, ISession } from '../session/session.interface'
-import { EPerson, Person } from './person.model'
+import { ArgsType, Field, Int } from 'type-graphql'
+import { ISession } from '../session/session.interface'
+import { Person } from './person.model'
 
 @ArgsType()
 export class CreatePersonArgs implements Partial<Person> {
 
-  @Field(() => Number)
-  readonly [EPerson.phone]: Person[EPerson.phone]
+  @Field(() => Int)
+  readonly phone: Person['phone']
 
-  @Field(() => Number)
-  readonly [EPerson.callingCode]: Person[EPerson.callingCode]
+  @Field(() => Int)
+  readonly callingCode: Person['callingCode']
 
 }
 
 @ArgsType()
 export class ConfirmPersonArgs implements Partial<ISession> {
   @Field(() => String)
-  readonly [ESession.verificationCode]: ISession[ESession.verificationCode]
+  readonly verificationCode: ISession['verificationCode']
 }
