@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 import { BehaviorSubject } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
+import { LanguageService } from '../language/language.service'
 import { EPerson, Person } from './person.model'
 
 @Injectable({
@@ -10,7 +11,9 @@ import { EPerson, Person } from './person.model'
 })
 export class PersonService {
 
-  constructor(private readonly apollo: Apollo) { }
+  constructor(
+    private readonly languageService:LanguageService,
+    private readonly apollo: Apollo) { }
 
   private readonly _value = new BehaviorSubject<Person>(null)
 
@@ -26,13 +29,13 @@ export class PersonService {
 
   create({ callingCode, phone }: { callingCode: Person[EPerson.callingCode], phone: Person[EPerson.phone] }) {
 
-    const { apollo, _value } = this
+    const { apollo, _value, languageService } = this
 
     return apollo.
       mutate({
         mutation: gql`
           mutation createPerson {
-            createPerson(phone: ${phone}, callingCode: ${callingCode})
+            createPerson(phone: ${phone}, callingCode: ${callingCode}, language: "${languageService.current}")
           }
       `}).
       pipe(map(({ data: { createPerson } }) => {

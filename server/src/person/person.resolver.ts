@@ -1,7 +1,10 @@
 import { property } from 'lodash'
 import { numericCode } from 'utilizes/numeric-code'
-import { Logger } from '@nestjs/common'
+import { Inject, Logger } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { PLIVO_CLIENT } from '../config/constants'
+import { VERIFICATION_CODE_SMS } from '../language/language.keys'
+import { LanguageService } from '../language/language.service'
 import { EMain } from '../main.abstract'
 import { Session } from '../session/session.decorator'
 import { ISession } from '../session/session.interface'
@@ -11,15 +14,34 @@ import { Person } from './person.model'
 @Resolver(() => Person)
 export class PersonResolver {
 
-  @Mutation(() => Boolean)
-  async createPerson(@Args() phoneData: CreatePersonArgs, @Session() session: ISession) {
+  constructor(
+    @Inject(PLIVO_CLIENT)
+    private readonly plivoClient,
+    private readonly languageService: LanguageService) { }
 
-    const getId = property<Person, Person[EMain._id]>(EMain._id)
+  @Mutation(() => Boolean)
+  async createPerson(@Args() { language, ...phoneData }: CreatePersonArgs, @Session() session: ISession) {
+
+    const
+      getId = property<Person, Person['_id']>(EMain._id),
+      { phone, callingCode } = phoneData
 
     if (!session.personId) session.personId = getId(await Person.findOne(phoneData, { select: [`_id`] })) || getId(await Person.create(phoneData).save())
 
     session.verificationCode = numericCode()
-    Logger.log(session.verificationCode, `createPerson.verificationCode`)
+
+    this.plivoClient.messages.create(
+      `Vehicles App`,
+      `${callingCode}${phone}`,
+      this.languageService.valueOf({
+        language,
+        token: VERIFICATION_CODE_SMS,
+        locals: {
+          verificationCode: session.verificationCode
+        }
+      })
+    )
+
     return !!session.personId
 
   }

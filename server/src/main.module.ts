@@ -1,11 +1,12 @@
+import { Client } from 'plivo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { PLIVO_CLIENT, production } from './config/constants'
 import { IContext } from './context/context.interface'
+import { LanguageService } from './language/language.service'
 import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
-
-const production = process.env.NODE_ENV === 'production'
 
 @Module({
   imports: [
@@ -30,6 +31,13 @@ const production = process.env.NODE_ENV === 'production'
     RecipesModule
   ],
   controllers: [],
-  providers: [PersonResolver],
+  providers: [
+    PersonResolver,
+    LanguageService,
+    {
+      provide: PLIVO_CLIENT,
+      useClass: Client
+    }
+  ],
 })
 export class MainModule { }

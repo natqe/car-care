@@ -1,4 +1,5 @@
 import { ArgsType, Field, Int } from 'type-graphql'
+import { ELanguage } from '../language/language.enum'
 import { ISession } from '../session/session.interface'
 import { Person } from './person.model'
 
@@ -10,6 +11,9 @@ export class CreatePersonArgs implements Partial<Person> {
 
   @Field(() => Int)
   readonly callingCode: Person['callingCode']
+
+  @Field(() => String)
+  readonly language: ELanguage
 
 }
 

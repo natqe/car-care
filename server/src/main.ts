@@ -3,13 +3,12 @@ import * as connectPgSimple from 'connect-pg-simple'
 import * as expressSession from 'express-session'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
+import { production } from './config/constants'
 import { MainModule } from './main.module'
 
 NestFactory.create(MainModule).then(app => {
 
-  const
-    production = process.env.NODE_MODE === `production`,
-    PGStore = connectPgSimple(expressSession)
+  const PGStore = connectPgSimple(expressSession)
 
   app.
     useGlobalPipes(new ValidationPipe()).
