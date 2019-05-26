@@ -3,9 +3,9 @@ import * as connectPgSimple from 'connect-pg-simple'
 import * as expressSession from 'express-session'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { MainModule } from './main.module'
 
-NestFactory.create(AppModule).then(app => {
+NestFactory.create(MainModule).then(app => {
 
   const
     production = process.env.NODE_MODE === `production`,

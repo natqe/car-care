@@ -9,28 +9,26 @@ export enum EMain {
   _type = '_type'
 }
 
-export const { _createDate, _id, _type, _updateDate, _version } = EMain
-
 @ObjectType()
 export abstract class Main extends BaseEntity {
 
   @Field(() => ID)
   @PrimaryGeneratedColumn(`uuid`)
-  readonly [_id]: string
+  readonly [EMain._id]: string
 
   @Field()
   @CreateDateColumn()
-  readonly [_createDate]: Date
+  readonly [EMain._createDate]: Date
 
   @Field()
   @UpdateDateColumn()
-  readonly [_updateDate]: Date
+  readonly [EMain._updateDate]: Date
 
   @Field()
   @VersionColumn()
-  readonly [_version]: number
+  readonly [EMain._version]: number
 
   @Field(()=> String)
-  readonly [_type] = this.constructor.name
+  readonly [EMain._type] = this.constructor.name
 
 }

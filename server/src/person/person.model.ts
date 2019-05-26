@@ -1,7 +1,7 @@
 import { Field, ObjectType } from 'type-graphql'
 import { Column, Entity } from 'typeorm'
 import { VehicleEntity } from '../database/vehicle.entity'
-import { WithImageEntity } from '../database/with-image.abstract-entity'
+import { WithImage } from '../with-image/with-image.abstract'
 
 export enum EPerson {
   phone = 'phone',
@@ -12,34 +12,32 @@ export enum EPerson {
   currency = 'currency'
 }
 
-export const { phone, currency, fullName, language, vehicles, callingCode } = EPerson
-
 @ObjectType()
 @Entity()
-export class Person extends WithImageEntity {
+export class Person extends WithImage {
 
   @Field()
   @Column()
-  readonly [phone]: number
+  readonly [EPerson.phone]: number
 
   @Field()
   @Column()
-  readonly [callingCode]: number
+  readonly [EPerson.callingCode]: number
 
   @Field(() => [String])
   @Column(`text`, { array: true, nullable: true })
-  readonly [vehicles]?: Array<VehicleEntity['_id']> | Array<VehicleEntity>
+  readonly [EPerson.vehicles]?: Array<VehicleEntity['_id']> | Array<VehicleEntity>
 
   @Field()
   @Column({ nullable: true })
-  readonly [fullName]?: string
+  readonly [EPerson.fullName]?: string
 
   @Field()
   @Column({ nullable: true })
-  readonly [language]?: string
+  readonly [EPerson.language]?: string
 
   @Field()
   @Column({ nullable: true })
-  readonly [currency]?: string
+  readonly [EPerson.currency]?: string
 
 }

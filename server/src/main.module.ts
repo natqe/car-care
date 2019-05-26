@@ -12,8 +12,8 @@ const production = process.env.NODE_ENV === 'production'
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [`${!production ? 'src' : 'dist'}/**/**.entity.${!production ? `t` : `j`}s`],
-      synchronize: !production || true,
+      entities: [`${!production ? 'src' : 'dist'}/**/**.model.${!production ? `t` : `j`}s`],
+      synchronize: true,
       logging: true,
       ssl: production,
       // dropSchema: true
@@ -32,4 +32,4 @@ const production = process.env.NODE_ENV === 'production'
   controllers: [],
   providers: [PersonResolver],
 })
-export class AppModule { }
+export class MainModule { }

@@ -1,14 +1,14 @@
 import { Column, Entity, ManyToOne, OneToMany, OneToOne } from 'typeorm'
-import { Person } from '../person/person.entity'
+import { Person } from '../person/person.model'
+import { WithImage } from '../with-image/with-image.abstract'
 import { CareEntity } from './care.entity'
 import { FuelEntity } from './fuel.entity'
 import { SaleEntity } from './sale.entity'
 import { TestEntity } from './test.entity'
 import { WashEntity } from './wash.entity'
-import { WithImageEntity } from './with-image.abstract-entity'
 
 @Entity()
-export class VehicleEntity extends WithImageEntity {
+export class VehicleEntity extends WithImage {
 
   @OneToOne(() => SaleEntity, { nullable: true })
   sale: SaleEntity
