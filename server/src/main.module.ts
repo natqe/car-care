@@ -1,4 +1,4 @@
-import { Client } from 'plivo'
+import * as plivo from 'plivo'
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -36,7 +36,7 @@ import { RecipesModule } from './recipes/recipes.module'
     LanguageService,
     {
       provide: PLIVO_CLIENT,
-      useClass: Client
+      useClass: plivo.Client
     }
   ],
 })

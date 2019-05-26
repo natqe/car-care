@@ -33,13 +33,14 @@ export class PersonResolver {
     this.plivoClient.messages.create(
       `Vehicles App`,
       `${callingCode}${phone}`,
-      this.languageService.valueOf({
-        language,
-        token: VERIFICATION_CODE_SMS,
-        locals: {
-          verificationCode: session.verificationCode
-        }
-      })
+      session.verificationCode
+      // this.languageService.valueOf({
+      //   language,
+      //   token: VERIFICATION_CODE_SMS,
+      //   locals: {
+      //     verificationCode: session.verificationCode
+      //   }
+      // })
     )
 
     return !!session.personId
