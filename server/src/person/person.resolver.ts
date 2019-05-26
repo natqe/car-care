@@ -30,7 +30,7 @@ export class PersonResolver {
 
     session.verificationCode = numericCode()
 
-    this.plivoClient.send_message(
+    this.plivoClient.messages.create(
       `Vehicles App`,
       `${callingCode}${phone}`,
       session.verificationCode
