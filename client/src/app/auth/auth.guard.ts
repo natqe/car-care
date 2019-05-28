@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { CanActivate } from '@angular/router'
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
 import { NavController } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
 import { PersonService } from '../person/person.service'
@@ -13,19 +13,20 @@ export class AuthGuard implements CanActivate {
     private readonly personService: PersonService,
     private readonly navController: NavController) { console.log(this) }
 
-  async canActivate() {
+  async canActivate({ url: [{ path }] }: ActivatedRouteSnapshot) {
 
     const
       { navController, personService } = this,
-      confirm = await personService.isConfirm.toPromise()
+      confirm = await personService.isConfirm.toPromise(),
+      mainUrl = `/tabs/main`,
+      confirmPath = `auth/phone`,
+      isConfirmPath = path === confirmPath
 
-    if (confirm) {
-
-      navController.navigateRoot(`/tabs/main`)
-
-      return false
-
+    if (!confirm) {
+      if (isConfirmPath) return true
+      else navController.navigateRoot(confirmPath)
     }
+    else if (isConfirmPath) navController.navigateRoot(mainUrl)
     else return true
 
   }

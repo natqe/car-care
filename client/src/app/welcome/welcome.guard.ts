@@ -17,13 +17,15 @@ export class WelcomeGuard implements CanActivate {
     const
       { storage, navController } = this,
       welcomeEnd = await storage.get(`welcome-end`),
-      welcomePath = `welcome`
+      nextUrl = `/auth/phone`,
+      welcomePath = `welcome`,
+      isWelcomePath = path === welcomePath
 
     if (!welcomeEnd) {
-      if (path === welcomePath) return true
+      if (isWelcomePath) return true
       else navController.navigateRoot(welcomePath)
     }
-    else if (path === welcomePath) navController.navigateRoot(`/auth/phone`)
+    else if (isWelcomePath) navController.navigateRoot(nextUrl)
     else return true
 
   }
