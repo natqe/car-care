@@ -1,11 +1,11 @@
 import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
 import { BehaviorSubject } from 'rxjs'
-import { filter, map, tap } from 'rxjs/operators'
+import { filter, pluck, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LanguageService } from '../language/language.service'
 import { UtilService } from '../util/util.service'
-import { EPerson, Person } from './person.model'
+import { Person } from './person.model'
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +25,10 @@ export class PersonService {
     query<{ isConfirmPerson: boolean }>({
       query: gql`{
         isConfirmPerson
-      }`
+      }`,
+      fetchPolicy: `no-cache`
     }).
-    pipe(map(({ data: { isConfirmPerson } }) => isConfirmPerson))
+    pipe(pluck('data', 'isConfirmPerson'))
 
   create({ callingCode, phone }: { callingCode: Person['callingCode'], phone: Person['phone'] }) {
 
@@ -41,7 +42,7 @@ export class PersonService {
           }
       `}).
       pipe(
-        map(({ data: { createPerson } }) => createPerson),
+        pluck('data', 'createPerson'),
         tap(value => {
           utilService.deliverateInfo(value)
         }),
@@ -61,7 +62,7 @@ export class PersonService {
         }
       `
     }).
-      pipe(map(({ data: { confirmPerson } }) => confirmPerson))
+      pipe(pluck('data', 'confirmPerson'))
 
   }
 

@@ -1,11 +1,13 @@
+import { first, map, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot } from '@angular/router'
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import { NavController } from '@ionic/angular'
 
 interface IHandleCanActivateOptions {
   defaultPath: string
   can: boolean
-  handlePath: string
+  handlePath: string,
+  activatedRouteSnapshot: ActivatedRouteSnapshot
 }
 
 @Injectable({
@@ -13,15 +15,13 @@ interface IHandleCanActivateOptions {
 })
 export class AppService {
 
-  constructor(
-    private readonly navController: NavController,
-    private readonly activatedRouteSnapshot: ActivatedRouteSnapshot) { }
+  constructor(private readonly navController: NavController) { }
 
-  async handleCanActivate({ defaultPath, can, handlePath }: IHandleCanActivateOptions) {
+  handleCanActivate({ defaultPath, can, handlePath, activatedRouteSnapshot: { url: [{ path }] } }: IHandleCanActivateOptions) {
 
     const
       { navController } = this,
-      isHandlePath = this.activatedRouteSnapshot.url[0].path === handlePath
+      isHandlePath = path === handlePath
 
     if (!can) {
       if (isHandlePath) return true

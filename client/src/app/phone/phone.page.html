@@ -12,7 +12,7 @@
         <ion-item class="item-select ion-margin-vertical" button detail detail-icon="md-arrow-dropdown"
           (click)="openCallingCodesModal()">
           <ion-avatar slot="start" class="size-x1&1/2 ion-no-margin ion-margin-start">
-            <img [src]="controls[controlsNames.PREFIX].value?.flag">
+            <ion-img [src]="controls[controlsNames.PREFIX].value?.flag"></ion-img>
           </ion-avatar>
           <ion-label color="primary" class="bold">
             <span>{{ controls[controlsNames.PREFIX].value | util: 'get': ENation.nativeName }}</span>

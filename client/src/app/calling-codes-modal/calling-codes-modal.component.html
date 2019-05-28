@@ -1,6 +1,6 @@
-<ion-header no-border>
+<ion-header>
   <ion-toolbar>
-    <ion-searchbar animated autocorrect autocomplete spellcheck #searchBar
+    <ion-searchbar animated autocorrect autocomplete spellcheck
       [placeholder]="'CallingCodesModalComponent.searchbar_placeholder' | language"></ion-searchbar>
     <ion-buttons slot="end">
       <ion-button (click)="modalController.dismiss()">
@@ -13,10 +13,10 @@
   <ion-list>
     <ion-item-group>
       <ion-item
-        *ngFor="let i of countryService.callingCodes | async | filterBy: [ECallingCode.value, ENation.nativeName, ENation.name] : searchBar.value?.replace('+', '')"
+        *ngFor="let i of countryService.callingCodes | async | filterBy: [ECallingCode.value, ENation.nativeName, ENation.name] : searchbar.value?.replace('+', '')"
         button (click)="modalController.dismiss(i)">
         <ion-avatar slot="start">
-          <img [src]="i[ENation.flag]">
+          <ion-img [src]="i[ENation.flag]"></ion-img>
         </ion-avatar>
         <ion-label [class.bold]="isSelected(i)" [color]="isSelected(i) ? 'primary': 'dark'">
           <span>{{ i[ENation.nativeName] }}</span>

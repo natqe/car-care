@@ -1,7 +1,7 @@
 import isEqual from 'lodash/isEqual'
 import { Subject } from 'rxjs'
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { ModalController, Platform } from '@ionic/angular'
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core'
+import { IonHeader, IonSearchbar, ModalController, Platform } from '@ionic/angular'
 import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
 import { CountryService } from '../country/country.service'
 import { ENation } from '../nation/nation.abstract'
@@ -16,6 +16,9 @@ export class CallingCodesModalComponent implements OnInit, OnDestroy {
   @Input()
   selected: CallingCode
 
+  @ViewChild(IonSearchbar)
+  searchbar: IonSearchbar
+
   constructor(
     readonly platform: Platform,
     readonly modalController: ModalController,
@@ -27,11 +30,22 @@ export class CallingCodesModalComponent implements OnInit, OnDestroy {
 
   readonly ENation = ENation
 
+  @ViewChild(IonHeader, { read: ElementRef })
+  set header({ nativeElement }: ElementRef<HTMLIonHeaderElement>) {
+    if (nativeElement && this.platform.is(`ios`)) nativeElement.setAttribute('no-border', null)
+  }
+
   isSelected(value: this['selected']) {
     return isEqual(value, this.selected)
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    const { searchbar, platform } = this
+
+    if (!platform.is(`ios`)) searchbar.getInputElement().then(({ style }) => style.boxShadow = `unset`)
+
+  }
 
   ngOnDestroy() {
 
