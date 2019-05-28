@@ -10,20 +10,16 @@ import { PersonService } from '../person/person.service'
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private readonly storage: Storage,
     private readonly personService: PersonService,
     private readonly navController: NavController) { console.log(this) }
 
   async canActivate() {
 
     const
-      { storage, navController, personService } = this,
-      [welcome, confirm] = await Promise.all([
-        <Promise<boolean>>storage.get(`welcome-end`),
-        personService.isConfirm.toPromise()
-      ])
+      { navController, personService } = this,
+      confirm = await personService.isConfirm.toPromise()
 
-    if (!welcome || confirm) {
+    if (confirm) {
 
       navController.navigateRoot(`/tabs/main`)
 

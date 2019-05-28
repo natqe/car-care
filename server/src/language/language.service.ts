@@ -1,5 +1,5 @@
-import { get } from 'lodash'
-import { Injectable } from '@nestjs/common'
+import { get, reduce } from 'lodash'
+import { Injectable, Logger } from '@nestjs/common'
 import { ELanguage } from './language.enum'
 
 interface IValueOfOptions {
@@ -13,6 +13,8 @@ interface IValueOfOptions {
 @Injectable()
 export class LanguageService {
 
+  constructor() { }
+
   private readonly store = <{ [key: string]: { [key: string]: string | number | boolean } }>{}
 
   async valueOf({ language = ELanguage.en, token, locals = {} }: IValueOfOptions) {
@@ -21,18 +23,20 @@ export class LanguageService {
       { store } = this,
       fromStore = () => store[language]
 
-    if (!fromStore()) store[language] = await import(`./language.${language}`)
+    if (!fromStore()) {
+
+      const languageModule = await import(`./language.${language}`)
+
+      store[language] = languageModule.default
+
+    }
 
     let result = get(fromStore(), token)
 
-    if (typeof result === 'string') for (const [key, value] of Object.entries(locals)) result = result.replace(new RegExp(`{ ${key} }`, `g`), value)
+    if (typeof result === 'string') for (const [key, value] of Object.entries(locals)) result = result.replace(new RegExp(`\\{{2}\\s*${key}\\s*\\}{2}`, `g`), value)
 
     return result
 
   }
 
 }
-
-new LanguageService().valueOf({ token: 'sdfsdf', locals: { code: 123456 } })
-// הקוד הסודי שלך הוא
-// Your code is

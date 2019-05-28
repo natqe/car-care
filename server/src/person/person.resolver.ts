@@ -19,7 +19,8 @@ export class PersonResolver {
     private readonly plivoClient,
     private readonly languageService: LanguageService) { }
 
-  @Mutation(() => Boolean)
+  // @Mutation(() => Boolean)
+  @Mutation(() => String)
   async createPerson(@Args() { language, ...phoneData }: CreatePersonArgs, @Session() session: ISession) {
 
     const
@@ -30,20 +31,27 @@ export class PersonResolver {
 
     session.verificationCode = numericCode()
 
-    this.plivoClient.messages.create(
-      `Vehicles App`,
-      `${callingCode}${phone}`,
-      session.verificationCode
-      // this.languageService.valueOf({
-      //   language,
-      //   token: VERIFICATION_CODE_SMS,
-      //   locals: {
-      //     verificationCode: session.verificationCode
-      //   }
-      // })
-    )
+    // this.plivoClient.messages.create(
+    //   `Vehicles App`,
+    //   `${callingCode}${phone}`,
+    //   await this.languageService.valueOf({
+    //     language,
+    //     token: VERIFICATION_CODE_SMS,
+    //     locals: {
+    //       verificationCode: session.verificationCode
+    //     }
+    //   })
+    // )
 
-    return !!session.personId
+    return this.languageService.valueOf({
+      language,
+      token: VERIFICATION_CODE_SMS,
+      locals: {
+        verificationCode: session.verificationCode
+      }
+    })
+
+    // return !!session.personId
 
   }
 

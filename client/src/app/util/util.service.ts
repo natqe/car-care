@@ -40,7 +40,25 @@ export class UtilService {
         { toastController, languageService } = this,
         toast = await toastController.create({
           message: message || await languageService.valueOf(`GENERAL_ERROR`).toPromise(),
-          duration: 3000
+          showCloseButton: true,
+          closeButtonText: await languageService.valueOf(`OK_TEXT`).toPromise()
+        })
+
+      toast.present()
+
+    })()
+  }
+
+  deliverateInfo(message: string) {
+    (async () => {
+
+      const
+        { toastController, languageService } = this,
+        toast = await toastController.create({
+          message,
+          showCloseButton: true,
+          closeButtonText: await languageService.valueOf(`OK_TEXT`).toPromise(),
+          color: `primary`
         })
 
       toast.present()

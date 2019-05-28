@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NavController } from '@ionic/angular'
-import { LanguageService } from '../language/language.service'
 import { EPerson } from '../person/person.model'
 import { PersonService } from '../person/person.service'
 import { UtilService } from '../util/util.service'

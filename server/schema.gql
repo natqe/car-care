@@ -15,7 +15,7 @@ type Main {
 }
 
 type Mutation {
-  createPerson(phone: Int!, callingCode: Int!, language: String!): Boolean!
+  createPerson(phone: Int!, callingCode: Int!, language: String!): String!
   confirmPerson(verificationCode: String!): Boolean
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!

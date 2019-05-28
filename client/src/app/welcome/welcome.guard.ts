@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { CanActivate } from '@angular/router'
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
 import { NavController } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
 
@@ -12,14 +12,19 @@ export class WelcomeGuard implements CanActivate {
     private readonly storage: Storage,
     private readonly navController: NavController) { }
 
-  async canActivate() {
+  async canActivate({ url: [{ path }] }: ActivatedRouteSnapshot) {
 
     const
       { storage, navController } = this,
-      nextUrl = `/auth/phone`
+      welcomeEnd = await storage.get(`welcome-end`),
+      welcomePath = `welcome`
 
-    if (!await storage.get(`welcome-end`)) return true
-    else navController.navigateRoot(nextUrl)
+    if (!welcomeEnd) {
+      if (path === welcomePath) return true
+      else navController.navigateRoot(welcomePath)
+    }
+    else if (path === welcomePath) navController.navigateRoot(`/auth/phone`)
+    else return true
 
   }
 

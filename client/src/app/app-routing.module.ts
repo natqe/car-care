@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
 import { AuthGuard } from './auth/auth.guard'
+import { TabsGuard } from './tabs/tabs.guard'
 import { WelcomeGuard } from './welcome/welcome.guard'
 
 const routes: Routes = [
@@ -12,9 +13,12 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: './auth/auth.module#AuthPageModule',
-    canActivate: [AuthGuard]
+    canActivate: [WelcomeGuard, AuthGuard]
   },
-  { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
+  {
+    path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule',
+    canActivate: [WelcomeGuard, TabsGuard]
+  },
   { path: '', redirectTo: '/welcome/welcome-start', pathMatch: 'full' }
 ]
 
@@ -24,4 +28,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {  }
+export class AppRoutingModule { }

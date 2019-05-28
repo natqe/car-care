@@ -1,9 +1,10 @@
 import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
 import { BehaviorSubject } from 'rxjs'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LanguageService } from '../language/language.service'
+import { UtilService } from '../util/util.service'
 import { EPerson, Person } from './person.model'
 
 @Injectable({
@@ -12,7 +13,8 @@ import { EPerson, Person } from './person.model'
 export class PersonService {
 
   constructor(
-    private readonly languageService:LanguageService,
+    private readonly languageService: LanguageService,
+    private readonly utilService: UtilService,
     private readonly apollo: Apollo) { }
 
   private readonly _value = new BehaviorSubject<Person>(null)
@@ -27,9 +29,9 @@ export class PersonService {
     }).
     pipe(map(({ data: { isConfirmPerson } }) => isConfirmPerson))
 
-  create({ callingCode, phone }: { callingCode: Person[EPerson.callingCode], phone: Person[EPerson.phone] }) {
+  create({ callingCode, phone }: { callingCode: Person['callingCode'], phone: Person['phone'] }) {
 
-    const { apollo, _value, languageService } = this
+    const { apollo, _value, languageService, utilService } = this
 
     return apollo.
       mutate({
@@ -38,13 +40,15 @@ export class PersonService {
             createPerson(phone: ${phone}, callingCode: ${callingCode}, language: "${languageService.current}")
           }
       `}).
-      pipe(map(({ data: { createPerson } }) => {
-
-        if (createPerson) _value.next({ phone, callingCode })
-
-        return createPerson
-
-      }))
+      pipe(
+        map(({ data: { createPerson } }) => createPerson),
+        tap(value => {
+          utilService.deliverateInfo(value)
+        }),
+        tap(value => {
+          if (value) _value.next({ phone, callingCode })
+        }),
+      )
 
   }
 

@@ -1,12 +1,12 @@
+import { of } from 'rxjs'
+import { filter, first, switchMap } from 'rxjs/operators'
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ModalController, NavController } from '@ionic/angular'
 import { OverlayEventDetail } from '@ionic/core'
 import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
 import { CallingCodesModalComponent } from '../calling-codes-modal/calling-codes-modal.component'
-import { ECounty } from '../country/country.model'
 import { CountryService } from '../country/country.service'
-import { LanguageService } from '../language/language.service'
 import { ENation } from '../nation/nation.abstract'
 import { PersonService } from '../person/person.service'
 import { UtilService } from '../util/util.service'
@@ -34,25 +34,12 @@ export class PhonePage extends FormGroup implements OnInit {
       [PREFIX]: new FormControl(null)
     })
 
-    const { controls } = this
-
-    countryService.default.subscribe(
-      (defaultCountry) =>
-        defaultCountry[ECounty.callingCodes][0] ?
-          controls[PREFIX].setValue(<CallingCode>{
-            [ENation.flag]: defaultCountry[ENation.flag],
-            [ENation.name]: defaultCountry[ENation.name],
-            [ENation.nativeName]: defaultCountry[ENation.nativeName],
-            [ECallingCode.value]: defaultCountry[ECounty.callingCodes][0]
-          }) :
-          countryService.biggest.subscribe(biggestCountry => controls[PREFIX].setValue(<CallingCode>{
-            [ECallingCode.value]: biggestCountry[ECounty.callingCodes][0],
-            [ENation.flag]: biggestCountry[ENation.flag],
-            [ENation.name]: biggestCountry[ENation.name],
-            [ENation.nativeName]: biggestCountry[ENation.nativeName],
-          }))
-    )
-console.log(this)
+    countryService.default.pipe(
+      filter(value => !!value),
+      switchMap(country => country.callingCodes[0] ? of(country) : countryService.biggest),
+      first(),
+    ).subscribe(({ callingCodes: [value], name, nativeName, flag }) => this.controls[PREFIX].setValue(<CallingCode>{ value, nativeName, name, flag }))
+    console.log(this)
   }
 
   readonly controlsNames = { PHONE, PREFIX }

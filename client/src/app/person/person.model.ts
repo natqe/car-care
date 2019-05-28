@@ -1,11 +1,11 @@
 import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
 
+export class Person {
+  readonly phone: number
+  readonly callingCode: CallingCode[ECallingCode.value]
+}
+
 export enum EPerson {
   phone = 'phone',
   callingCode = 'callingCode'
-}
-
-export class Person {
-  readonly [EPerson.phone]: number
-  readonly [EPerson.callingCode]: CallingCode[ECallingCode.value]
 }

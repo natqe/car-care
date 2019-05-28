@@ -8,9 +8,8 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Platform } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
-import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
-import { ENation } from '../nation/nation.abstract'
-import { Country, ECounty } from './country.model'
+import { CallingCode } from '../calling-code/calling-code.model'
+import { Country } from './country.model'
 
 @Injectable({
   providedIn: 'root'
@@ -62,15 +61,9 @@ export class CountryService {
 
   readonly languages = this.all.pipe(map(value => uniqWith(value.flatMap(({ languages }) => languages.filter(Boolean)), isEqual)))
 
-  readonly callingCodes = this.all
-    .pipe(map(
-      countries => countries.flatMap((country) => country[ECounty.callingCodes].map(value => (<CallingCode>{
-        [ECallingCode.value]: value,
-        [ENation.flag]: country[ENation.flag],
-        [ENation.nativeName]: country[ENation.nativeName],
-        [ENation.name]: country[ENation.name]
-      })))
-    ))
+  readonly callingCodes = this.all.pipe(
+    map(countries => countries.flatMap(({ flag, name, nativeName, callingCodes }) => callingCodes.map(value => (<CallingCode>{ value, flag, nativeName, name }))))
+  )
 
   readonly default = this.all.pipe(
     map(value => {
