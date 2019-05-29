@@ -1,7 +1,7 @@
-import { config } from 'dotenv'
+import 'dotenv/config'
 
-export const { parsed: { NODE_ENV, EXPRESS_SESSION_SECRET, DATABASE_URL, PORT } } = config() as any as   {
-  parsed: {
+export const { env: { NODE_ENV, EXPRESS_SESSION_SECRET, DATABASE_URL, PORT } } = process as any as   {
+  env: {
     NODE_ENV: 'production',
     EXPRESS_SESSION_SECRET: string,
     DATABASE_URL: string,
