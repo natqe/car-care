@@ -1,9 +1,9 @@
-import 'dotenv/config'
 import * as connectPgSimple from 'connect-pg-simple'
 import * as expressSession from 'express-session'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { production } from './config/constants'
+import { DATABASE_URL, EXPRESS_SESSION_SECRET, PORT } from './config/env'
 import { MainModule } from './main.module'
 
 NestFactory.create(MainModule).then(app => {
@@ -18,21 +18,20 @@ NestFactory.create(MainModule).then(app => {
     }).
     use(expressSession({
       store: new PGStore({
-        ttl: 2 * 60 * 60 * 1000,
         conObject: {
-          connectionString: process.env.DATABASE_URL,
+          connectionString: DATABASE_URL,
           ssl: production
         }
       }),
-      secret: 'dasddad',
+      secret: EXPRESS_SESSION_SECRET,
       cookie: {
         // sameSite: true,
-        maxAge: 2 * 60 * 60 * 1000,
+        maxAge: 2 * 365 * 24 * 60 * 60 * 1000,
         secure: false
       },
       resave: false,
       saveUninitialized: false
     })).
-    listen(process.env.PORT)
+    listen(PORT)
 
 })
