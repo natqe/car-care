@@ -62,7 +62,7 @@ export class PersonResolver {
 
   @Mutation(() => Boolean, { nullable: true })
   confirmPerson(@Args() { verificationCode }: ConfirmPersonArgs, @Session() session: ISession) {
-
+Logger.log(session)
     const isConfirm = this.isConfirmPerson(session) || session.verificationCode === verificationCode
 
     if (isConfirm) delete session.verificationCode
