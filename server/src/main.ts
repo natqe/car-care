@@ -28,7 +28,7 @@ NestFactory.create(MainModule).then(app => {
       cookie: {
         // sameSite: true,
         maxAge: 2 * 60 * 60 * 1000,
-        secure: production
+        secure: false
       },
       resave: false,
       saveUninitialized: false
