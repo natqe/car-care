@@ -1,8 +1,7 @@
-import * as plivo from 'plivo'
-import { Logger, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { PLIVO_CLIENT, production } from './config/constants'
+import { production, TWILIO_PROVIDER } from './config/constants'
 import { DATABASE_URL } from './config/env'
 import { IContext } from './context/context.interface'
 import { LanguageService } from './language/language.service'
@@ -36,8 +35,8 @@ import { RecipesModule } from './recipes/recipes.module'
     PersonResolver,
     LanguageService,
     {
-      provide: PLIVO_CLIENT,
-      useClass: plivo.Client
+      provide: TWILIO_PROVIDER,
+      useFactory: require(`twilio`)
     }
   ],
 })

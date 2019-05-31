@@ -1,12 +1,13 @@
-import { of } from 'rxjs'
-import { filter, first, switchMap } from 'rxjs/operators'
-import { Component, OnInit } from '@angular/core'
+import { of, Subject } from 'rxjs'
+import { filter, first, switchMap, takeUntil } from 'rxjs/operators'
+import { Component, OnDestroy } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ModalController, NavController } from '@ionic/angular'
 import { OverlayEventDetail } from '@ionic/core'
 import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
 import { CallingCodesModalComponent } from '../calling-codes-modal/calling-codes-modal.component'
 import { CountryService } from '../country/country.service'
+import { LogService } from '../log/log.service'
 import { ENation } from '../nation/nation.abstract'
 import { PersonService } from '../person/person.service'
 import { UtilService } from '../util/util.service'
@@ -20,27 +21,36 @@ const
   templateUrl: './phone.page.html',
   styleUrls: ['./phone.page.scss']
 })
-export class PhonePage extends FormGroup implements OnInit {
+export class PhonePage extends FormGroup  implements OnDestroy {
 
   constructor(
     readonly countryService: CountryService,
     private readonly personService: PersonService,
     private readonly navController: NavController,
     private readonly utilService: UtilService,
+    private readonly logService: LogService,
     private readonly modalController: ModalController) {
 
     super({
-      [PHONE]: new FormControl(null, [Validators.required]),
+      [PHONE]: new FormControl(null, [Validators.required, Validators.pattern(/^\d{9}$/)]),
       [PREFIX]: new FormControl(null)
     })
 
-    countryService.default.pipe(
-      filter(value => !!value),
-      switchMap(country => country.callingCodes[0] ? of(country) : countryService.biggest),
-      first(),
-    ).subscribe(({ callingCodes: [value], name, nativeName, flag }) => this.controls[PREFIX].setValue(<CallingCode>{ value, nativeName, name, flag }))
-    console.log(this)
+    logService.debugInstance(this)
+
+    const { controls } = this
+
+    countryService.default.
+      pipe(
+        filter(value => !!value),
+        switchMap(country => country.callingCodes[0] ? of(country) : countryService.biggest),
+        first(),
+      ).
+      subscribe(({ callingCodes: [value], name, nativeName, flag }) => controls[PREFIX].setValue(<CallingCode>{ value, nativeName, name, flag }))
+
   }
+
+  private readonly componentLeave = new Subject
 
   readonly controlsNames = { PHONE, PREFIX }
 
@@ -70,23 +80,41 @@ export class PhonePage extends FormGroup implements OnInit {
   handleSubmit() {
 
     const
-      { controls, personService, navController, utilService } = this,
+      { controls, personService, navController, utilService, valid } = this,
       phone = controls[PHONE].value
 
-    const asyncOperation = utilService.createAsyncOperation()
+    if (valid) {
 
-    asyncOperation.next(true)
+      const asyncOperation = utilService.createAsyncOperation()
 
-    personService.create({ phone, callingCode: controls[PREFIX].value[ECallingCode.value] }).subscribe(created => {
+      asyncOperation.next(true)
 
-      asyncOperation.complete()
+      personService.create({ phone, callingCode: controls[PREFIX].value[ECallingCode.value] }).subscribe(created => {
 
-      if (created) navController.navigateForward(`/auth/verification-code`)
+        asyncOperation.complete()
 
-    })
+        if (created) navController.navigateForward(`/auth/verification-code`)
+
+      })
+
+    }
 
   }
 
-  ngOnInit() { }
+  ionViewWillEnter() {
+
+    const { statusChanges, componentLeave } = this
+
+    statusChanges.pipe(filter(status => status === 'VALID'), takeUntil(componentLeave)).subscribe(() => this.handleSubmit())
+
+  }
+
+  ionViewWillLeave() {
+    this.componentLeave.next()
+  }
+
+  ngOnDestroy() {
+    this.componentLeave.complete()
+  }
 
 }

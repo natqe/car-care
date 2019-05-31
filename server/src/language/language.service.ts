@@ -17,6 +17,9 @@ export class LanguageService {
 
   private readonly store = <{ [key: string]: { [key: string]: string | number | boolean } }>{}
 
+   valueOf<T extends string>(options: IValueOfOptions): Promise<T>
+   valueOf<T extends number>(options: IValueOfOptions): Promise<T>
+   valueOf<T extends boolean>(options: IValueOfOptions): Promise<T>
   async valueOf({ language = ELanguage.en, token, locals = {} }: IValueOfOptions) {
 
     const

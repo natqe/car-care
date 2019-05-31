@@ -1,7 +1,7 @@
 <ion-content fullscreen>
   <form [formGroup]="this" (ngSubmit)="handleSubmit()">
     <ion-list>
-      <ion-list-header class="flex-column">
+      <ion-list-header class="flex-column ion-no-padding">
         <ion-text color="dark" class="font-size-large margin-horizontal-auto table bold margin-top-5">
           {{ 'PhonePage.title' |language }}</ion-text>
         <ion-note color="dark" class="margin-horizontal-auto table margin-top-1/2 ion-padding-bottom">
@@ -27,11 +27,6 @@
         </ion-item>
       </ion-item-group>
     </ion-list>
-    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-      <ion-fab-button type="submit" color="secondary" (click)="handleSubmit()" [disabled]="invalid" class="bottom">
-        <ion-icon name="arrow-round-forward" color="primary"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
     <ion-input type="submit" hidden [disabled]="invalid"></ion-input>
   </form>
 </ion-content>

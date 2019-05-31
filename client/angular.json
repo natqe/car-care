@@ -56,7 +56,7 @@
             ],
             "styles": [
               {
-                "input": "src/theme/variables.scss"
+                "input": "src/theme/variables/variables.scss"
               },
               {
                 "input": "src/global.scss"

@@ -6,17 +6,36 @@ import { WelcomeGuard } from './welcome/welcome.guard'
 const routes: Routes = [
   {
     path: 'welcome',
-    loadChildren: './welcome/welcome.module#WelcomePageModule',
-    canActivate: [WelcomeGuard]
+    canActivate: [WelcomeGuard],
+    async loadChildren() {
+
+      const { WelcomePageModule } = await import(`./welcome/welcome.module`)
+
+      return WelcomePageModule
+
+    }
   },
   {
     path: 'auth',
-    loadChildren: './auth/auth.module#AuthPageModule',
-    canActivate: [WelcomeGuard, AuthGuard]
+    canActivate: [WelcomeGuard, AuthGuard],
+    async loadChildren() {
+
+      const { AuthPageModule } = await import(`./auth/auth.module`)
+
+      return AuthPageModule
+
+    }
   },
   {
-    path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule',
-    canActivate: [WelcomeGuard, AuthGuard]
+    path: 'tabs',
+    canActivate: [WelcomeGuard, AuthGuard],
+    async loadChildren() {
+
+      const { TabsPageModule } = await import(`./tabs/tabs.module`)
+
+      return TabsPageModule
+
+    }
   },
   { path: '', redirectTo: '/welcome/welcome-start', pathMatch: 'full' }
 ]

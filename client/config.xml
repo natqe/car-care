@@ -3,7 +3,7 @@
     <name>Vehicles</name>
     <description>An Vehicles manager app.</description>
     <author email="natqe3@gmail.com" href="http://ionicframework.com/">Natan Farkash</author>
-    <content original-src="index.html" src="http://172.19.249.81:8100" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -85,6 +85,7 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <plugin name="cordova-sqlite-storage" spec="3.2.0" />
     <allow-navigation href="http://172.19.249.81:8101" sessionid="0bf6b709" />
+    <allow-navigation href="http://localhost:8100" sessionid="ab8b78c1" />
     <engine name="browser" spec="6.0.0" />
     <engine name="android" spec="8.0.0" />
 </widget>

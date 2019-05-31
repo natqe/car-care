@@ -1,8 +1,10 @@
 import { property } from 'lodash'
+import { Twilio } from 'twilio'
 import { numericCode } from 'utilizes/numeric-code'
-import { Inject, Logger } from '@nestjs/common'
+import { Inject } from '@nestjs/common'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { PLIVO_CLIENT } from '../config/constants'
+import { TWILIO_PROVIDER } from '../config/constants'
+import { TWILIO_PHONE } from '../config/env'
 import { VERIFICATION_CODE_SMS } from '../language/language.keys'
 import { LanguageService } from '../language/language.service'
 import { EMain } from '../main.abstract'
@@ -15,43 +17,35 @@ import { Person } from './person.model'
 export class PersonResolver {
 
   constructor(
-    @Inject(PLIVO_CLIENT)
-    private readonly plivoClient,
+    @Inject(TWILIO_PROVIDER)
+    private readonly twilio: Twilio,
     private readonly languageService: LanguageService) { }
 
-  // @Mutation(() => Boolean)
-  @Mutation(() => String)
+  @Mutation(() => Boolean)
   async createPerson(@Args() { language, ...phoneData }: CreatePersonArgs, @Session() session: ISession) {
 
     const
       getId = property<Person, Person['_id']>(EMain._id),
-      { phone, callingCode } = phoneData
+      { phone, callingCode } = phoneData,
+      { twilio, languageService } = this
 
     if (!session.personId) session.personId = getId(await Person.findOne(phoneData, { select: [`_id`] })) || getId(await Person.create(phoneData).save())
 
     session.verificationCode = numericCode()
 
-    // this.plivoClient.messages.create(
-    //   `Vehicles App`,
-    //   `${callingCode}${phone}`,
-    //   await this.languageService.valueOf({
-    //     language,
-    //     token: VERIFICATION_CODE_SMS,
-    //     locals: {
-    //       verificationCode: session.verificationCode
-    //     }
-    //   })
-    // )
-
-    return this.languageService.valueOf({
-      language,
-      token: VERIFICATION_CODE_SMS,
-      locals: {
-        verificationCode: session.verificationCode
-      }
+    twilio.messages.create({
+      to: `+${callingCode}${phone}`,
+      from: `+${TWILIO_PHONE}`,
+      body: await languageService.valueOf({
+        language,
+        token: VERIFICATION_CODE_SMS,
+        locals: {
+          verificationCode: session.verificationCode
+        }
+      }),
     })
 
-    // return !!session.personId
+    return !!session.personId
 
   }
 
@@ -62,7 +56,7 @@ export class PersonResolver {
 
   @Mutation(() => Boolean, { nullable: true })
   confirmPerson(@Args() { verificationCode }: ConfirmPersonArgs, @Session() session: ISession) {
-Logger.log(session)
+
     const isConfirm = this.isConfirmPerson(session) || session.verificationCode === verificationCode
 
     if (isConfirm) delete session.verificationCode

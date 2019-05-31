@@ -16,7 +16,7 @@ export class CallingCodesModalComponent implements OnInit, OnDestroy {
   @Input()
   selected: CallingCode
 
-  @ViewChild(IonSearchbar)
+  @ViewChild(IonSearchbar, { static: true })
   searchbar: IonSearchbar
 
   constructor(
@@ -30,7 +30,7 @@ export class CallingCodesModalComponent implements OnInit, OnDestroy {
 
   readonly ENation = ENation
 
-  @ViewChild(IonHeader, { read: ElementRef })
+  @ViewChild(IonHeader, { read: ElementRef, static: true })
   set header({ nativeElement }: ElementRef<HTMLIonHeaderElement>) {
     if (nativeElement && this.platform.is(`ios`)) nativeElement.setAttribute('no-border', null)
   }

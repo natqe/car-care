@@ -7,8 +7,26 @@ const routes: Routes = [
     path: '',
     component: WelcomePage,
     children: [
-      { path: 'welcome-start', loadChildren: '../welcome-start/welcome-start.module#WelcomeStartPageModule' },
-      { path: 'welcome-end', loadChildren: '../welcome-end/welcome-end.module#WelcomeEndPageModule' },
+      {
+        path: 'welcome-start',
+        async loadChildren() {
+
+          const { WelcomeStartPageModule } = await import(`../welcome-start/welcome-start.module`)
+
+          return WelcomeStartPageModule
+
+        }
+      },
+      {
+        path: 'welcome-end',
+        async loadChildren() {
+
+          const { WelcomeEndPageModule } = await import(`../welcome-end/welcome-end.module`)
+
+          return WelcomeEndPageModule
+
+        }
+      },
       { path: '', redirectTo: 'welcome-start', pathMatch: 'full' }
     ]
   },

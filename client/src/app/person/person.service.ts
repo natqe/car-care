@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs'
 import { filter, pluck, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LanguageService } from '../language/language.service'
+import { LogService } from '../log/log.service'
 import { UtilService } from '../util/util.service'
 import { Person } from './person.model'
 
@@ -13,9 +14,12 @@ import { Person } from './person.model'
 export class PersonService {
 
   constructor(
+    private readonly logService: LogService,
     private readonly languageService: LanguageService,
     private readonly utilService: UtilService,
-    private readonly apollo: Apollo) { }
+    private readonly apollo: Apollo) {
+    logService.debugInstance(this)
+  }
 
   private readonly _value = new BehaviorSubject<Person>(null)
 
@@ -43,9 +47,6 @@ export class PersonService {
       `}).
       pipe(
         pluck('data', 'createPerson'),
-        tap(value => {
-          utilService.deliverateInfo(value)
-        }),
         tap(value => {
           if (value) _value.next({ phone, callingCode })
         }),
