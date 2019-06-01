@@ -7,31 +7,9 @@ const routes: Routes = [
     path: '',
     component: AuthPage,
     children: [
-      {
-        path: 'phone',
-        async loadChildren() {
-
-          const { PhonePageModule } = await import(`../phone/phone.module`)
-
-          return PhonePageModule
-
-        }
-      },
-      {
-        path: 'verification-code',
-        async loadChildren() {
-
-          const { VerificationCodePageModule } = await import(`../verification-code/verification-code.module`)
-
-          return VerificationCodePageModule
-
-        }
-      },
-      {
-        path: '',
-        redirectTo: 'phone',
-        pathMatch: 'full'
-      }
+      { path: 'phone', loadChildren: '../phone/phone.module#PhonePageModule' },
+      { path: 'verification-code', loadChildren: '../verification-code/verification-code.module#VerificationCodePageModule' },
+      { path: '', redirectTo: 'phone', pathMatch: 'full' }
     ]
   },
   { path: '', redirectTo: 'phone', pathMatch: 'full' }

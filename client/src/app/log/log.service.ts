@@ -75,7 +75,7 @@ export class LogService {
       bgColor = ionCssVariable(`color-${color}`),
       contrast = ionCssVariable(`color-${color}-contrast`)
 
-    console.debug(`%c ${message} on ${moment().format('h:mm:ss.SSS a')} :`, `background-color:${bgColor};color:${contrast}`)
+    console.debug(`%c ${message} on ${moment().format('H:mm:ss.SSS')}:`, `background-color:${bgColor};color:${contrast}`)
 
     return this
 

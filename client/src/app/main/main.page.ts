@@ -4,6 +4,7 @@ import { CareModalComponent } from '../care-modal/care-modal.component'
 import { Care } from '../care/care.model'
 import { FuelModalComponent } from '../fuel-modal/fuel-modal.component'
 import { Fuel } from '../fuel/fuel.model'
+import { PersonService } from '../person/person.service'
 import { TestModalComponent } from '../test-modal/test-modal.component'
 import { Test } from '../test/test.model'
 import { Vehicle } from '../vehicle/vehicle.model'
@@ -17,7 +18,9 @@ import { Wash } from '../wash/wash.modal'
 })
 export class MainPage {
 
-  constructor(private readonly modalController: ModalController) { }
+  constructor(
+    readonly personService: PersonService,
+    private readonly modalController: ModalController) { }
 
   readonly vehicle = new Vehicle
 

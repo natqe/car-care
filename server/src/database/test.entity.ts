@@ -1,13 +1,13 @@
 import { Column, Entity, ManyToOne, OneToOne } from 'typeorm'
 import { Main } from '../main.abstract'
+import { Vehicle } from '../vehicle/vehicle.entity'
 import { ActionEntity } from './action.abstract-entity'
-import { VehicleEntity } from './vehicle.entity'
 
 @Entity()
 export class TestEntity extends ActionEntity{
 
-  @ManyToOne(() => VehicleEntity)
-  vehicle: VehicleEntity
+  @ManyToOne(() => Vehicle)
+  vehicle: Vehicle
 
   @Column({ nullable: true })
   actionDate: Date

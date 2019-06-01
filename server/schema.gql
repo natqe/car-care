@@ -43,6 +43,7 @@ type Person {
 }
 
 type Query {
+  vehiclesOfPerson(_id: String): [Vehicle!]
   isConfirmPerson: Boolean
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
@@ -58,6 +59,26 @@ type Recipe {
 
 type Subscription {
   recipeAdded: Recipe!
+}
+
+type Vehicle {
+  _id: ID!
+  _createDate: Date!
+  _updateDate: Date!
+  _version: Int!
+  _type: String!
+  image: String!
+  gallery: [String!]!
+  user: String!
+  license: String!
+  type: String!
+  hand: Float!
+  km: Float!
+  color: String!
+  productionDate: Date!
+  producer: String!
+  model: String!
+  isActive: Boolean!
 }
 
 type WithImage {

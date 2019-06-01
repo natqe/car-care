@@ -1,11 +1,10 @@
 import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
-import { BehaviorSubject } from 'rxjs'
-import { filter, pluck, tap } from 'rxjs/operators'
+import { BehaviorSubject, of } from 'rxjs'
+import { filter, first, pluck, switchMap, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LanguageService } from '../language/language.service'
 import { LogService } from '../log/log.service'
-import { UtilService } from '../util/util.service'
 import { Person } from './person.model'
 
 @Injectable({
@@ -16,7 +15,6 @@ export class PersonService {
   constructor(
     private readonly logService: LogService,
     private readonly languageService: LanguageService,
-    private readonly utilService: UtilService,
     private readonly apollo: Apollo) {
     logService.debugInstance(this)
   }
@@ -36,7 +34,7 @@ export class PersonService {
 
   create({ callingCode, phone }: { callingCode: Person['callingCode'], phone: Person['phone'] }) {
 
-    const { apollo, _value, languageService, utilService } = this
+    const { apollo, _value, languageService } = this
 
     return apollo.
       mutate({
@@ -55,7 +53,6 @@ export class PersonService {
   }
 
   confirm(verificationCode: string) {
-
     return this.apollo.mutate({
       mutation: gql`
         mutation createPerson {
@@ -64,6 +61,38 @@ export class PersonService {
       `
     }).
       pipe(pluck('data', 'confirmPerson'))
+  }
+
+  vehicles(_id?: Person['_id']) {
+
+    const
+      { _value, apollo } = this,
+      idPartial = _id ? `_id: "${_id}"` : ``
+
+    return _value.
+      pipe(
+        pluck(`vehicles`),
+        switchMap(
+          vehicles => !_id && vehicles ?
+            of(vehicles) :
+            apollo.query<{ vehiclesOfPerson: Array<any> }>({
+              query: gql`
+                {
+                  vehiclesOfPerson${idPartial}{
+                    _id
+                  }
+                }
+            `
+            }).pipe(
+              pluck(`data`, `vehiclesOfPerson`),
+              tap(vehicles => {
+                if (!_id) _value.pipe(first()).subscribe(person => {
+                  _value.next({ ...person, vehicles })
+                })
+              })
+            )
+        )
+      )
 
   }
 

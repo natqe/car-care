@@ -7,46 +7,10 @@ const routes: Routes = [
     path: '',
     component: ArchivePage,
     children: [
-      {
-        path: 'care',
-        async loadChildren() {
-
-          const { CarePageModule } = await import(`../care/care.module`)
-
-          return CarePageModule
-
-        }
-      },
-      {
-        path: 'fuel',
-        async loadChildren() {
-
-          const { FuelPageModule } = await import(`../fuel/fuel.module`)
-
-          return FuelPageModule
-
-        }
-      },
-      {
-        path: 'test',
-        async loadChildren() {
-
-          const { TestPageModule } = await import(`../test/test.module`)
-
-          return TestPageModule
-
-        }
-      },
-      {
-        path: 'wash',
-        async loadChildren() {
-
-          const { WashPageModule } = await import(`../wash/wash.module`)
-
-          return WashPageModule
-
-        }
-      },
+      { path: 'care', loadChildren: '../care/care.module#CarePageModule' },
+      { path: 'fuel', loadChildren: '../fuel/fuel.module#FuelPageModule' },
+      { path: 'test', loadChildren: '../test/test.module#TestPageModule' },
+      { path: 'wash', loadChildren: '../wash/wash.module#WashPageModule' },
       {
         path: '',
         redirectTo: 'care',

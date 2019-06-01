@@ -1,4 +1,4 @@
-import { property } from 'lodash'
+import { get, property, size } from 'lodash'
 import { Twilio } from 'twilio'
 import { numericCode } from 'utilizes/numeric-code'
 import { Inject } from '@nestjs/common'
@@ -10,8 +10,9 @@ import { LanguageService } from '../language/language.service'
 import { EMain } from '../main.abstract'
 import { Session } from '../session/session.decorator'
 import { ISession } from '../session/session.interface'
-import { ConfirmPersonArgs, CreatePersonArgs } from './person.dto'
-import { Person } from './person.model'
+import { Vehicle } from '../vehicle/vehicle.model'
+import { ConfirmPersonArgs, CreatePersonArgs, VehiclesOfPersonArgs } from './person.dto'
+import { EPerson, Person } from './person.model'
 
 @Resolver(() => Person)
 export class PersonResolver {
@@ -49,9 +50,13 @@ export class PersonResolver {
 
   }
 
-  @Query(() => Boolean, { nullable: true })
-  isConfirmPerson(@Session() { personId, verificationCode }: ISession) {
-    return personId && !verificationCode
+  @Query(() => [Vehicle], { nullable: true })
+  async vehiclesOfPerson(@Args() { _id }: VehiclesOfPersonArgs, @Session() { personId }: ISession) {
+
+    const vehicles = get(await Person.findOne(_id || personId, { select: [`vehicles`] }), EPerson.vehicles)
+
+    if (size(vehicles)) return Vehicle.findByIds(vehicles)
+
   }
 
   @Mutation(() => Boolean, { nullable: true })
@@ -63,6 +68,11 @@ export class PersonResolver {
 
     return isConfirm
 
+  }
+
+  @Query(() => Boolean, { nullable: true })
+  isConfirmPerson(@Session() { personId, verificationCode }: ISession) {
+    return personId && !verificationCode
   }
 
 }

@@ -22,3 +22,9 @@ export class ConfirmPersonArgs implements Partial<ISession> {
   @Field(() => String)
   readonly verificationCode: ISession['verificationCode']
 }
+
+@ArgsType()
+export class VehiclesOfPersonArgs implements Partial<Person> {
+  @Field(() => String, { nullable: true })
+  readonly _id: Person['_id']
+}

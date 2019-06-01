@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from 'type-graphql'
 import { Column, Entity } from 'typeorm'
-import { VehicleEntity } from '../database/vehicle.entity'
+import { Vehicle } from '../vehicle/vehicle.model'
 import { WithImage } from '../with-image/with-image.abstract'
 
 @ObjectType()
@@ -17,7 +17,7 @@ export class Person extends WithImage {
 
   @Field(() => [String])
   @Column(`text`, { array: true, nullable: true })
-  readonly vehicles?: Array<VehicleEntity['_id']> | Array<VehicleEntity>
+  readonly vehicles?: Array<Vehicle['_id']>
 
   @Field()
   @Column({ nullable: true })

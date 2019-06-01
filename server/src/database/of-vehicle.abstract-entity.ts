@@ -1,8 +1,8 @@
 import { Main } from '../main.abstract'
-import { VehicleEntity } from './vehicle.entity'
+import { Vehicle } from '../vehicle/vehicle.entity'
 
 export abstract class OfVehicleEntity extends Main{
 
-  vehicle: VehicleEntity
+  vehicle: Vehicle
 
 }
