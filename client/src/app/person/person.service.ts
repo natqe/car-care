@@ -1,11 +1,13 @@
 import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
+import get from 'lodash/get'
 import { BehaviorSubject, of } from 'rxjs'
 import { filter, first, pluck, switchMap, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LanguageService } from '../language/language.service'
 import { LogService } from '../log/log.service'
-import { Person } from './person.model'
+import { Vehicle } from '../vehicle/vehicle.model'
+import { EPerson, Person } from './person.model'
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,11 @@ export class PersonService {
 
   private readonly _value = new BehaviorSubject<Person>(null)
 
-  readonly value = this._value.pipe<Person>(filter(value => !!value))
+  private readonly _loadingVehicles = new BehaviorSubject<boolean>(null)
+
+  readonly value = this._value.pipe(filter(value => !!value))
+
+  readonly loadingVehicles = this._loadingVehicles.pipe(filter(value => value !== null))
 
   readonly isConfirm = this.apollo.
     query<{ isConfirmPerson: boolean }>({
@@ -66,16 +72,24 @@ export class PersonService {
   vehicles(_id?: Person['_id']) {
 
     const
-      { _value, apollo } = this,
-      idPartial = _id ? `_id: "${_id}"` : ``
+      { _value, apollo, _loadingVehicles } = this,
+      idPartial = _id ? `_id: "${_id}"` : ``,
+      loadingFinished = ()=> setTimeout(() => {
+        _loadingVehicles.next(false)
+      }, 5000);
+
+    _loadingVehicles.next(true)
 
     return _value.
       pipe(
-        pluck(`vehicles`),
-        switchMap(
-          vehicles => !_id && vehicles ?
-            of(vehicles) :
-            apollo.query<{ vehiclesOfPerson: Array<any> }>({
+        first(),
+        switchMap(person => {
+
+          const vehicles = get(person, EPerson.vehicles)
+
+          return !_id && vehicles ?
+            of(vehicles).pipe(tap(loadingFinished)) :
+            apollo.query<{ vehiclesOfPerson: Array<Vehicle> }>({
               query: gql`
                 {
                   vehiclesOfPerson${idPartial}{
@@ -89,9 +103,11 @@ export class PersonService {
                 if (!_id) _value.pipe(first()).subscribe(person => {
                   _value.next({ ...person, vehicles })
                 })
-              })
+              }),
+              tap(loadingFinished)
             )
-        )
+
+        })
       )
 
   }

@@ -1,4 +1,5 @@
 import { NgArrayPipesModule } from 'ngx-pipes'
+import { SafePipeModule } from 'safe-pipe'
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -27,7 +28,8 @@ const
   imports = [
     FormsModule,
     ReactiveFormsModule,
-    NgArrayPipesModule
+    NgArrayPipesModule,
+    SafePipeModule
   ]
 
 @NgModule({

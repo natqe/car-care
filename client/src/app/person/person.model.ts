@@ -13,5 +13,6 @@ export class Person extends Main {
 
 export enum EPerson {
   phone = 'phone',
-  callingCode = 'callingCode'
+  callingCode = 'callingCode',
+  vehicles = 'vehicles'
 }

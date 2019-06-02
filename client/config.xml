@@ -3,7 +3,7 @@
     <name>Vehicles</name>
     <description>An Vehicles manager app.</description>
     <author email="natqe3@gmail.com" href="http://ionicframework.com/">Natan Farkash</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
