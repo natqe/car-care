@@ -3,15 +3,15 @@
     <ion-label class="bold" color="secondary" [class.ion-margin-end]="!vehicles || !vehicles.length">
       {{ 'APP_TITLE'| language }}
     </ion-label>
-    <ion-button [disabled]="personService.loadingVehicles | async" *ngIf="vehicles && vehicles.length || (personService.loadingVehicles | async)" color="medium"
-      class="padding-horizontal-tiny">
+    <ion-button [disabled]="personService.loadingVehicles | async"
+      *ngIf="vehicles && vehicles.length || (personService.loadingVehicles | async)" color="medium" class="padding-horizontal-tiny">
       <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
       <ng-container *ngIf="!(personService.loadingVehicles | async)">
         <ion-icon name="more" class="font-size-super"></ion-icon>
       </ng-container>
     </ion-button>
   </ion-buttons>
-  <ng-container>
+  <ng-container *ngIf="vehicles && vehicles.length || (personService.loadingVehicles | async); else emptyState">
     <ion-item [button]="vehicles && vehicles.length" lines="none" detail="false" routerLink="/tabs/vehicle">
       <ion-fab-button slot="start" class="no-events" mode="ios"
         [style]="!(personService.loadingVehicles | async) && '--background: url(https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17) center / cover no-repeat'  | safe: 'style'">
@@ -64,7 +64,8 @@
         <ng-container *ngIf="!(personService.loadingVehicles | async)">{{ 'MainPage.updateDetails_title' | language }}</ng-container>
       </ion-text>
       <ion-fab class="flex ion-justify-content-evenly relative">
-        <ion-fab-button color="secondary" *ngFor="let state of vehicle.state | keyvalue" [disabled]="personService.loadingVehicles | async"
+        <ion-fab-button color="secondary" *ngFor="let state of vehicle.state | keyvalue"
+          [disabled]="personService.loadingVehicles | async"
           [attr.data-label]="!(personService.loadingVehicles | async) ? (state.value.label | language): ''"
           (click)="openUpdateModal(state.value)">
           <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
@@ -76,6 +77,10 @@
     </section>
   </ng-container>
   <ng-template #emptyState>
-
+    <section class="flex-column ion-justify-content-center ion-align-items-center absolute-middle width-parent">
+      <ion-img src="assets/images/main-empty-state.png" class="margin-vertical-tiny"></ion-img>
+      <ion-text class="margin-vertical-tiny font-size-plus" color="dark">{{ 'MainPage.emptyState_title'|language }}</ion-text>
+      <ion-note class="margin-vertical-tiny" color="medium">{{ 'MainPage.emptyState_subtitle'|language }}</ion-note>
+    </section>
   </ng-template>
 </ion-content>

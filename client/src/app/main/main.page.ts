@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs'
-import { first } from 'rxjs/operators'
-import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core'
+import { first, switchMap, takeUntil } from 'rxjs/operators'
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
 import { CareModalComponent } from '../care-modal/care-modal.component'
 import { Care } from '../care/care.model'
@@ -19,7 +19,7 @@ import { Wash } from '../wash/wash.modal'
   templateUrl: 'main.page.html',
   styleUrls: ['main.page.scss']
 })
-export class MainPage implements OnDestroy {
+export class MainPage implements OnDestroy, OnInit {
 
   vehicles: Array<Vehicle>
 
@@ -30,7 +30,9 @@ export class MainPage implements OnDestroy {
     logService.debugInstance(this)
   }
 
-  private readonly componentLeave = new Subject
+  private readonly componentLeave = new Subject()
+
+  private readonly componentEnd = new Subject
 
   readonly vehicle = new Vehicle
 
@@ -49,8 +51,15 @@ export class MainPage implements OnDestroy {
 
   }
 
+  ngOnInit() {
+
+    const { personService, componentEnd } = this
+
+    personService.vehicles().pipe(first()).subscribe(() => personService.value.pipe(takeUntil(componentEnd)).subscribe(({ vehicles })=> this.vehicles = vehicles))
+
+  }
+
   ionViewWillEnter() {
-    this.personService.vehicles().pipe(first()).subscribe(vehicles => this.vehicles = vehicles)
   }
 
   ionViewWillLeave() {
@@ -58,7 +67,15 @@ export class MainPage implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.componentLeave.complete()
+
+    const { componentEnd, componentLeave } = this
+
+    componentEnd.next()
+
+    componentEnd.complete()
+
+    componentLeave.complete()
+
   }
 
 }

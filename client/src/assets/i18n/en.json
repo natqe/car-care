@@ -57,7 +57,9 @@
   "MainPage": {
     "state_title": "Hi {{ firstName }}! The state of your vehicle:",
     "spendingMoney_title": "Your spending month on vehicle:",
-    "updateDetails_title": "What do you want to update?"
+    "updateDetails_title": "What do you want to update?",
+    "emptyState_title": "It seems that at the moment there is no vehicle",
+    "emptyState_subtitle": "You can fix this on your profile screen"
   },
   "ArchivePage": {
     "title": "Vehicle history"

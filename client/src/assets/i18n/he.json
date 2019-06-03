@@ -57,7 +57,9 @@
   "MainPage": {
     "state_title": "הי {{ firstName }}! המצב של הרכב שלך:",
     "spendingMoney_title": "ההוצאות שלך החודש על הרכב:",
-    "updateDetails_title": "מה בא לך לעדכן?"
+    "updateDetails_title": "מה בא לך לעדכן?",
+    "emptyState_title": "עושה רושם שכרגע אין רכב מעודכן",
+    "emptyState_subtitle": "אפשר לתקן את זה במסך הפרופיל שלך"
   },
   "ArchivePage": {
     "title": "היסטוריית הרכב"

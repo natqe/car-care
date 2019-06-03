@@ -74,9 +74,7 @@ export class PersonService {
     const
       { _value, apollo, _loadingVehicles } = this,
       idPartial = _id ? `_id: "${_id}"` : ``,
-      loadingFinished = ()=> setTimeout(() => {
-        _loadingVehicles.next(false)
-      }, 5000);
+      loadingFinished = () => _loadingVehicles.next(false)
 
     _loadingVehicles.next(true)
 

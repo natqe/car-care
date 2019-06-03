@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToOne } from 'typeorm'
 import { Main } from '../main.abstract'
-import { Vehicle } from '../vehicle/vehicle.entity'
+import { Vehicle } from '../vehicle/vehicle.model'
 import { ActionEntity } from './action.abstract-entity'
 
 @Entity()
