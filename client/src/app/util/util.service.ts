@@ -1,8 +1,8 @@
-import { BehaviorSubject, from } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
+import { BehaviorSubject } from 'rxjs'
 import { Injectable } from '@angular/core'
 import { LoadingController, ToastController } from '@ionic/angular'
 import { LanguageService } from '../language/language.service'
+import { LogService } from '../log/log.service'
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,12 @@ import { LanguageService } from '../language/language.service'
 export class UtilService {
 
   constructor(
+    private readonly logService: LogService,
     private readonly toastController: ToastController,
     private readonly languageService: LanguageService,
-    private readonly loadingController: LoadingController) { }
+    private readonly loadingController: LoadingController) {
+    logService.debugInstance(this)
+  }
 
   createAsyncOperation(description = ``) {
 
@@ -64,6 +67,26 @@ export class UtilService {
       toast.present()
 
     })()
+  }
+
+  convertToJqlParams(obj, { wrap = true }: { wrap: boolean } = { wrap: true }) {
+
+    const
+      objEntries = Object.entries(obj),
+      shouldWrap = wrap && objEntries.length
+
+    let params = `${shouldWrap ? `(` : ``}`
+
+    for (const [index, [property, value]] of objEntries.entries()) {
+
+      const quote = typeof value === `string` ? `"` : ``
+
+      params += `${property}:${quote}${value}${quote}${index + 1 === objEntries.length ? `` : `, `}`
+
+    }
+
+    return params + `${shouldWrap ? `)` : ``}`
+
   }
 
 }

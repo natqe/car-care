@@ -2,6 +2,7 @@ import { first, map, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import { NavController } from '@ionic/angular'
+import { LogService } from './log/log.service'
 
 interface IHandleCanActivateOptions {
   defaultPath: string
@@ -15,12 +16,14 @@ interface IHandleCanActivateOptions {
 })
 export class AppService {
 
-  constructor(private readonly navController: NavController) { }
+  constructor(
+    private readonly logService: LogService,
+    private readonly navController: NavController) { }
 
   handleCanActivate({ defaultPath, can, handlePath, activatedRouteSnapshot: { url: [{ path }] } }: IHandleCanActivateOptions) {
 
     const
-      { navController } = this,
+      { navController, logService } = this,
       isHandlePath = path === handlePath
 
     if (!can) {

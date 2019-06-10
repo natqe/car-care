@@ -15,8 +15,9 @@ type Main {
 }
 
 type Mutation {
-  createPerson(phone: Int!, callingCode: Int!, language: String!): Boolean!
   confirmPerson(verificationCode: String!): Boolean
+  createPerson(phone: Int!, callingCode: Int!, language: String!): Boolean!
+  editPerson(_id: ID, fullName: String, language: String, currency: String): Boolean!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
 }
@@ -43,8 +44,9 @@ type Person {
 }
 
 type Query {
-  vehiclesOfPerson(_id: String): [Vehicle!]
   isConfirmPerson: Boolean
+  fullNameOfPerson(_id: ID): String
+  vehiclesOfPerson(_id: ID): [Vehicle!]
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }

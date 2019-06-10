@@ -34,7 +34,14 @@ export class MainPage implements OnDestroy, OnInit {
 
   private readonly componentEnd = new Subject
 
-  readonly vehicle = new Vehicle
+  readonly vehicle = {
+    state: {
+      care: new Care,
+      wash: new Wash,
+      fuel: new Fuel,
+      test: new Test
+    }
+  }
 
   async openUpdateModal(value) {
 
@@ -55,7 +62,7 @@ export class MainPage implements OnDestroy, OnInit {
 
     const { personService, componentEnd } = this
 
-    personService.vehicles().pipe(first()).subscribe(() => personService.value.pipe(takeUntil(componentEnd)).subscribe(({ vehicles })=> this.vehicles = vehicles))
+    personService.fetchVehicles().pipe(first()).subscribe(() => personService.value.pipe(takeUntil(componentEnd)).subscribe(({ vehicles }) => this.vehicles = vehicles))
 
   }
 

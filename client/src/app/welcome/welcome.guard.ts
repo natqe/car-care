@@ -3,16 +3,19 @@ import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
 import { Platform } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
 import { AppService } from '../app.service'
+import { LogService } from '../log/log.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class WelcomeGuard implements CanActivate {
 
-  constructor(
+  constructor(logService: LogService,
     private readonly appService: AppService,
     private readonly platform: Platform,
-    private readonly storage: Storage) { }
+    private readonly storage: Storage) {
+    logService.debugInstance(this)
+  }
 
   async canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot) {
 

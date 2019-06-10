@@ -8,10 +8,11 @@ import { TWILIO_PHONE } from '../config/env'
 import { VERIFICATION_CODE_SMS } from '../language/language.keys'
 import { LanguageService } from '../language/language.service'
 import { EMain } from '../main.abstract'
+import { IdentityArgs } from '../main.dto'
 import { Session } from '../session/session.decorator'
 import { ISession } from '../session/session.interface'
 import { Vehicle } from '../vehicle/vehicle.model'
-import { ConfirmPersonArgs, CreatePersonArgs, VehiclesOfPersonArgs } from './person.dto'
+import { ConfirmPersonArgs, CreatePersonArgs, EditPersonArgs } from './person.dto'
 import { EPerson, Person } from './person.model'
 
 @Resolver(() => Person)
@@ -22,15 +23,40 @@ export class PersonResolver {
     private readonly twilio: Twilio,
     private readonly languageService: LanguageService) { }
 
+  @Mutation(() => Boolean, { nullable: true })
+  confirmPerson(@Args() { verificationCode }: ConfirmPersonArgs, @Session() session: ISession) {
+
+    const isConfirm = this.isConfirmPerson(session) || session.verificationCode === verificationCode
+
+    if (isConfirm) delete session.verificationCode
+
+    return isConfirm
+
+  }
+
+  @Query(() => Boolean, { nullable: true })
+  isConfirmPerson(@Session() { personId, verificationCode }: ISession) {
+    return personId && !verificationCode
+  }
+
+  @Query(() => String, { nullable: true })
+  async fullNameOfPerson(@Args() { _id }: IdentityArgs, @Session() { personId }: ISession) {
+
+    if (!_id) _id = personId
+
+    if (_id) return get(await Person.findOne(_id, { select: [`fullName`] }), EPerson.fullName)
+
+  }
+
   @Mutation(() => Boolean)
-  async createPerson(@Args() { language, ...phoneData }: CreatePersonArgs, @Session() session: ISession) {
+  async createPerson(@Args() args: CreatePersonArgs, @Session() session: ISession) {
 
     const
       getId = property<Person, Person['_id']>(EMain._id),
-      { phone, callingCode } = phoneData,
+      { callingCode, phone, language } = args,
       { twilio, languageService } = this
 
-    if (!session.personId) session.personId = getId(await Person.findOne(phoneData, { select: [`_id`] })) || getId(await Person.create(phoneData).save())
+    if (!session.personId) session.personId = getId(await Person.findOne({ callingCode, phone }, { select: [`_id`] })) || getId(await Person.create(args).save())
 
     session.verificationCode = numericCode()
 
@@ -50,29 +76,18 @@ export class PersonResolver {
 
   }
 
+  @Mutation(() => Boolean)
+  async editPerson(@Args() { _id, ...args }:  EditPersonArgs, @Session() { personId }: ISession) {
+    return !!await Person.update(_id || personId, args)
+  }
+
   @Query(() => [Vehicle], { nullable: true })
-  async vehiclesOfPerson(@Args() { _id }: VehiclesOfPersonArgs, @Session() { personId }: ISession) {
+  async vehiclesOfPerson(@Args() { _id }: IdentityArgs, @Session() { personId }: ISession) {
 
     const vehicles = get(await Person.findOne(_id || personId, { select: [`vehicles`] }), EPerson.vehicles)
 
     if (size(vehicles)) return Vehicle.findByIds(vehicles)
 
-  }
-
-  @Mutation(() => Boolean, { nullable: true })
-  confirmPerson(@Args() { verificationCode }: ConfirmPersonArgs, @Session() session: ISession) {
-
-    const isConfirm = this.isConfirmPerson(session) || session.verificationCode === verificationCode
-
-    if (isConfirm) delete session.verificationCode
-
-    return isConfirm
-
-  }
-
-  @Query(() => Boolean, { nullable: true })
-  isConfirmPerson(@Session() { personId, verificationCode }: ISession) {
-    return personId && !verificationCode
   }
 
 }

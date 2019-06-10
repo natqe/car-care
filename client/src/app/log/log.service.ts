@@ -1,5 +1,5 @@
 import { castArray, cloneDeep, keys, lowerFirst } from 'lodash'
-import * as moment from 'moment'
+import moment from 'moment'
 import { ensureUnique } from 'utilizes/ensure-unique'
 import { prefix } from 'utilizes/prefix'
 import { Injectable } from '@angular/core'
@@ -8,10 +8,12 @@ import { ionCssVariable } from '../../theme/variables/variables'
 
 const { production } = environment
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 export class LogService {
+
+  private readonly instances = new class application { }
 
   constructor() {
 
@@ -19,53 +21,15 @@ export class LogService {
 
     if (!production) {
 
-      window['moment'] = moment
+      const { instances } = this
 
-      window['application'] = this.instances
+      window['application'] = instances
 
       this.onTime('Init', `primary`)
 
-      console.dir(this.instances)
+      console.dir(instances)
 
     }
-
-  }
-
-  private readonly instances = new class application { }
-
-  private readonly intervals = {}
-
-  interval(handler: (...args: any[]) => boolean, timeout?: number, ...args: any[]) {
-
-    const handle = window.setInterval(
-      (...args: any[]) => {
-        try {
-
-          const finish = handler(...args)
-
-          if (finish) this.clearInterval(handle)
-
-        } catch (e) {
-          this.error(e).clearInterval(handle)
-        }
-      },
-      timeout,
-      ...args
-    )
-
-    this.intervals[handle] = true
-
-    return handle
-
-  }
-
-  clearInterval(handle?: number) {
-
-    clearInterval(handle)
-
-    this.intervals[handle] = false
-
-    return this
 
   }
 

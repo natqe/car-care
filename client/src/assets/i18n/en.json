@@ -54,6 +54,14 @@
     "note": "Sent to a phone number - {{ phone }}",
     "form_code_placeholder": ""
   },
+  "FullNamePage": {
+    "title": "Hi, welcome",
+    "note": [
+      "Ready to start?",
+      "fill out your name and hit the button"
+    ],
+    "form_fullName_placeholder":"Enter full name"
+  },
   "MainPage": {
     "state_title": "Hi {{ firstName }}! The state of your vehicle:",
     "spendingMoney_title": "Your spending month on vehicle:",

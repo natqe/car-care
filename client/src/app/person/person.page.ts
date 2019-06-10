@@ -27,7 +27,7 @@ export class PersonPage extends FormGroup {
 
     super({
       [CURRENCY]: new FormControl(USD),
-      [FULL_NAME]: new FormControl(null, [Validators.required, Validators.pattern(new RegExp("^[a-z\\u05D0-\\u05EA'´`]+\\.?\\s+([a-z\\uu05D0-\\u05EA'´`]+\\.?\\s*)+$", `i`))]),
+      [FULL_NAME]: new FormControl(null, [Validators.required, Validators.pattern(RegExp("^[a-z\\u05D0-\\u05EA'´`]+\\.?\\s+([a-z\\u05D0-\\u05EA'´`]+\\.?\\s*)+$", `i`))]),
       [LANGUAGE]: new FormControl(languageService.current)
     })
 

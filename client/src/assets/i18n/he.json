@@ -54,6 +54,14 @@
     "note": "שנשלח לטלפון מספר - {{ phone }}",
     "form_code_placeholder": ""
   },
+  "FullNamePage":{
+    "title": "היי, ברוך הבא!!",
+    "note": [
+      "מוכן להתחיל?",
+      "מלא את שמך ולחץ על הכפתור"
+    ],
+    "form_fullName_placeholder":"הקלד שם מלא"
+  },
   "MainPage": {
     "state_title": "הי {{ firstName }}! המצב של הרכב שלך:",
     "spendingMoney_title": "ההוצאות שלך החודש על הרכב:",
