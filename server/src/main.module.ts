@@ -42,7 +42,7 @@ import { RecipesModule } from './recipes/recipes.module'
   ],
 })
 export class MainModule {
-  constructor() {
-    setTimeout(()=> Person.delete({}), 10000)
-  }
+  // constructor() {
+  //   setTimeout(()=> Person.delete({}), 10000)
+  // }
  }
