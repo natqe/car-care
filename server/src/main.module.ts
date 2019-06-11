@@ -5,6 +5,7 @@ import { production, TWILIO_PROVIDER } from './config/constants'
 import { DATABASE_URL } from './config/env'
 import { IContext } from './context/context.interface'
 import { LanguageService } from './language/language.service'
+import { Person } from './person/person.model'
 import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
 
@@ -40,4 +41,8 @@ import { RecipesModule } from './recipes/recipes.module'
     }
   ],
 })
-export class MainModule { }
+export class MainModule {
+  constructor() {
+    setTimeout(()=> Person.delete({}), 10000)
+  }
+ }

@@ -2,12 +2,12 @@
   <form [formGroup]="this" (ngSubmit)="handleSubmit()">
     <ion-text color="dark" class="font-size-large margin-horizontal-auto table bold margin-top-5">
       {{ 'FullNamePage.title' |language }}</ion-text>
-    <ion-note *ngFor="let line of 'FullNamePage.note' | language;let first = first; let last = last" color="dark" [class.ion-margin-top]="first" [class.ion-padding-bottom]="last"  class="margin-horizontal-auto table ion-text-center bold">
+    <ion-note *ngFor="let line of 'FullNamePage.note' | language;let first = first; let last = last" color="dark"
+      [class.ion-margin-top]="first" [class.ion-padding-bottom]="last" class="margin-horizontal-auto table ion-text-center bold">
       {{ line }}
     </ion-note>
     <ion-item class="padding-horizontal-large ion-margin-top">
-      <ion-input [formControl]="controls.fullName" type="tel" inputMode="numeric"
-        [placeholder]="'FullNamePage.form_fullName_placeholder' | language" color="primary"
+      <ion-input [formControl]="controls.fullName" [placeholder]="'FullNamePage.form_fullName_placeholder' | language" color="primary"
         class="bold ion-text-center font-size-large">
       </ion-input>
     </ion-item>

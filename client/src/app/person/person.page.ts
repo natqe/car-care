@@ -4,6 +4,7 @@ import { Component } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { USD } from '../currency/currency.enum'
 import { CurrencyService } from '../currency/currency.service'
+import { FullNameService } from '../full-name/full-name.service'
 import { Language } from '../language/language.model'
 import { LanguageService } from '../language/language.service'
 
@@ -21,13 +22,13 @@ export class PersonPage extends FormGroup {
 
   private initialValue
 
-  constructor(
+  constructor(fullNameService: FullNameService,
     readonly currencyService: CurrencyService,
     private readonly languageService: LanguageService) {
 
     super({
       [CURRENCY]: new FormControl(USD),
-      [FULL_NAME]: new FormControl(null, [Validators.required, Validators.pattern(RegExp("^[a-z\\u05D0-\\u05EA'´`]+\\.?\\s+([a-z\\u05D0-\\u05EA'´`]+\\.?\\s*)+$", `i`))]),
+      [FULL_NAME]: new FormControl(null, [Validators.required, Validators.pattern(fullNameService.pattern)]),
       [LANGUAGE]: new FormControl(languageService.current)
     })
 

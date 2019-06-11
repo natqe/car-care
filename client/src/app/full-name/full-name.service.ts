@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import isNull from 'lodash/isNull'
 import negate from 'lodash/negate'
 import { BehaviorSubject } from 'rxjs'
-import { filter, first, pluck, tap } from 'rxjs/operators'
+import { filter, first, mapTo, pluck, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LogService } from '../log/log.service'
 import { Person } from '../person/person.model'
@@ -22,6 +22,10 @@ export class FullNameService {
   private readonly _value = new BehaviorSubject<Person['fullName']>(null)
 
   private readonly _loading = new BehaviorSubject<boolean>(null)
+
+  private readonly wordPattern = `[a-z\\u05D0-\\u05EA'´\`]+\\.?\\s`
+
+  readonly pattern = RegExp(`^${this.wordPattern}+(${this.wordPattern}*)+$`, `i`)
 
   readonly loading = this._loading.pipe<FullNameService['_loading']['value']>(filter(negate(isNull)))
 
@@ -70,15 +74,15 @@ export class FullNameService {
   }
 
   setValue(fullName: Person['fullName']) {
+
     const { _value, _loading, personService } = this
-    if (_value.value !== fullName) {
-      _loading.next(true)
-      personService.edit({ fullName }).
-        pipe(
-          tap(() => _loading.next(false))
-        ).
-        subscribe()
-    }
+
+    _loading.next(true)
+
+    const result = _value.value === fullName ? _value.pipe(first(), mapTo(true)) : personService.edit({ fullName })
+
+    return result.pipe(tap(() => _loading.next(false)))
+
   }
 
 }

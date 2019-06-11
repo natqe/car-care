@@ -1,43 +1,48 @@
 import { interval, Subject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core'
+import { Component, ElementRef, OnDestroy, QueryList, ViewChildren } from '@angular/core'
 import { IonTabButton } from '@ionic/angular'
-import { Vehicle } from '../vehicle/vehicle.model'
+import { Care } from '../care/care.model'
+import { Fuel } from '../fuel/fuel.model'
+import { Test } from '../test/test.model'
+import { Wash } from '../wash/wash.modal'
 
 @Component({
   selector: 'app-archive',
   templateUrl: 'archive.page.html',
   styleUrls: ['archive.page.scss']
 })
-export class ArchivePage {
-
-  private componentEnd: Subject<any>
+export class ArchivePage implements OnDestroy {
 
   @ViewChildren(IonTabButton, { read: ElementRef })
   tabs: QueryList<ElementRef<HTMLIonTabButtonElement>>
 
-  readonly vehicle = new Vehicle
+  readonly vehicle = {
+    state: {
+      care: new Care,
+      wash: new Wash,
+      fuel: new Fuel,
+      test: new Test
+    }
+  }
+
+  private readonly componentLeave = new Subject
 
   ionViewDidEnter() {
 
-    this.componentEnd = new Subject
+    const { componentLeave, tabs } = this
 
-    const { componentEnd, tabs } = this
-
-    interval(40).pipe(takeUntil(componentEnd)).subscribe(n => tabs.forEach(({ nativeElement: { classList, dataset } }) => {
-      classList[location.pathname.split(`/`).pop() === dataset.label ? `add` : `remove`](`tab-selected`)
-    }))
+    interval(40).pipe(takeUntil(componentLeave)).subscribe(() =>
+      tabs.forEach(({ nativeElement: { classList, dataset } }) => classList[location.pathname.split(`/`).pop() === dataset.label ? `add` : `remove`](`tab-selected`)))
 
   }
 
   ionViewWillLeave() {
+    this.componentLeave.next()
+  }
 
-    const { componentEnd } = this
-
-    componentEnd.next()
-
-    componentEnd.complete()
-
+  ngOnDestroy() {
+    this.componentLeave.complete()
   }
 
 }

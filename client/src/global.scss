@@ -30,9 +30,6 @@ html {
   }
 
   &[dir=rtl] {
-    .fab-horizontal-center {
-      transform: translateX(-50%);
-    }
 
     .start {
       right: 0;

@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import get from 'lodash/get'
 import isNull from 'lodash/isNull'
 import negate from 'lodash/negate'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, Observable, of } from 'rxjs'
 import { filter, first, pluck, switchMap, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { Platform } from '@ionic/angular'
@@ -146,20 +146,20 @@ export class PersonService {
    * @description Edit properties on server
    * @author Natan Farkash
    */
-  edit(person: Partial<Pick<Person, 'fullName' | 'language'>>) {
+  edit(person: Partial<Pick<Person, 'fullName' | 'language'>>): Observable<boolean> {
 
     const { apollo, utilService } = this
 
    return apollo.mutate({
      mutation: gql`
-     mutation{
-      editPerson${utilService.convertToJqlParams(person)}
-    }
+        mutation{
+          editPerson${utilService.convertToJqlParams(person)}
+        }
       `
    }).
      pipe(
        pluck(`data`, `editPerson`),
-       tap(response => {
+       tap<boolean>(response => {
          if(response) this.merge(person)
        })
     )
