@@ -10,11 +10,11 @@ export abstract class Main extends BaseEntity {
 
   @Field()
   @CreateDateColumn()
-  readonly _createDate: Date
+  readonly _createDate: string
 
   @Field()
   @UpdateDateColumn()
-  readonly _updateDate: Date
+  readonly _updateDate: string
 
   @Field(()=> Int)
   @VersionColumn()

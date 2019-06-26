@@ -1,4 +1,5 @@
 import * as connectPgSimple from 'connect-pg-simple'
+import { static as expressStatic } from 'express'
 import * as expressSession from 'express-session'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
@@ -32,6 +33,7 @@ NestFactory.create(MainModule).then(app => {
       resave: false,
       saveUninitialized: false
     })).
+    use(`/static`, expressStatic(`views/public`)).
     listen(PORT)
 
 })

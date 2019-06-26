@@ -44,7 +44,7 @@ export class PersonResolver {
 
     if (!_id) _id = personId
 
-    if (_id) return get(await Person.findOne(_id, { select: [`fullName`] }), EPerson.fullName)
+    if (_id) return get(await Person.findOne(_id, { select: [EPerson.fullName] }), EPerson.fullName)
 
   }
 
@@ -56,7 +56,7 @@ export class PersonResolver {
       { callingCode, phone, language } = args,
       { twilio, languageService } = this
 
-    if (!session.personId) session.personId = getId(await Person.findOne({ callingCode, phone }, { select: [`_id`] })) || getId(await Person.create(args).save())
+    if (!session.personId) session.personId = getId(await Person.findOne({ callingCode, phone }, { select: [EMain._id] })) || getId(await Person.create(args).save())
 
     session.verificationCode = numericCode()
 
@@ -84,7 +84,7 @@ export class PersonResolver {
   @Query(() => [Vehicle], { nullable: true })
   async vehiclesOfPerson(@Args() { _id }: IdentityArgs, @Session() { personId }: ISession) {
 
-    const vehicles = get(await Person.findOne(_id || personId, { select: [`vehicles`] }), EPerson.vehicles)
+    const vehicles = get(await Person.findOne(_id || personId, { select: [EPerson.vehicles] }), EPerson.vehicles)
 
     if (size(vehicles)) return Vehicle.findByIds(vehicles)
 

@@ -3,13 +3,13 @@ import { Column, Entity, PrimaryColumn } from 'typeorm'
 @Entity()
 export class Session {
 
-@PrimaryColumn()
-  sid: string
+  @PrimaryColumn()
+  readonly sid: string
 
-@Column(`json`)
-  sess: object
+  @Column(`json`)
+  readonly sess: object
 
-@Column(`timestamp`)
-  expire: Date
+  @Column(`timestamp`)
+  readonly expire: Date
 
 }

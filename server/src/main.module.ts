@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { CareResolver } from './care/care.resolver'
 import { production, TWILIO_PROVIDER } from './config/constants'
 import { DATABASE_URL } from './config/env'
 import { IContext } from './context/context.interface'
 import { LanguageService } from './language/language.service'
-import { Person } from './person/person.model'
+import { MainService } from './main.service'
 import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
+import { VehicleResolver } from './vehicle/vehicle.resolver'
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { RecipesModule } from './recipes/recipes.module'
       synchronize: true,
       logging: true,
       ssl: production,
-      // dropSchema: true
+      dropSchema: false
     }),
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
@@ -38,7 +40,10 @@ import { RecipesModule } from './recipes/recipes.module'
     {
       provide: TWILIO_PROVIDER,
       useFactory: require(`twilio`)
-    }
+    },
+    VehicleResolver,
+    MainService,
+    CareResolver
   ],
 })
 export class MainModule {

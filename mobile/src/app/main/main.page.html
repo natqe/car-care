@@ -1,0 +1,115 @@
+<ion-content>
+
+  <ion-buttons class="absolute end padding-top-tiny">
+    <ion-label class="bold" color="secondary" [class.ion-margin-end]="vehicles?.length < 2">
+      {{ 'APP_TITLE'| language }}
+    </ion-label>
+    <ion-button [disabled]="personService.loadingVehicles | async"
+      *ngIf="vehicles?.length > 1 || (personService.loadingVehicles | async)" color="medium" class="padding-horizontal-tiny">
+      <ion-skeleton-text animated *ngIf="personService.loadingVehicles | async"></ion-skeleton-text>
+      <ng-container *ngIf="!(personService.loadingVehicles | async)">
+        <ion-icon name="more" class="font-size-super"></ion-icon>
+      </ng-container>
+    </ion-button>
+  </ion-buttons>
+
+  <ng-container *ngIf="vehicles?.length || (personService.loadingVehicles | async); else emptyState">
+    <ion-item [class.no-events]="personService.loadingVehicles | async" lines="none" detail="false"
+      [routerLink]="'/tabs/vehicle' | util : 'suffix': ('/' | util: 'prefix': (vehicles | util : 'get' : '0._id'))">
+      <ion-fab-button slot="start" class="no-events" mode="ios"
+        [style]="!(personService.loadingVehicles | async) && '--background: url('+utilService.locationImage(vehicles[0].image) +') center / cover no-repeat'  | safe: 'style'">
+        <ion-skeleton-text animated *ngIf="personService.loadingVehicles | async"></ion-skeleton-text>
+      </ion-fab-button>
+      <ion-label class="flex flex-column ion-align-self-end" color="medium">
+          <ion-text class="bold">
+              <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+              <ng-container *ngIf="!(personService.loadingVehicles | async)">
+                <span>{{ vehicles[0].type }}</span>
+              </ng-container>
+            </ion-text>
+        <ion-text class="bold">
+          <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+          <ng-container *ngIf="!(personService.loadingVehicles | async)">
+            <span>{{ vehicles[0].producer }}</span>
+            <span>&nbsp;</span>
+            <span>{{vehicles[0].model}}</span>
+          </ng-container>
+        </ion-text>
+        <ion-note>
+          <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+          <ng-container *ngIf="!(personService.loadingVehicles | async)">{{ vehicles[0].license }}</ng-container>
+        </ion-note>
+      </ion-label>
+    </ion-item>
+    <article>
+      <ion-text color="primary" class="bold">
+        <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+        <ng-container *ngIf="!(personService.loadingVehicles | async)">
+          <ng-container *ngIf="vehicles[0].fuels?.length || vehicles[0].tests?.length || vehicles[0].washes?.length || vehicles[0].cares?.length; else emptyStateTitle">
+              {{ 'MainPage.state_title' | language: { firstName: fullNameService.value | async } }}
+          </ng-container>
+          <ng-template #emptyStateTitle>
+              {{ 'MainPage.empty_state_title' | language: { firstName: fullNameService.value | async } }}
+          </ng-template>
+        </ng-container>
+      </ion-text>
+      <main class="flex margin-top-tiny">
+        <ng-container
+          *ngIf="(personService.loadingVehicles | async) || vehicles[0].fuels?.length || vehicles[0].tests?.length || vehicles[0].washes?.length || vehicles[0].cares?.length; else statePlaceholder">
+          <p *ngFor="let state of vehicle.state | keyvalue">
+            <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+            <ng-container *ngIf="!(personService.loadingVehicles | async)">
+              <ion-icon [src]="state.value.icon.src" [name]="state.value.icon.name" color="medium" class="font-size-large"></ion-icon>
+            </ng-container>
+            <ion-note color="medium">
+              <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+              <ng-container *ngIf="!(personService.loadingVehicles | async)">19/03/2019</ng-container>
+            </ion-note>
+          </p>
+        </ng-container>
+        <ng-template #statePlaceholder>
+          <ion-img src="/assets/images/main_vehicle_empty_state.png" class="width-parent"></ion-img>
+        </ng-template>
+      </main>
+    </article>
+    <ion-toolbar color="primary" mode="ios"
+      *ngIf="(personService.loadingVehicles | async) || vehicles[0].fuels?.length || vehicles[0].tests?.length || vehicles[0].washes?.length || vehicles[0].cares?.length">
+      <ion-label>
+        <ion-skeleton-text animated *ngIf="personService.loadingVehicles | async"></ion-skeleton-text>
+        <ng-container *ngIf="!(personService.loadingVehicles | async)">
+          <span>{{ 'MainPage.spendingMoney_title' | language }}</span>
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <span>850</span>
+          <span>$</span>
+        </ng-container>
+      </ion-label>
+    </ion-toolbar>
+    <section class="flex-column ion-justify-content-evenly width-parent absolute bottom ion-margin-bottom">
+      <ion-text color="primary" class="bold block">
+        <ion-skeleton-text animated *ngIf="personService.loadingVehicles | async"></ion-skeleton-text>
+        <ng-container *ngIf="!(personService.loadingVehicles | async)">{{ 'MainPage.updateDetails_title' | language }}</ng-container>
+      </ion-text>
+      <ion-fab class="flex ion-justify-content-evenly relative">
+        <ion-fab-button color="secondary" *ngFor="let state of vehicle.state | keyvalue"
+          [disabled]="personService.loadingVehicles | async"
+          [attr.data-label]="!(personService.loadingVehicles | async) ? (state.value.label | language): ''"
+          (click)="openUpdateModal(state.value)">
+          <ion-skeleton-text animated *ngIf="(personService.loadingVehicles | async)"></ion-skeleton-text>
+          <ng-container *ngIf="!(personService.loadingVehicles | async)">
+            <ion-icon [src]="state.value.icon.src" [name]="state.value.icon.name" color="primary"></ion-icon>
+          </ng-container>
+        </ion-fab-button>
+      </ion-fab>
+    </section>
+  </ng-container>
+
+  <ng-template #emptyState>
+    <section class="flex-column ion-justify-content-center ion-align-items-center absolute-middle width-parent">
+      <ion-img src="assets/images/main-empty-state.png" class="margin-vertical-tiny"></ion-img>
+      <ion-text class="margin-vertical-tiny font-size-plus ion-text-center" color="dark">{{ 'MainPage.emptyState_title'|language }}
+      </ion-text>
+      <ion-note class="margin-vertical-tiny ion-text-center" color="medium">{{ 'MainPage.emptyState_subtitle'|language }}</ion-note>
+    </section>
+  </ng-template>
+
+</ion-content>

@@ -3,23 +3,66 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-"""Date custom scalar type"""
-scalar Date
+type Action {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
+  actionDate: String!
+}
+
+type Care {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
+  actionDate: String!
+  type: String!
+  description: String
+  km: Int
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Fuel {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
+  actionDate: String!
+}
 
 type Main {
   _id: ID!
-  _createDate: Date!
-  _updateDate: Date!
+  _createDate: String!
+  _updateDate: String!
   _version: Int!
   _type: String!
 }
 
 type Mutation {
+  createCare(vehicle: ID!, actionDate: String!, currency: String!, description: String, km: Int!, type: String!): Boolean!
   confirmPerson(verificationCode: String!): Boolean
   createPerson(phone: Int!, callingCode: Int!, language: String!): Boolean!
   editPerson(_id: ID, fullName: String, language: String, currency: String): Boolean!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
+  createVehicle(color: String!, hand: Int!, km: Int!, license: String!, model: String!, producer: String!, type: String!, productionDate: String!, image: String!, gallery: [String!]): Boolean!
 }
 
 input NewRecipeInput {
@@ -28,13 +71,22 @@ input NewRecipeInput {
   ingredients: [String!]!
 }
 
-type Person {
+type OfVehicle {
   _id: ID!
-  _createDate: Date!
-  _updateDate: Date!
+  _createDate: String!
+  _updateDate: String!
   _version: Int!
   _type: String!
-  image: String!
+  vehicle: Vehicle!
+}
+
+type Person {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  image: String
   phone: Int!
   callingCode: Int!
   vehicles: [String!]!
@@ -55,39 +107,91 @@ type Recipe {
   id: ID!
   title: String!
   description: String
-  creationDate: Date!
+  creationDate: DateTime!
   ingredients: [String!]!
+}
+
+type Sale {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
 }
 
 type Subscription {
   recipeAdded: Recipe!
 }
 
+type Test {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Int!
+  currency: String!
+  actionDate: String!
+  expirationDate: String!
+}
+
 type Vehicle {
   _id: ID!
-  _createDate: Date!
-  _updateDate: Date!
+  _createDate: String!
+  _updateDate: String!
   _version: Int!
   _type: String!
   image: String!
+  sale: Sale
+  fuels: [Fuel!]!
+  washes: [Wash!]!
+  cares: [Care!]!
+  tests: [Test!]!
   gallery: [String!]!
-  user: String!
+  person: String!
   license: String!
   type: String!
-  hand: Float!
-  km: Float!
+  hand: Int!
+  km: Int!
   color: String!
-  productionDate: Date!
+  productionDate: String!
   producer: String!
   model: String!
   isActive: Boolean!
 }
 
-type WithImage {
+type Wash {
   _id: ID!
-  _createDate: Date!
-  _updateDate: Date!
+  _createDate: String!
+  _updateDate: String!
   _version: Int!
   _type: String!
-  image: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
+  actionDate: String!
+}
+
+type WithImage {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  image: String
+}
+
+type WithPrice {
+  _id: ID!
+  _createDate: String!
+  _updateDate: String!
+  _version: Int!
+  _type: String!
+  vehicle: Vehicle!
+  price: Float!
+  currency: String!
 }

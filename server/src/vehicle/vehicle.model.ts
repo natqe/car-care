@@ -1,75 +1,103 @@
-import { createUnionType, Field, ObjectType } from 'type-graphql'
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm'
-import { CareEntity as Care } from '../database/care.entity'
-import { FuelEntity as Fuel } from '../database/fuel.entity'
-import { SaleEntity as Sale } from '../database/sale.entity'
-import { TestEntity as Test } from '../database/test.entity'
-import { WashEntity as Wash } from '../database/wash.entity'
+import { createUnionType, Field, Int, ObjectType } from 'type-graphql'
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm'
+import { Care } from '../care/care.model'
+import { Fuel } from '../fuel/fuel.model'
 import { Person } from '../person/person.model'
+import { Sale } from '../sale/sale.model'
+import { Test } from '../test/test.model'
+import { Wash as Wash } from '../wash/wash.model'
 import { WithImage } from '../with-image/with-image.abstract'
 
 @ObjectType()
 @Entity()
 export class Vehicle extends WithImage {
 
-  // @Field(()=> Sale)
-  // @OneToOne(() => Sale, { nullable: true })
-  // sale: Sale | Sale['_id']
+  @Field(() => Sale, { nullable: true })
+  @OneToOne(() => Sale, { eager: true, cascade: true })
+  @JoinColumn()
+  readonly sale?: Sale
 
-  // @OneToMany(() => Fuel, ({ vehicle }) => vehicle)
-  // fuels: Array<Fuel>
+  @Field(() => [Fuel])
+  @OneToMany(() => Fuel, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  readonly fuels: Array<Fuel>
 
-  // @OneToMany(() => Wash, ({ vehicle }) => vehicle)
-  // washes: Array<Wash>
+  @Field(() => [Wash])
+  @OneToMany(() => Wash, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  readonly washes: Array<Wash>
 
-  // @OneToMany(() => Care, ({ vehicle }) => vehicle)
-  // cares: Array<Care>
+  @Field(() => [Care])
+  @OneToMany(() => Care, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  readonly cares: Array<Care>
 
-  // @OneToMany(() => Test, ({ vehicle }) => vehicle)
-  // tests: Array<Test>
+  @Field(() => [Test])
+  @OneToMany(() => Test, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  readonly tests: Array<Test>
 
   @Field(() => [String])
   @Column(`text`, { array: true })
-  gallery: Array<this['image']>
+  readonly gallery: Array<this['image']>
 
   @Field(() => String)
   @Column(`text`)
-  user: Person['_id']
+  readonly person: Person['_id']
 
   @Field()
   @Column()
-  license: string
+  readonly license: string
 
   @Field()
   @Column()
-  type: string
+  readonly type: string
+
+  @Field(() => Int)
+  @Column()
+  readonly hand: number
+
+  @Field(() => Int)
+  @Column()
+  readonly km: number
 
   @Field()
   @Column()
-  hand: number
+  readonly color: string
 
   @Field()
   @Column()
-  km: number
+  readonly productionDate: string
 
   @Field()
   @Column()
-  color: string
+  readonly producer: string
 
   @Field()
   @Column()
-  productionDate: Date
+  readonly model: string
 
   @Field()
-  @Column()
-  producer: string
+  @Column({ default: true })
+  readonly isActive: boolean
 
-  @Field()
-  @Column()
-  model: string
+  @Field({ nullable: false })
+  @Column({ nullable: false })
+  readonly image: string
 
-  @Field()
-  @Column()
-  isActive: boolean
+}
 
+export enum EVehicle {
+  sale = 'sale',
+  fuels = 'fuels',
+  tests = 'tests',
+  washes = 'washes',
+  cares = 'cares',
+  model = 'model',
+  isActive = 'isActive',
+  producer = 'producer',
+  gallery = 'gallery',
+  person = 'person',
+  license = 'license',
+  type = 'type',
+  hand = 'hand',
+  productionDate = 'productionDate',
+  color = 'color',
+  km = 'km'
 }
