@@ -5,11 +5,14 @@ import { CareResolver } from './care/care.resolver'
 import { production, TWILIO_PROVIDER } from './config/constants'
 import { DATABASE_URL } from './config/env'
 import { IContext } from './context/context.interface'
+import { FuelResolver } from './fuel/fuel.resolver'
 import { LanguageService } from './language/language.service'
 import { MainService } from './main.service'
 import { PersonResolver } from './person/person.resolver'
 import { RecipesModule } from './recipes/recipes.module'
+import { TestResolver } from './test/test.resolver'
 import { VehicleResolver } from './vehicle/vehicle.resolver'
+import { WashResolver } from './wash/wash.resolver'
 
 @Module({
   imports: [
@@ -35,15 +38,18 @@ import { VehicleResolver } from './vehicle/vehicle.resolver'
   ],
   controllers: [],
   providers: [
-    PersonResolver,
     LanguageService,
     {
       provide: TWILIO_PROVIDER,
       useFactory: require(`twilio`)
     },
+    PersonResolver,
     VehicleResolver,
     MainService,
-    CareResolver
+    CareResolver,
+    TestResolver,
+    WashResolver,
+    FuelResolver
   ],
 })
 export class MainModule {

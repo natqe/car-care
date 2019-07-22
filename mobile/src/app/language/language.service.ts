@@ -1,10 +1,11 @@
+import { Apollo } from 'apollo-angular'
+import gql from 'graphql-tag'
 import isEqual from 'lodash/isEqual'
-import moment from 'moment'
 import { Observable } from 'rxjs'
-import { first } from 'rxjs/operators'
+import { filter, first, pluck, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { Storage } from '@ionic/storage'
 import { TranslateService } from '@ngx-translate/core'
+import { PersonDataService } from '../person/person-data.service'
 import { ELanguage, EN } from './language.enum'
 
 @Injectable({
@@ -14,7 +15,9 @@ export class LanguageService {
 
   constructor(
     readonly translateService: TranslateService,
-    private readonly storage: Storage) {
+    private readonly personDataService: PersonDataService,
+    // private readonly personService: PersonService,
+    private readonly apollo: Apollo) {
 
     const { documentElement: { lang } } = document
 
@@ -30,19 +33,16 @@ export class LanguageService {
 
   private readonly storageKey = `language`
 
-  readonly moment = moment
-
   set current(value) {
 
-    const { storageKey, storage, current } = this
+    const { current, personDataService } = this
 
-    if (value !== current) {
-
-      localStorage.setItem(storageKey, value)
-
-      storage.set(storageKey, value).then(() => location.reload())
-
-    }
+    if (value !== current) personDataService.editPerson({ language: value }).
+      pipe(
+        filter(Boolean),
+        tap(() => this.setLangInStorage(value))
+      ).
+      subscribe()
 
   }
 
@@ -50,29 +50,35 @@ export class LanguageService {
     return <ELanguage>localStorage.getItem(this.storageKey) || <ELanguage>document.documentElement.lang
   }
 
-  async init() {
+  init() {
 
-    const
-      { storage, storageKey } = this,
-      fromLocalStorage = <ELanguage>localStorage.getItem(storageKey),
-      fromStorage = <ELanguage>await storage.get(storageKey)
+    const { storageKey, apollo, personDataService } = this
 
-    if (!fromStorage) {
+    apollo.
+      query<{ languageOfPerson: ELanguage }>({
+        query: gql`
+          {
+            languageOfPerson
+          }
+        `,
+        fetchPolicy: `no-cache`
+      }).
+      pipe(
+        pluck(`data`, `languageOfPerson`),
+        filter(value => !!value),
+        tap(language => personDataService.patch({ language })),
+        filter(lang => lang !== localStorage.getItem(storageKey)),
+        tap(lang => this.setLangInStorage(lang)),
+      ).
+      subscribe()
 
-      const { documentElement: { lang } } = document
+  }
 
-      localStorage.setItem(storageKey, lang)
+  setLangInStorage(value: ELanguage) {
 
-      storage.set(storageKey, lang)
+    localStorage.setItem(this.storageKey, value)
 
-    }
-    else if (fromStorage !== fromLocalStorage) {
-
-      localStorage.setItem(storageKey, fromStorage)
-
-      location.reload()
-
-    }
+    location.reload()
 
   }
 

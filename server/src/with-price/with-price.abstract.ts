@@ -5,12 +5,12 @@ import { OfVehicle } from '../of-vehicle/of-vehicle.abstract'
 @ObjectType()
 export abstract class WithPrice extends OfVehicle {
 
-  @Field(() => Float)
-  @Column(`float`)
+  @Field(() => Float, { nullable: true })
+  @Column(`float`, { nullable: true })
   readonly price: number
 
-  @Field()
-  @Column()
+  @Field({ nullable: true})
+  @Column({ nullable: true})
   readonly currency: string
 
 }

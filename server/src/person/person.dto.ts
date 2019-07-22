@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsNumberString, IsOptional, IsPositive, IsString, Length, Matches, Max, Min } from 'class-validator'
+import { IsEnum, IsInt, IsNotEmpty, IsNumberString, IsOptional, IsPositive, IsString, Length, Matches, Max, Min } from 'class-validator'
 import { ArgsType, Field, Int } from 'type-graphql'
 import { ELanguage } from '../language/language.enum'
 import { IdentityArgs } from '../main.dto'
@@ -24,7 +24,13 @@ export class CreatePersonArgs implements Partial<Person> {
   @Field(() => String)
   @IsString()
   @IsNotEmpty()
-  readonly language: ELanguage
+  @IsEnum(ELanguage)
+  readonly language: Person['language']
+
+  @Field(() => String)
+  @IsString()
+  @IsNotEmpty()
+  readonly currency: Person['currency']
 
 }
 
@@ -49,6 +55,7 @@ export class EditPersonArgs extends IdentityArgs implements Partial<Person>{
   @IsOptional()
   @IsString()
   @IsNotEmpty()
+  @IsEnum(ELanguage)
   readonly language?: Person['language']
 
   @Field(() => String, { nullable: true })

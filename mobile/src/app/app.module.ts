@@ -9,12 +9,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular'
 import { IonicStorageModule } from '@ionic/storage'
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { AppGraphQLModule } from './app-graphql.module'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { CurrencyService } from './currency/currency.service'
-import { GraphQLModule } from './graphql.module'
 import { LanguageService } from './language/language.service'
-import { PersonService } from './person/person.service'
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +32,7 @@ import { PersonService } from './person/person.service'
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
-    GraphQLModule
+    AppGraphQLModule
   ],
   providers: [
     StatusBar,
@@ -41,7 +40,6 @@ import { PersonService } from './person/person.service'
     LanguageService,
     TranslateService,
     CurrencyService,
-    PersonService,
     Keyboard,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

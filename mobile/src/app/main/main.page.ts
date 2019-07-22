@@ -1,20 +1,18 @@
-import { Subject } from 'rxjs'
-import { first, switchMap, takeUntil } from 'rxjs/operators'
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import get from 'lodash/get'
+import { BehaviorSubject, Subject } from 'rxjs'
+import { filter, first, switchMap, takeUntil, tap } from 'rxjs/operators'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
+import { AppService } from '../app.service'
 import { CareModalComponent } from '../care-modal/care-modal.component'
-import { Care } from '../care/care.model'
 import { FuelModalComponent } from '../fuel-modal/fuel-modal.component'
-import { Fuel } from '../fuel/fuel.model'
 import { FullNameService } from '../full-name/full-name.service'
 import { LogService } from '../log/log.service'
-import { PersonService } from '../person/person.service'
+import { PersonVehiclesDataService } from '../person/person-vehicles-data.service'
 import { TestModalComponent } from '../test-modal/test-modal.component'
-import { Test } from '../test/test.model'
-import { UtilService } from '../util/util.service'
 import { Vehicle } from '../vehicle/vehicle.model'
 import { WashModalComponent } from '../wash-modal/wash-modal.component'
-import { Wash } from '../wash/wash.modal'
+import { EMain } from './main.model'
 
 @Component({
   selector: 'app-main',
@@ -25,49 +23,50 @@ export class MainPage implements OnDestroy, OnInit {
 
   vehicles: Array<Vehicle>
 
+  private readonly componentLeave = new Subject
+
+  private readonly componentEnd = new Subject
+
+  readonly selectedVehicle = new BehaviorSubject<Vehicle>(null)
+
   constructor(
-    readonly personService: PersonService,
-    readonly utilService: UtilService,
+    readonly personVehiclesDataService: PersonVehiclesDataService,
+    readonly appService: AppService,
     readonly fullNameService: FullNameService,
-    private readonly logService: LogService,
+    logService: LogService,
     private readonly modalController: ModalController) {
     logService.debugInstance(this)
   }
 
-  private readonly componentLeave = new Subject()
-
-  private readonly componentEnd = new Subject
-
-  readonly vehicle = {
-    state: {
-      care: new Care,
-      wash: new Wash,
-      fuel: new Fuel,
-      test: new Test
-    }
-  }
-
-  async openUpdateModal(value) {
+  async openUpdateModal({ type }: { type: 'care' | 'wash' | 'fuel' | 'test' }) {
 
     let component: Function
 
-    if (value instanceof Fuel) component = FuelModalComponent
-    else if (value instanceof Care) component = CareModalComponent
-    else if (value instanceof Wash) component = WashModalComponent
-    else if (value instanceof Test) component = TestModalComponent
+    if (type === 'fuel') component = FuelModalComponent
+    else if (type === 'care') component = CareModalComponent
+    else if (type === 'wash') component = WashModalComponent
+    else if (type === 'test') component = TestModalComponent
 
-    const modal = await this.modalController.create({ component })
+    const modal = await this.modalController.create({
+      component,
+      componentProps: { vehicle: get(this.selectedVehicle.getValue(), EMain._id) }
+    })
 
     modal.present()
 
   }
 
   ngOnInit() {
-
-    const { personService, componentEnd } = this
-
-    personService.fetchVehicles().pipe(first()).subscribe(() => personService.value.pipe(takeUntil(componentEnd)).subscribe(({ vehicles }) => this.vehicles = vehicles))
-
+    const { personVehiclesDataService, componentEnd } = this
+    personVehiclesDataService.
+      value.
+      pipe(
+        filter(value => !!value),
+        takeUntil(componentEnd),
+        tap(value => this.vehicles = value),
+        tap(() => this.selectedVehicle.next(this.vehicles[0]))
+      ).
+      subscribe()
   }
 
   ionViewWillEnter() {

@@ -1,11 +1,8 @@
+import { Currency } from '../currency/currency.model'
 import { Nation } from '../nation/nation.abstract'
 
 export class Country extends Nation {
-  readonly currencies: Array<{
-    code: string
-    name: string
-    symbol: string
-  }>
+  readonly currencies: Array<Currency>
  readonly languages: Array<{
     iso639_1: string
     iso639_2: string

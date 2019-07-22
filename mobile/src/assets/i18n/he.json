@@ -2,6 +2,7 @@
   "APP_TITLE": "Vehicles",
   "CANCEL_TEXT": "בטל",
   "OK_TEXT": "אוקי",
+  "DELETE_TEXT": "מחק",
   "GENERAL_ERROR": "התרחשה שגיאה",
   "monthNames": [
     "ינואר",
@@ -17,19 +18,51 @@
     "נובמבר",
     "דצמבר"
   ],
+  "monthShortNames": [
+    "ינו",
+    "פבר",
+    "מרץ",
+    "אפר",
+    "מאי",
+    "יונ",
+    "יול",
+    "אוג",
+    "ספט",
+    "אוק",
+    "נוב",
+    "דצמ"
+  ],
   "VEHICLE": {
     "state": {
       "care": {
-        "label": "טיפול"
-      },
-      "test": {
-        "label": "טסט"
+        "label": "טיפול",
+        "types": {
+          "period": "תקופתי",
+          "tire": "פנצ'ר",
+          "mishap": "תקלה",
+          "other": "אחר"
+        },
+        "icon": {
+          "name": "build"
+        }
       },
       "wash": {
-        "label": "שטיפה"
+        "label": "שטיפה",
+        "icon": {
+          "src": "assets/icon/baseline-local_car_wash-24px.svg"
+        }
       },
       "fuel": {
-        "label": "דלק"
+        "label": "דלק",
+        "icon": {
+          "src": "assets/icon/baseline-local_gas_station-24px.svg"
+        }
+      },
+      "test": {
+        "label": "טסט",
+        "icon": {
+          "src": "assets/icon/verified.svg"
+        }
       }
     }
   },
@@ -54,13 +87,13 @@
     "note": "שנשלח לטלפון מספר - {{ phone }}",
     "form_code_placeholder": ""
   },
-  "FullNamePage":{
+  "FullNamePage": {
     "title": "היי, ברוך הבא!!",
     "note": [
       "מוכן להתחיל?",
       "מלא את שמך ולחץ על הכפתור"
     ],
-    "form_fullName_placeholder":"הקלד שם מלא"
+    "form_fullName_placeholder": "הקלד שם מלא"
   },
   "MainPage": {
     "state_title": "הי {{ firstName }}! המצב של הרכב שלך:",
@@ -86,11 +119,38 @@
     "button_public": "פרסום הרכב למכירה",
     "article_UpOnTheRoad_prefix": "עלה לכביש ב - "
   },
+  "VehicleMoreOptionsModalComponent": {
+    "delete_subHeader": "אתה הולך למחוק את הרכב",
+    "delete_message": "אתה בטוח שזה מה שאתה רוצה?",
+    "delete_error": "נכשל במחיקת הרכב"
+  },
   "CallingCodesModalComponent": {
     "searchbar_placeholder": "חפש"
   },
+  "CareModalComponent": {
+    "title": "עדכון טיפול",
+    "form_type_title": "?מה סוג הטיפול",
+    "form_km_title": "מה הק\"מ הנוכחי?",
+    "form_mishapDesc_title": "מה התקלה?",
+    "form_price_title": "כמה עלה?",
+    "form_actionDate_title": "תאריך הטיפול?"
+  },
+  "TestModalComponent": {
+    "title": "עדכון טסט",
+    "form_experationDate_title": "?עד מתי הטסט תקף",
+    "form_experationDate_value": "עד {{ date }}",
+    "form_experationDate_value_other": "תאריך אחר",
+    "form_experationDate_other_title": "בחר חודש אחר",
+    "form_actionDate_title": "תאריך הטסט?"
+  },
+  "WashModalComponent": {
+    "title": "עדכון שטיפה",
+    "form_price_title": "כמה עלה?",
+    "form_actionDate_title": "תאריך השטיפה"
+  },
   "FuelModalComponent": {
-    "price_title": "?בכמה תדלקת",
-    "currency_title": "What currency?"
+    "title": "עדכון תדלוק",
+    "form_price_title": "כמה עלה?",
+    "form_actionDate_title": "תאריך התדלוק"
   }
 }

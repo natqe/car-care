@@ -10,7 +10,7 @@
   <form [formGroup]="this" (ngSubmit)="handleSubmit()">
     <ion-text color="dark" class="font-size-large margin-horizontal-auto table bold margin-top-5">
       {{ 'VerificationCodePage.title' |language }}</ion-text>
-    <ion-note *ngIf="personService.value | async as person" color="dark"
+    <ion-note *ngIf="personDataService.value | async as person" color="dark"
       class="margin-horizontal-auto table margin-top-1/2 ion-padding-bottom bold">
       {{ 'VerificationCodePage.note' | language : { phone: '+' + person.callingCode + person.phone } }}
     </ion-note>

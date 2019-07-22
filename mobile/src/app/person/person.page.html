@@ -25,13 +25,13 @@
         <ion-label position="floating">
           {{ 'ProfilePage.form_fullName_label' | language }}
         </ion-label>
-        <ion-input [formControlName]="controlsNames.FULL_NAME"></ion-input>
+        <ion-input [formControl]="controls.fullName"></ion-input>
       </ion-item>
       <ion-item class="ion-margin" button detail="false">
         <ion-label position="floating">
           {{ 'ProfilePage.form_currency_label' | language }}
         </ion-label>
-        <ion-select [formControlName]="controlsNames.CURRENCY" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
+        <ion-select [formControl]="controls.currency" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
           <ion-select-option *ngFor="let currency of currencyService.all | async" [value]="currency.code">{{ currency.code }} </ion-select-option>
         </ion-select>
       </ion-item>
@@ -39,19 +39,16 @@
         <ion-label position="floating">
           {{ 'ProfilePage.form_language_label' | language }}
         </ion-label>
-        <ion-select [formControlName]="controlsNames.LANGUAGE" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
-          <ion-select-option *ngFor="let item of language | keyvalue" [value]="item.key">{{ item.value.label }} </ion-select-option>
+        <ion-select  [formControl]="controls.language" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language">
+          <ion-select-option *ngFor="let item of ELanguage | util: 'keys'" [value]="item" [ngSwitch]="item">
+            <ion-label *ngSwitchCase="ELanguage.EN">English</ion-label>
+            <ion-label *ngSwitchCase="ELanguage.HE">עברית</ion-label>
+          </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button (click)="save()" *ngIf="valueChange && valid" type="submit" color="tertiary" expand="full" size="large"
-      class="ion-no-margin fixed width-parent bottom index-1">
-      <ion-label class="md-font-size">
-        {{ 'ProfilePage.form_submit_label' | language }}
-      </ion-label>
-    </ion-button>
   </form>
-  <ion-list [style.marginBottom]="valueChange && valid ? '4.5rem' : '1rem'">
+  <ion-list class="ion-margin-bottom">
     <ion-list-header>
       <ion-label class="font-size-plus" color="dark">
         {{ 'ProfilePage.vehicleList_title' | language }}

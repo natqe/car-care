@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar animated autocorrect autocomplete spellcheck
+      [placeholder]="'CallingCodesModalComponent.searchbar_placeholder' | language">
+    </ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()">
+        {{ 'CANCEL_TEXT' | language }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-virtual-scroll
+      [items]="currencyService.all | async | filterBy: (ECurrency | util: 'keys') : (_searchbar | async)?.value?.replace('+', '')">
+      <ion-item *virtualItem="let i" button (click)="modalController.dismiss(i)">
+        <ion-label class="flex flex-column" [color]="(i | util: 'isEqual': (_selected | async)) ? 'primary': 'dark'">
+          <ion-text [class.bold]="i | util: 'isEqual': (_selected | async)">{{ i[ECurrency.code] }}</ion-text>
+          <ion-note [color]="(i | util: 'isEqual': (_selected | async)) ? 'primary': 'medium'">{{ i[ECurrency.name] }}</ion-note>
+        </ion-label>
+        <ion-text [class.bold]="i | util: 'isEqual': (_selected | async)" slot="end"
+          [color]="(i | util: 'isEqual': (_selected | async)) ? 'primary': 'dark'">
+          {{i[ECurrency.symbol]}}
+        </ion-text>
+      </ion-item>
+    </ion-virtual-scroll>
+  </ion-list>
+</ion-content>

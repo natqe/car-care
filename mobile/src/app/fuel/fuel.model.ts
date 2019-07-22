@@ -1,6 +1,3 @@
-export class Fuel {
-  label = `VEHICLE.state.fuel.label`
-  icon = {
-    src:"assets/icon/baseline-local_gas_station-24px.svg"
-  }
-}
+import { Action } from '../action/action.model'
+
+export class Fuel extends Action { }

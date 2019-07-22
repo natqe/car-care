@@ -10,8 +10,8 @@ type Action {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
   actionDate: String!
 }
 
@@ -22,8 +22,8 @@ type Care {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
   actionDate: String!
   type: String!
   description: String
@@ -42,8 +42,8 @@ type Fuel {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
   actionDate: String!
 }
 
@@ -56,13 +56,16 @@ type Main {
 }
 
 type Mutation {
-  createCare(vehicle: ID!, actionDate: String!, currency: String!, description: String, km: Int!, type: String!): Boolean!
+  createCare(vehicle: ID!, actionDate: String!, price: Float, currency: String, description: String, km: Int, type: String!): Care!
+  createFuel(vehicle: ID!, actionDate: String!, price: Float, currency: String): Fuel!
   confirmPerson(verificationCode: String!): Boolean
-  createPerson(phone: Int!, callingCode: Int!, language: String!): Boolean!
+  createPerson(phone: Int!, callingCode: Int!, language: String!, currency: String!): Boolean!
   editPerson(_id: ID, fullName: String, language: String, currency: String): Boolean!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
+  createTest(vehicle: ID!, actionDate: String!, price: Float, currency: String, expirationDate: String!): Test!
   createVehicle(color: String!, hand: Int!, km: Int!, license: String!, model: String!, producer: String!, type: String!, productionDate: String!, image: String!, gallery: [String!]): Boolean!
+  createWash(vehicle: ID!, actionDate: String!, price: Float, currency: String): Wash!
 }
 
 input NewRecipeInput {
@@ -89,15 +92,17 @@ type Person {
   image: String
   phone: Int!
   callingCode: Int!
-  vehicles: [String!]!
-  fullName: String!
   language: String!
   currency: String!
+  vehicles: [String!]!
+  fullName: String!
 }
 
 type Query {
   isConfirmPerson: Boolean
   fullNameOfPerson(_id: ID): String
+  currencyOfPerson(_id: ID): String
+  languageOfPerson(_id: ID): String
   vehiclesOfPerson(_id: ID): [Vehicle!]
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
@@ -118,8 +123,8 @@ type Sale {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
 }
 
 type Subscription {
@@ -133,8 +138,8 @@ type Test {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Int!
-  currency: String!
+  price: Float
+  currency: String
   actionDate: String!
   expirationDate: String!
 }
@@ -171,8 +176,8 @@ type Wash {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
   actionDate: String!
 }
 
@@ -192,6 +197,6 @@ type WithPrice {
   _version: Int!
   _type: String!
   vehicle: Vehicle!
-  price: Float!
-  currency: String!
+  price: Float
+  currency: String
 }

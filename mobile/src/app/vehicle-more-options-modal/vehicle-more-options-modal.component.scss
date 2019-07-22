@@ -1,0 +1,7 @@
+// ViewEncapsulation.None
+
+.app-vehicle-more-options-modal-wrapper {
+  --max-width: fit-content;
+
+  > app-vehicle-more-options-modal {}
+}

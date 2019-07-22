@@ -2,8 +2,8 @@ import { Component } from '@angular/core'
 import { SplashScreen } from '@ionic-native/splash-screen/ngx'
 import { StatusBar } from '@ionic-native/status-bar/ngx'
 import { Platform } from '@ionic/angular'
-import { ionCssVariable } from '../theme/variables/variables'
 import { LanguageService } from './language/language.service'
+import { StyleService } from './style/style.service'
 
 /**
  * @classdesc Control app component
@@ -14,7 +14,7 @@ import { LanguageService } from './language/language.service'
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  constructor(platform: Platform, splashScreen: SplashScreen, languageService: LanguageService, statusBar: StatusBar) {
+  constructor(platform: Platform, splashScreen: SplashScreen, languageService: LanguageService, statusBar: StatusBar, styleService:StyleService) {
     platform.ready().then(() => {
 
       languageService.init()
@@ -27,7 +27,7 @@ export class AppComponent {
 
       documentElement.style.setProperty(`--initial-vw`, `${platform.width()}px`)
 
-      statusBar.backgroundColorByHexString(ionCssVariable(`color-primary`))
+      statusBar.backgroundColorByHexString(styleService.ionCssVariable(`color-primary`))
 
       splashScreen.hide()
 

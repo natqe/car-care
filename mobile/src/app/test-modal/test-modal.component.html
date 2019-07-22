@@ -1,3 +1,59 @@
-<p>
-  test-modal works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ 'TestModalComponent.title' | language }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()">
+        {{ 'CANCEL_TEXT' | language }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="this">
+    <ion-list>
+      <ion-item-group>
+        <ion-item lines="none">
+          <ion-label position="stacked" color="primary">
+            {{ 'TestModalComponent.form_experationDate_title' | language }}
+          </ion-label>
+        </ion-item>
+        <ion-item lines='none'>
+          <ion-segment [formControl]="controls.expirationDate" mode="ios">
+            <ion-segment-button *ngFor="let item of options; let last = last" [value]="item" mode="ios">
+              <ion-label *ngIf="!last">
+                  {{ 'TestModalComponent.form_experationDate_value' | language: { date: item | date : 'MM/yyyy' } }}
+              </ion-label>
+              <ion-label *ngIf="last">
+                  {{ 'TestModalComponent.form_experationDate_value_other' | language }}
+              </ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+      </ion-item-group>
+      <ion-item class="ion-margin" *ngIf="value.expirationDate === options[options.length - 1]">
+        <ion-label position="floating" color="primary">
+          {{ 'TestModalComponent.form_experationDate_other_title' | language }}
+        </ion-label>
+        <ion-datetime [yearValues]="yearValues" displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [monthNames]="'monthNames' | language"
+          [formControl]="controls.expirationDate" [cancelText]="'CANCEL_TEXT' | language" [doneText]="'OK_TEXT' | language">
+        </ion-datetime>
+      </ion-item>
+      <ion-item class="ion-margin">
+        <ion-label position="floating" color="primary">
+          {{ 'TestModalComponent.form_actionDate_title' | language }}
+        </ion-label>
+        <ion-datetime [monthShortNames]="'monthShortNames' | language" [max]="now" [formControl]="controls.actionDate"
+          [cancelText]="'CANCEL_TEXT' | language" [doneText]="'OK_TEXT' | language">
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button type="submit" color="secondary" (click)="handleSubmit()" [disabled]="invalid" class="bottom">
+        <ion-icon name="checkmark" color="primary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-input type="submit" hidden [disabled]="invalid"></ion-input>
+  </form>
+</ion-content>

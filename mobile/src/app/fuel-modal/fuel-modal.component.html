@@ -1,37 +1,46 @@
-<ion-header class="no-shadow">
+<ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="modalController.dismiss()"  color="medium">
-        <ion-icon name="close" class="font-size-super"></ion-icon>
+    <ion-title>
+      {{ 'FuelModalComponent.title' | language }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()">
+        {{ 'CANCEL_TEXT' | language }}
       </ion-button>
     </ion-buttons>
-    <ion-item slot="end" lines="none"  [formGroup]="this">
-      <ion-datetime [formControlName]="controlsNames.DATE" slot="end" class="color-medium"></ion-datetime>
-      <ion-icon name="calendar" slot="end" color="medium"></ion-icon>
-    </ion-item>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <form (submit)="$event.preventDefault(); valid && save()" [formGroup]="this" class="flex-column height-parent ion-justify-content-evenly">
-    <ion-text color="primary" class="absolute bold ion-margin top ion-padding-top">
-      {{ 'FuelModalComponent.price_title' | language }}
-    </ion-text>
-    <ion-item lines="inset">
-      <ion-input clearInput  [formControlName]="controlsNames.PRICE" type="number"></ion-input>
-    </ion-item>
-    <ion-item lines="none" class="width-content">
-      <ion-label color="primary">
-        {{ 'FuelModalComponent.currency_title' | language }}
-      </ion-label>
-      <ion-select [formControlName]="controlsNames.CURRENCY" [cancelText]="'CANCEL_TEXT' | language" [okText]="'OK_TEXT' | language" class="min-width-content">
-        <ion-select-option *ngFor="let i of ['USE', 'BLA']" [value]="i">{{ i }} </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-fab-button class="ion-align-self-center" [class.rtl]="platform.isRTL" color="secondary" [disabled]="!valid" (click)="save()"
-      slot="end">
-      <ion-icon name="checkmark" color="primary"></ion-icon>
-    </ion-fab-button>
-    <ion-input type="submit" hidden></ion-input>
+  <form [formGroup]="this">
+    <ion-list>
+      <ion-item-group class="flex ion-margin">
+        <ion-item class="flex-1">
+          <ion-label position="floating" color="primary">
+            {{ 'FuelModalComponent.form_price_title' | language }}
+          </ion-label>
+          <ion-input type="number" [formControl]="controls.price"></ion-input>
+        </ion-item>
+        <ion-item class="item-select ion-min-height-parent ion-margin-start" button detail detail-icon="md-arrow-dropdown"
+          (click)="openCurrencyModal()">
+          <ion-label class="bold">
+            {{ value.currency?.symbol || value.currency?.code }}
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+      <ion-item class="ion-margin">
+        <ion-label position="floating" color="primary">
+          {{ 'FuelModalComponent.form_actionDate_title' | language }}
+        </ion-label>
+        <ion-datetime [monthShortNames]="'monthShortNames' | language" [max]="now" [formControl]="controls.actionDate"
+          [cancelText]="'CANCEL_TEXT' | language" [doneText]="'OK_TEXT' | language">
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button type="submit" color="secondary" (click)="handleSubmit()" [disabled]="invalid" class="bottom">
+        <ion-icon name="checkmark" color="primary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-input type="submit" hidden [disabled]="invalid"></ion-input>
   </form>
 </ion-content>

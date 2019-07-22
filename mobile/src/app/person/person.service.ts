@@ -7,7 +7,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs'
 import { filter, first, pluck, switchMap, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { Platform } from '@ionic/angular'
-import { LanguageService } from '../language/language.service'
 import { LogService } from '../log/log.service'
 import { EMain } from '../main/main.model'
 import { UtilService } from '../util/util.service'
@@ -21,14 +20,11 @@ export class PersonService {
 
   constructor(
     private readonly logService: LogService,
-    private readonly languageService: LanguageService,
     private readonly utilService: UtilService,
     private readonly platform: Platform,
     private readonly apollo: Apollo) {
 
     logService.debugInstance(this)
-
-    platform.ready().then(()=> this.merge({ language: languageService.current }))
 
   }
 
@@ -49,22 +45,22 @@ export class PersonService {
     }).
     pipe(pluck('data', 'isConfirmPerson'))
 
-  create({ callingCode, phone }: { callingCode: Person['callingCode'], phone: Person['phone'] }) {
+  create(person: { callingCode: Person['callingCode'], phone: Person['phone'], language: Person['language'], currency: Person['currency'] }) {
 
-    const { apollo, languageService } = this
+    const { apollo, utilService } = this
 
     return apollo.
       mutate({
         mutation: gql`
           mutation createPerson {
-            createPerson(phone: ${phone}, callingCode: ${callingCode}, language: "${languageService.current}")
+            createPerson${utilService.convertToJqlParams(person)}
           }
       `}).
       pipe(
         pluck('data', 'createPerson'),
         tap(value => {
-          if (value) this.merge({ phone, callingCode })
-        }),
+          if (value) this.merge(person)
+        })
       )
 
   }
@@ -98,19 +94,6 @@ export class PersonService {
 
           return !_id && vehicles ?
             of(vehicles).pipe(tap(loadingFinished)) :
-            // of({
-            //   data: {
-            //     vehiclesOfPerson: [
-            //       <Vehicle>{
-            //         _id: 'sdfsdfsdsdfasdfkasjdfklasjdf;asdjkfasdf',
-            //         image: `https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202017/Magazine-Articles/April/CR-Inline-top-picks-Audi-02-17`,
-            //         model: `s3`,
-            //         producer: `Dialim`,
-            //         license: `44-896-30`
-            //       }
-            //     ]
-            //   }
-            // }).
             apollo.query<{ vehiclesOfPerson: Array<Vehicle> }>({
               query: gql`
                   {
@@ -160,7 +143,7 @@ export class PersonService {
    * @description Edit properties on server
    * @author Natan Farkash
    */
-  edit(person: Partial<Pick<Person, 'fullName' | 'language'>>): Observable<boolean> {
+  edit(person: Partial<Pick<Person, 'fullName' | 'language' | 'currency'>>): Observable<boolean> {
 
     const { apollo, utilService } = this
 
@@ -177,7 +160,6 @@ export class PersonService {
          if(response) this.merge(person)
        })
     )
-
 
   }
 

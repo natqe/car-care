@@ -2,12 +2,12 @@ import { Apollo } from 'apollo-angular'
 import gql from 'graphql-tag'
 import isNull from 'lodash/isNull'
 import negate from 'lodash/negate'
-import { BehaviorSubject } from 'rxjs'
-import { filter, first, mapTo, pluck, tap } from 'rxjs/operators'
+import { BehaviorSubject, of } from 'rxjs'
+import { filter, first, pluck, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { LogService } from '../log/log.service'
+import { PersonDataService } from '../person/person-data.service'
 import { Person } from '../person/person.model'
-import { PersonService } from '../person/person.service'
 
 interface IGetValueArgs {
   readonly _id?: Person['_id']
@@ -33,21 +33,21 @@ export class FullNameService {
 
   constructor(
     private readonly logService: LogService,
-    private readonly personService: PersonService,
+    private readonly personDataService: PersonDataService,
     private readonly apollo: Apollo) {
 
     logService.debugInstance(this)
 
     const { _value } = this
 
-    personService.value.pipe(filter(value => !!value), filter(({ fullName }) => fullName !== _value.value)).subscribe(({ fullName }) => _value.next(fullName))
+    personDataService.value.pipe(filter(value => !!value), filter(({ fullName }) => fullName !== _value.value)).subscribe(({ fullName }) => _value.next(fullName))
 
   }
 
   getValue({ _id, cache = true }: IGetValueArgs = { cache: true }) {
 
     const
-      { _value, _loading, apollo, personService } = this,
+      { _value, _loading, apollo, personDataService } = this,
       queryArgs = _id ? `(_id: "${_id}")` : ``
 
     _loading.next(true)
@@ -64,7 +64,7 @@ export class FullNameService {
         pluck(`data`, `fullNameOfPerson`),
         tap(fullName => {
           if (!_id) {
-            personService.merge({ fullName })
+            personDataService.patch({ fullName })
           }
         })
       )
@@ -75,11 +75,11 @@ export class FullNameService {
 
   setValue(fullName: Person['fullName']) {
 
-    const { _value, _loading, personService } = this
+    const { _value, _loading, personDataService } = this
 
     _loading.next(true)
 
-    const result = _value.value === fullName ? _value.pipe(first(), mapTo(true)) : personService.edit({ fullName })
+    const result = _value.value === fullName ? of(true) : personDataService.editPerson({ fullName })
 
     return result.pipe(tap(() => _loading.next(false)))
 

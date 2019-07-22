@@ -1,0 +1,5 @@
+ion-item-group {
+  >ion-item:nth-of-type(1) {
+    --min-height: 2rem;
+  }
+}

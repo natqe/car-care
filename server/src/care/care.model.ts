@@ -1,7 +1,14 @@
 import { Field, Int, ObjectType } from 'type-graphql'
-import { Column, DeepPartial, Entity, ManyToOne, ObjectType as typeormObjectType } from 'typeorm'
+import { Column, Entity, ManyToOne } from 'typeorm'
 import { Action } from '../action/action.abstract'
 import { Vehicle } from '../vehicle/vehicle.model'
+
+export enum ECareType {
+  period = 'period',
+  tire = 'tire',
+  mishap = 'mishap',
+  other = 'other'
+}
 
 @Entity()
 @ObjectType()
@@ -13,7 +20,7 @@ export class Care extends Action {
 
   @Field()
   @Column()
-  readonly type: string
+  readonly type: ECareType
 
   @Field({ nullable: true })
   @Column({ nullable: true })

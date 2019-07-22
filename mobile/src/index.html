@@ -19,9 +19,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <script>
 
+    if (!localStorage.language) localStorage.language = navigator.language.slice(0, 2)
+
     const
       { documentElement } = document,
-      langhuge = localStorage.language || navigator.language.slice(0, 2)
+      { langhuge } = localStorage
 
     documentElement.lang = langhuge
 

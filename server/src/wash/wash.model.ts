@@ -1,5 +1,5 @@
 import { Field, ObjectType } from 'type-graphql'
-import { Column, Entity, ManyToOne } from 'typeorm'
+import { Entity, ManyToOne } from 'typeorm'
 import { Action } from '../action/action.abstract'
 import { Vehicle } from '../vehicle/vehicle.model'
 

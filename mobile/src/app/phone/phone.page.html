@@ -12,16 +12,16 @@
         <ion-item class="item-select ion-margin-vertical" button detail detail-icon="md-arrow-dropdown"
           (click)="openCallingCodesModal()">
           <ion-avatar slot="start" class="size-x1&1/2 ion-no-margin ion-margin-start">
-            <ion-img [src]="controls[controlsNames.PREFIX].value?.flag"></ion-img>
+            <ion-img [src]="value.prefix?.flag"></ion-img>
           </ion-avatar>
           <ion-label color="primary" class="bold">
-            <span>{{ controls[controlsNames.PREFIX].value | util: 'get': ENation.nativeName }}</span>
+            <span>{{ value.prefix | util: 'get': ENation.nativeName }}</span>
             <span>&nbsp;</span>
-            <span dir="ltr">(+{{controls[controlsNames.PREFIX].value | util: 'get': ECallingCode.value}})</span>
+            <span dir="ltr">(+{{value.prefix | util: 'get': ECallingCode.value}})</span>
           </ion-label>
         </ion-item>
         <ion-item>
-          <ion-input [formControlName]="controlsNames.PHONE" type="number" [placeholder]="'PhonePage.form_phone_placeholder'|language"
+          <ion-input [formControl]="controls.phone" type="number" [placeholder]="'PhonePage.form_phone_placeholder'|language"
             color="primary" class="bold ion-text-center font-size-large">
           </ion-input>
         </ion-item>

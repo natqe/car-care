@@ -8,10 +8,10 @@
   </ion-fab-button>
   </ion-toolbar>
   <ion-tab-bar class="ion-no-border">
-    <ion-tab-button *ngFor="let state of vehicle.state | keyvalue" class="ion-no-padding" [attr.data-label]="state.key"
+    <ion-tab-button *ngFor="let state of 'VEHICLE.state' | util: 'keyvalue'" class="ion-no-padding" [attr.data-label]="state.key"
       layout="icon-hide" routerLink="/tabs/archive/{{state.key}}">
       <ion-label class="font-size-medium bold ion-text-uppercase text-over">
-        {{ state.value.label | language }}
+        {{ state.value.label }}
       </ion-label>
     </ion-tab-button>
   </ion-tab-bar>

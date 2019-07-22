@@ -1,32 +1,22 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
-import { AppService } from '../app.service'
-import { LogService } from '../log/log.service'
-import { PersonService } from '../person/person.service'
+import { NavController } from '@ionic/angular'
+import { AppGuard } from '../app.guard'
+import { PersonDataService } from '../person/person-data.service'
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard extends AppGuard {
 
-  constructor(
-    private readonly logService: LogService,
-    private readonly appService: AppService,
-    private readonly personService: PersonService) {
-    logService.debugInstance(this)
-  }
+  protected readonly defaultPath = `/tabs/main`
 
-  async canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot) {
+  protected readonly handlePath = `auth`
 
-    const { appService, personService } = this
+  protected readonly determineCanActive = this.personDataService.isConfirm
 
-    return appService.handleCanActivate({
-      can: await personService.isConfirm.toPromise(),
-      defaultPath: `/tabs/main`,
-      handlePath: `auth`,
-      activatedRouteSnapshot
-    })
-
+  constructor(navController: NavController,
+    private readonly personDataService: PersonDataService) {
+    super(navController)
   }
 
 }

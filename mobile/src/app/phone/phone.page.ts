@@ -1,39 +1,47 @@
-import { of, Subject } from 'rxjs'
-import { filter, first, switchMap, takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs'
+import { filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators'
 import { Component, OnDestroy } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ModalController, NavController } from '@ionic/angular'
 import { OverlayEventDetail } from '@ionic/core'
+import { AppService } from '../app.service'
 import { CallingCode, ECallingCode } from '../calling-code/calling-code.model'
 import { CallingCodesModalComponent } from '../calling-codes-modal/calling-codes-modal.component'
 import { CountryService } from '../country/country.service'
+import { FormControls, IFormControl } from '../form/form.model'
+import { LanguageService } from '../language/language.service'
 import { LogService } from '../log/log.service'
 import { ENation } from '../nation/nation.abstract'
-import { PersonService } from '../person/person.service'
-import { UtilService } from '../util/util.service'
-
-const
-  PHONE = `phone`,
-  PREFIX = `prefix`
+import { PersonDataService } from '../person/person-data.service'
 
 @Component({
   selector: 'app-phone',
   templateUrl: './phone.page.html',
   styleUrls: ['./phone.page.scss']
 })
-export class PhonePage extends FormGroup  implements OnDestroy {
+export class PhonePage extends FormGroup implements OnDestroy {
+
+  readonly value: {
+    phone: number,
+    prefix: CallingCode
+  }
+
+  readonly controls: FormControls<this> & {
+    prefix: IFormControl<PhonePage, 'prefix'>
+  }
 
   constructor(
     readonly countryService: CountryService,
-    private readonly personService: PersonService,
+    private readonly personDataService: PersonDataService,
+    private readonly languageService: LanguageService,
     private readonly navController: NavController,
-    private readonly utilService: UtilService,
-    private readonly logService: LogService,
+    private readonly appService: AppService,
+    logService: LogService,
     private readonly modalController: ModalController) {
 
-    super({
-      [PHONE]: new FormControl(null, [Validators.required, Validators.pattern(/^\d{9}$/)]),
-      [PREFIX]: new FormControl(null)
+    super(<this['controls']>{
+      phone: new FormControl(null, [Validators.required, Validators.pattern(/^\d{9}$/)]),
+      prefix: new FormControl(null)
     })
 
     logService.debugInstance(this)
@@ -42,17 +50,14 @@ export class PhonePage extends FormGroup  implements OnDestroy {
 
     countryService.default.
       pipe(
-        filter(value => !!value),
-        switchMap(country => country.callingCodes[0] ? of(country) : countryService.biggest),
         first(),
+        tap(({ callingCodes: [value], name, nativeName, flag }) => controls.prefix.setValue({ value, nativeName, name, flag }, { emitEvent: false }))
       ).
-      subscribe(({ callingCodes: [value], name, nativeName, flag }) => controls[PREFIX].setValue(<CallingCode>{ value, nativeName, name, flag }))
+      subscribe()
 
   }
 
   private readonly componentLeave = new Subject
-
-  readonly controlsNames = { PHONE, PREFIX }
 
   readonly ENation = ENation
 
@@ -60,12 +65,12 @@ export class PhonePage extends FormGroup  implements OnDestroy {
 
   async openCallingCodesModal() {
 
-    const { modalController, controls } = this
+    const { modalController, controls, value } = this
 
     const modal = await modalController.create({
       component: CallingCodesModalComponent,
       componentProps: {
-        selected: controls[PREFIX].value
+        selected: value.prefix
       }
     })
 
@@ -73,29 +78,31 @@ export class PhonePage extends FormGroup  implements OnDestroy {
 
     const { data }: OverlayEventDetail<CallingCode> = await modal.onWillDismiss()
 
-    if (data) controls[PREFIX].setValue(data)
+    if (data) controls.prefix.setValue(data)
 
   }
 
   handleSubmit() {
 
     const
-      { controls, personService, navController, utilService, valid } = this,
-      phone = controls[PHONE].value
+      { personDataService, navController, appService, valid, languageService, value, countryService } = this,
+      phone = value.phone,
+      asyncOperation = appService.createAsyncOperation()
 
     if (valid) {
 
-      const asyncOperation = utilService.createAsyncOperation()
-
       asyncOperation.next(true)
 
-      personService.create({ phone, callingCode: controls[PREFIX].value[ECallingCode.value] }).subscribe(created => {
-
-        asyncOperation.complete()
-
-        if (created) navController.navigateForward(`/auth/verification-code`)
-
-      })
+      countryService.default.
+        pipe(
+          first(),
+          map(({ currencies: [{ code }] }) => code),
+          switchMap(currency => personDataService.createPerson({ phone, callingCode: value.prefix[ECallingCode.value], language: languageService.current, currency })),
+          tap(() => asyncOperation.complete()),
+          filter(value => value),
+          tap(() => navController.navigateForward(`/auth/verification-code`))
+        ).
+        subscribe()
 
     }
 

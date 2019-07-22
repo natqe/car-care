@@ -1,17 +1,12 @@
 import { Subject } from 'rxjs'
-import { filter, first, takeUntil } from 'rxjs/operators'
-import { Component, OnDestroy, OnInit } from '@angular/core'
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms'
+import { filter, takeUntil, tap } from 'rxjs/operators'
+import { Component, OnDestroy } from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NavController } from '@ionic/angular'
+import { AppService } from '../app.service'
+import { FormControls } from '../form/form.model'
 import { LogService } from '../log/log.service'
-import { EPerson } from '../person/person.model'
-import { PersonService } from '../person/person.service'
-import { UtilService } from '../util/util.service'
-
-interface IVerificationCodeControls{
-  readonly code: FormControl
-  readonly [key: string]: AbstractControl
-}
+import { PersonDataService } from '../person/person-data.service'
 
 @Component({
   selector: 'app-verification-code',
@@ -20,17 +15,21 @@ interface IVerificationCodeControls{
 })
 export class VerificationCodePage extends FormGroup implements OnDestroy {
 
-  readonly controls: IVerificationCodeControls
+  readonly value: {
+    code: string
+  }
+
+  readonly controls: FormControls<this>
 
   private readonly componentLeave = new Subject
 
   constructor(
-    readonly personService: PersonService,
-    private readonly logService: LogService,
+    readonly personDataService: PersonDataService,
+    logService: LogService,
     private readonly navController: NavController,
-    private readonly utilService: UtilService) {
+    private readonly appService: AppService) {
 
-    super(<IVerificationCodeControls>{
+    super(<this['controls']>{
       code: new FormControl(null, [Validators.required, Validators.pattern(/^\d{6}$/)])
     })
 
@@ -55,22 +54,20 @@ export class VerificationCodePage extends FormGroup implements OnDestroy {
   }
 
   handleSubmit() {
-
     const
-      { utilService, personService, controls, navController } = this,
-      asyncOperation = utilService.createAsyncOperation()
-
+      { appService, personDataService, value, navController } = this,
+      asyncOperation = appService.createAsyncOperation()
     asyncOperation.next(true)
-
-    personService.confirm(controls.code.value).subscribe(isConfirm => {
-
-      asyncOperation.complete()
-
-      if (isConfirm) navController.navigateRoot(`/full-name`)
-      else utilService.indicateError()
-
-    })
-
+    personDataService.
+      confirmPerson(value.code).
+      pipe(
+        tap(() => asyncOperation.complete()),
+        tap(isConfirm => {
+          if (isConfirm) navController.navigateRoot(`/full-name`)
+          else appService.indicateError()
+        })
+      ).
+      subscribe()
   }
 
 }

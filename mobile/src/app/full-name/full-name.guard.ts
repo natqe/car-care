@@ -1,30 +1,26 @@
+import { map } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
-import { AppService } from '../app.service'
-import { LogService } from '../log/log.service'
+import { NavController } from '@ionic/angular'
+import { AppGuard } from '../app.guard'
 import { FullNameService } from './full-name.service'
 
 @Injectable({
   providedIn: 'root'
 })
-export class FullNameGuard implements CanActivate {
+export class FullNameGuard extends AppGuard {
+
+  protected readonly defaultPath = `/tabs/main`
+
+  protected readonly handlePath = `full-name`
+
+  protected readonly determineCanActive = this.fullNameService.getValue().pipe(
+    map(value => !!value)
+  )
 
   constructor(
-    private readonly appService: AppService,
-    private readonly logService: LogService,
-    private readonly fullNameService: FullNameService) { }
-
-  async canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot) {
-
-    const { appService, fullNameService, logService } = this
-
-    return appService.handleCanActivate({
-      can: !!await fullNameService.getValue().toPromise(),
-      defaultPath: `/tabs/main`,
-      handlePath: `full-name`,
-      activatedRouteSnapshot
-    })
-
+    navController: NavController,
+    private readonly fullNameService: FullNameService) {
+    super(navController)
   }
 
 }

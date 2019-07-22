@@ -4,18 +4,18 @@ import { ensureUnique } from 'utilizes/ensure-unique'
 import { prefix } from 'utilizes/prefix'
 import { Injectable } from '@angular/core'
 import { environment } from '../../environments/environment'
-import { ionCssVariable } from '../../theme/variables/variables'
+import { StyleService } from '../style/style.service'
 
 const { production } = environment
 
-@Injectable({ 
+@Injectable({
   providedIn: 'root'
 })
 export class LogService {
 
   private readonly instances = new class application { }
 
-  constructor() {
+  constructor(private readonly styleService: StyleService) {
 
     this.debugInstance(this)
 
@@ -36,8 +36,9 @@ export class LogService {
   onTime(message: string, color: 'primary' | 'secondary' | 'tertiary' | 'warn' | 'danger' = 'primary') {
 
     const
-      bgColor = ionCssVariable(`color-${color}`),
-      contrast = ionCssVariable(`color-${color}-contrast`)
+      { styleService } = this,
+      bgColor = styleService.ionCssVariable(`color-${color}`),
+      contrast = styleService.ionCssVariable(`color-${color}-contrast`)
 
     console.debug(`%c ${message} on ${moment().format('H:mm:ss.SSS')}:`, `background-color:${bgColor};color:${contrast}`)
 

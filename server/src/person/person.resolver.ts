@@ -48,6 +48,25 @@ export class PersonResolver {
 
   }
 
+  @Query(() => String, { nullable: true })
+  async currencyOfPerson(@Args() { _id }: IdentityArgs, @Session() { personId }: ISession) {
+
+    if (!_id) _id = personId
+
+    if (_id) return get(await Person.findOne(_id, { select: [EPerson.currency] }), EPerson.currency)
+
+  }
+
+
+  @Query(() => String, { nullable: true })
+  async languageOfPerson(@Args() { _id }: IdentityArgs, @Session() { personId }: ISession) {
+
+    if (!_id) _id = personId
+
+    if (_id) return get(await Person.findOne(_id, { select: [EPerson.language] }), EPerson.language)
+
+  }
+
   @Mutation(() => Boolean)
   async createPerson(@Args() args: CreatePersonArgs, @Session() session: ISession) {
 
@@ -77,7 +96,7 @@ export class PersonResolver {
   }
 
   @Mutation(() => Boolean)
-  async editPerson(@Args() { _id, ...args }:  EditPersonArgs, @Session() { personId }: ISession) {
+  async editPerson(@Args() { _id, ...args }: EditPersonArgs, @Session() { personId }: ISession) {
     return !!await Person.update(_id || personId, args)
   }
 

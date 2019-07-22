@@ -2,8 +2,8 @@ import { timeout } from 'rxjs/operators'
 import { Component, OnInit } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NavController } from '@ionic/angular'
+import { AppService } from '../app.service'
 import { LogService } from '../log/log.service'
-import { UtilService } from '../util/util.service'
 import { FullNameService } from './full-name.service'
 
 @Component({
@@ -23,7 +23,7 @@ export class FullNamePage extends FormGroup implements OnInit {
 
   constructor(
     private readonly logService: LogService,
-    private readonly utilService: UtilService,
+    private readonly appService: AppService,
     private readonly navController: NavController,
     private readonly fullNameService: FullNameService) {
 
@@ -37,12 +37,12 @@ export class FullNamePage extends FormGroup implements OnInit {
 
   handleSubmit() {
 
-    const { valid, fullNameService, utilService, value, navController } = this
+    const { valid, fullNameService, appService, value, navController } = this
 
     if (valid) {
 
       const
-        asyncOperation = utilService.createAsyncOperation(),
+        asyncOperation = appService.createAsyncOperation(),
         loadingSubscription = fullNameService.loading
           .pipe(timeout(1500))
           .subscribe(inLoadProcess => {

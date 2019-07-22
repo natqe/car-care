@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
-import { SharedModule } from '../shared.module'
+import { AppSharedModule } from '../app-shared.module'
 import { VehiclePage } from './vehicle.page'
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    AppSharedModule
   ],
   declarations: [VehiclePage]
 })

@@ -23,4 +23,4 @@ import { environment } from '../environments/environment'
     },
   ],
 })
-export class GraphQLModule { }
+export class AppGraphQLModule { }

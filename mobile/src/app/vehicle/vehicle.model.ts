@@ -1,8 +1,7 @@
 import { Care } from '../care/care.model'
 import { Fuel } from '../fuel/fuel.model'
-import { Main } from '../main/main.model'
 import { Test } from '../test/test.model'
-import { Wash } from '../wash/wash.modal'
+import { Wash } from '../wash/wash.model'
 import { WithImage } from '../with-image/with-image.model'
 
 export class Vehicle extends WithImage {
@@ -12,7 +11,7 @@ export class Vehicle extends WithImage {
  readonly cares: Array<Care>
  readonly license: string
  readonly image: string
- readonly gallery: string
+ readonly gallery: Array<string>
  readonly type: string
  readonly hand: string
  readonly km: string

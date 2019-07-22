@@ -1,35 +1,27 @@
+import { from } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot, CanActivate } from '@angular/router'
-import { Platform } from '@ionic/angular'
+import { NavController, Platform } from '@ionic/angular'
 import { Storage } from '@ionic/storage'
-import { AppService } from '../app.service'
-import { LogService } from '../log/log.service'
+import { AppGuard } from '../app.guard'
 
 @Injectable({
   providedIn: 'root'
 })
-export class WelcomeGuard implements CanActivate {
+export class WelcomeGuard extends AppGuard {
 
-  constructor(logService: LogService,
-    private readonly appService: AppService,
-    private readonly platform: Platform,
-    private readonly storage: Storage) {
-    logService.debugInstance(this)
-  }
+  protected readonly defaultPath = `/auth/phone`
 
-  async canActivate(activatedRouteSnapshot: ActivatedRouteSnapshot) {
+  protected readonly handlePath = `welcome`
 
-    const { appService, storage, platform } = this
+  protected readonly determineCanActive = from(this.platform.ready()).pipe(
+    switchMap(() => this.storage.get(`welcome-end`))
+  )
 
-    await platform.ready()
-
-    return appService.handleCanActivate({
-      can: await storage.get(`welcome-end`),
-      defaultPath: `/auth/phone`,
-      handlePath: `welcome`,
-      activatedRouteSnapshot
-    })
-
+  constructor(navController: NavController,
+    private readonly storage: Storage,
+    private readonly platform: Platform) {
+    super(navController)
   }
 
 }
