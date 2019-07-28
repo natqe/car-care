@@ -14,8 +14,7 @@ export enum ECareType {
 @ObjectType()
 export class Care extends Action {
 
-  @Field(() => Vehicle)
-  @ManyToOne(() => Vehicle)
+  @ManyToOne(() => Vehicle, { onDelete: 'CASCADE', nullable: false})
   readonly vehicle: Vehicle | Vehicle['_id']
 
   @Field()

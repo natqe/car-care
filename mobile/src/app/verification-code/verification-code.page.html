@@ -12,7 +12,8 @@
       {{ 'VerificationCodePage.title' |language }}</ion-text>
     <ion-note *ngIf="personDataService.value | async as person" color="dark"
       class="margin-horizontal-auto table margin-top-1/2 ion-padding-bottom bold">
-      {{ 'VerificationCodePage.note' | language : { phone: '+' + person.callingCode + person.phone } }}
+      <span>{{ 'VerificationCodePage.note' | language }}</span>
+      <span dir="ltr">+{{person.callingCode}}{{person.phone}}</span>
     </ion-note>
     <ion-item class="padding-horizontal-large ion-margin-top">
       <ion-input [formControl]="controls.code" type="tel" inputMode="numeric"

@@ -34,3 +34,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 /server/.env
 dist
+yarn.lock

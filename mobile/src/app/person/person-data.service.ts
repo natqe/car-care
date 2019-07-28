@@ -5,7 +5,8 @@ import { map, mapTo, pluck, switchMap, switchMapTo, tap } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
 import { AppDataService } from '../app-data.service'
 import { UtilService } from '../util/util.service'
-import { Person } from './person.model'
+import { Person, EPerson } from './person.model'
+import { EMain } from '../main/main.model';
 
 @Injectable({
   providedIn: `root`
@@ -21,7 +22,9 @@ export class PersonDataService extends AppDataService<Person>{
     switchMap(args => this.apollo.mutate({
       mutation: gql`
         mutation createPerson {
-          createPerson${args}
+          createPerson${args}{
+            ${this.utilService.selectJqlEnums(EMain, EPerson)}
+          }
         }
     `})),
     pluck(`data`, `createPerson`)

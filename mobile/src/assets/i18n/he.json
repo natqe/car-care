@@ -32,6 +32,18 @@
     "נוב",
     "דצמ"
   ],
+  "vehicleHand":[
+    "ראשונה",
+    "שניה",
+    "שלישית",
+    "רביעית",
+    "חמישית",
+    "שישית",
+    "שביעית",
+    "שמינית",
+    "תשיעית",
+    "עשירית"
+  ],
   "VEHICLE": {
     "state": {
       "care": {
@@ -84,7 +96,7 @@
   },
   "VerificationCodePage": {
     "title": "הכנס/י את הקוד הסודי",
-    "note": "שנשלח לטלפון מספר - {{ phone }}",
+    "note": "שנשלח לטלפון מספר - ",
     "form_code_placeholder": ""
   },
   "FullNamePage": {
@@ -117,7 +129,16 @@
   },
   "VehiclePage": {
     "button_public": "פרסום הרכב למכירה",
-    "article_UpOnTheRoad_prefix": "עלה לכביש ב - "
+    "article_UpOnTheRoad_prefix": "עלה לכביש ב - ",
+    "article_UpOnTheRoad_desc_yearsAndMonths": "כ- {{ Years }}  שנים ו - {{ Months }} חודשים",
+    "article_UpOnTheRoad_desc_years": "כ- {{ Years }} שנים",
+    "article_UpOnTheRoad_desc_months": "כ- {{ Months }} חודשים",
+    "details_Color":"צבע",
+    "details_Km":"ק\"מ",
+    "details_hand":"יד",
+    "details_test":"טסט בתוקף עד",
+    "details_last_care":"טיפול אחרון בתאריך:",
+    "details_average_fuel":"תדלוק ממוצע פעם ב-{{days}}ימים"
   },
   "VehicleMoreOptionsModalComponent": {
     "delete_subHeader": "אתה הולך למחוק את הרכב",

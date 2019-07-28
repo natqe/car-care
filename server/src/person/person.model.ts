@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from 'type-graphql'
+import { Field, Int, ObjectType, ID } from 'type-graphql'
 import { Column, Entity } from 'typeorm'
 import { ELanguage } from '../language/language.enum'
 import { Vehicle } from '../vehicle/vehicle.model'
@@ -8,15 +8,15 @@ import { WithImage } from '../with-image/with-image.abstract'
 @Entity()
 export class Person extends WithImage {
 
-  @Field(()=> Int)
+  @Field(() => Int)
   @Column()
   readonly phone: number
 
-  @Field(()=> Int)
+  @Field(() => Int)
   @Column()
   readonly callingCode: number
 
-  @Field(()=> String)
+  @Field(() => String)
   @Column(`text`)
   readonly language: ELanguage
 
@@ -24,11 +24,11 @@ export class Person extends WithImage {
   @Column()
   readonly currency: string
 
-  @Field(() => [String])
+  @Field(() => [ID], { nullable: true })
   @Column(`text`, { array: true, nullable: true })
   readonly vehicles?: Array<Vehicle['_id']>
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   readonly fullName?: string
 

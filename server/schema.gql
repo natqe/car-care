@@ -59,7 +59,7 @@ type Mutation {
   createCare(vehicle: ID!, actionDate: String!, price: Float, currency: String, description: String, km: Int, type: String!): Care!
   createFuel(vehicle: ID!, actionDate: String!, price: Float, currency: String): Fuel!
   confirmPerson(verificationCode: String!): Boolean
-  createPerson(phone: Int!, callingCode: Int!, language: String!, currency: String!): Boolean!
+  createPerson(phone: Int!, callingCode: Int!, language: String!, currency: String!): Person!
   editPerson(_id: ID, fullName: String, language: String, currency: String): Boolean!
   addRecipe(newRecipeData: NewRecipeInput!): Recipe!
   removeRecipe(id: String!): Boolean!
@@ -94,8 +94,8 @@ type Person {
   callingCode: Int!
   language: String!
   currency: String!
-  vehicles: [String!]!
-  fullName: String!
+  vehicles: [ID!]
+  fullName: String
 }
 
 type Query {
@@ -157,7 +157,7 @@ type Vehicle {
   cares: [Care!]!
   tests: [Test!]!
   gallery: [String!]!
-  person: String!
+  person: ID!
   license: String!
   type: String!
   hand: Int!

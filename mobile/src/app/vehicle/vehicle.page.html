@@ -9,10 +9,10 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <ion-button size="large" color="light" (click)="handleEdit()" [disabled]="loading | async">
-        <ion-icon name="create" class="font-size-large" *ngIf="data | async; else loadingPlaceholerTpl"></ion-icon>
+        <ion-icon name="create" class="font-size-large" *ngIf="data | async; else loadingPlaceholderTpl"></ion-icon>
       </ion-button>
       <ion-button color="light" (click)="handleMore($event)" [disabled]="loading | async">
-        <ion-icon name="more" class="font-size-super" *ngIf="data | async; else loadingPlaceholerTpl"></ion-icon>
+        <ion-icon name="more" class="font-size-super" *ngIf="data | async; else loadingPlaceholderTpl"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -21,7 +21,7 @@
 <ion-content fullscreen>
   <ng-template #slidesLoadingPlaceholder>
     <section class="img-section">
-      <ng-container *ngTemplateOutlet="loadingPlaceholerTpl"></ng-container>
+      <ng-container *ngTemplateOutlet="loadingPlaceholderTpl"></ng-container>
     </section>
   </ng-template>
   <ion-slides *ngIf="data | async; else slidesLoadingPlaceholder">
@@ -31,21 +31,54 @@
     </ion-slide>
   </ion-slides>
   <ion-item lines="none"
-    class="ion-background-transparent minus-self-half-top ion-min-height-1/6-screen ion-padding-start-plus  index-1" mode="ios">
+    class="ion-background-transparent minus-self-half-top ion-min-height-1/6-screen ion-padding-start-plus index-1"
+    mode="ios">
     <ion-fab-button slot="start" class="no-events size-x5" mode="ios"
       [style]="(image | async) && '--background: url('+appService.locationImage(image | async) +') center / cover no-repeat'  | safe: 'style'">
     </ion-fab-button>
     <ion-label class="flex flex-column ion-align-self-end" color="medium">
-      <ion-text class="bold"  *ngIf="data | async; else loadingPlaceholerTpl">{{ type | async }} {{ model | async }}</ion-text>
-      <ion-note  *ngIf="data | async; else loadingPlaceholerTpl">{{ license | async }}</ion-note>
+      <ion-text class="bold" *ngIf="data | async; else loadingPlaceholderTpl">{{ type | async }} {{ model | async }}
+      </ion-text>
+      <ion-note *ngIf="data | async; else loadingPlaceholderTpl">{{ license | async }}</ion-note>
     </ion-label>
   </ion-item>
   <article>
     <p>
-      {{ 'VehiclePage.article_UpOnTheRoad_prefix' | language }}{{ 'monthNames.' + (productionMonth | async) | language }} {{ productionYear | async }}
+      {{ 'VehiclePage.article_UpOnTheRoad_prefix' | language }}{{ 'monthNames.' + (productionMonth | async) | language }}
+      {{ productionYear | async }}
     </p>
-    <p></p>
-    <p></p>
+    <p *ngIf="(productionDiffMonths | async) || (productionDiffYears | async)">
+      (
+      <ng-container *ngIf="(productionDiffMonths | async) && (productionDiffYears | async)">
+        {{ 'VehiclePage.article_UpOnTheRoad_desc_yearsAndMonths' | language: { Years: productionDiffYears | async , Months: productionDiffMonths | async} }}
+      </ng-container>
+      <ng-container *ngIf="(productionDiffYears | async) && !(productionDiffMonths | async)">
+        {{ 'VehiclePage.article_UpOnTheRoad_desc_years' | language: { Years: productionDiffYears | async} }}
+      </ng-container>
+      <ng-container *ngIf="(productionDiffMonths | async) && !(productionDiffYears | async)">
+        {{ 'VehiclePage.article_UpOnTheRoad_desc_months' | language: { Months: productionDiffMonths | async} }}
+      </ng-container>
+      )
+    </p>
+    <p>
+      {{ 'VehiclePage.details_Color' | language }} {{ color | async }}, {{ 'VehiclePage.details_Km' | language }}
+      {{ km | async }}
+    </p>
+    <p>
+      {{ 'VehiclePage.details_hand' | language }} {{ 'vehicleHand.' + ( hand | async ) | language }}
+    </p>
+    <p *ngIf="testExpirationDate | async">
+      {{ 'VehiclePage.details_test' | language }}
+      {{ 'monthNames.' + ( testExpirationDateMonth | async ) | language }}
+      {{ testExpirationDateYear | async }}
+    </p>
+    <p *ngIf="cares | async">
+      {{ 'VehiclePage.details_last_care' | language }} {{ careGetYear  | async }}/{{careGetMou}}
+      {{ b | async }}
+    </p>
+    <p *ngIf="fuels | async">
+      {{ 'VehiclePage.details_average_fuel' | language: { days: actionDate | async } }}
+    </p>
   </article>
   <ion-button color="tertiary" expand="full" size="large" class="ion-no-margin width-parent bottom absolute">
     <ion-label class="md-font-size">

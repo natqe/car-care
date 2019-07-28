@@ -1,5 +1,5 @@
-import { IsDateString, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator'
-import { ArgsType, Field, Float } from 'type-graphql'
+import { IsDateString, IsNotEmpty, IsOptional, IsString, Min, IsUUID } from 'class-validator'
+import { ArgsType, Field, Float, ID } from 'type-graphql'
 import { Action } from '../action/action.abstract'
 import { CreateActionArgs } from '../action/action.dto'
 import { Test } from './test.model'

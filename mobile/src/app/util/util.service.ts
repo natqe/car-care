@@ -31,4 +31,16 @@ export class UtilService {
 
   }
 
+  enumsToArray(...enums) {
+    return enums.reduce((prev, curr) => prev.concat(Object.keys(curr)), [])
+  }
+
+  selectJqlResults(props: Array<string>) {
+    return props.reduce((prev, curr) => `${prev}\n${curr}`)
+  }
+
+  selectJqlEnums(...enums) {
+    return this.selectJqlResults(this.enumsToArray(...enums))
+  }
+
 }

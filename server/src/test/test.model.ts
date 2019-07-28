@@ -8,8 +8,7 @@ import { Vehicle } from '../vehicle/vehicle.model'
 @ObjectType()
 export class Test extends Action {
 
-  @Field(() => Vehicle)
-  @ManyToOne(() => Vehicle)
+  @ManyToOne(() => Vehicle, { onDelete: 'CASCADE', nullable: false})
   readonly vehicle: Vehicle | Vehicle['_id']
 
   @Field()

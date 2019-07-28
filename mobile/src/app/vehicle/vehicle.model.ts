@@ -13,7 +13,7 @@ export class Vehicle extends WithImage {
  readonly image: string
  readonly gallery: Array<string>
  readonly type: string
- readonly hand: string
+ readonly hand: number
  readonly km: string
  readonly color: string
  readonly productionDate: Date

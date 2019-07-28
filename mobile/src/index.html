@@ -23,11 +23,11 @@
 
     const
       { documentElement } = document,
-      { langhuge } = localStorage
+      { language } = localStorage
 
-    documentElement.lang = langhuge
+    documentElement.lang = language
 
-    documentElement.dir = [`he`].includes(langhuge) ? `rtl` : `ltr`
+    documentElement.dir = [`he`].includes(language) ? `rtl` : `ltr`
 
   </script>
 </head>

@@ -7,6 +7,9 @@ import { AppDataService } from '../app-data.service'
 import { EMain } from '../main/main.model'
 import { UtilService } from '../util/util.service'
 import { EVehicle, Vehicle } from '../vehicle/vehicle.model'
+import { EWithImage } from '../with-image/with-image.model';
+import { ETest } from '../test/test.model';
+import { EAction } from '../action/action.model';
 
 type createArgs = Partial<Vehicle>
 
@@ -46,8 +49,18 @@ export class PersonVehiclesDataService extends AppDataService<Array<Vehicle>>{
               ${EVehicle.productionDate}
               ${EVehicle.type}
               ${EMain._id}
-              ${EMain._createDate}
-              ${EMain._updateDate}
+              ${EVehicle.tests}{
+                ${EMain._id}
+                ${ETest.expirationDate}
+              }
+              ${EVehicle.cares}{
+                ${EMain._id}
+                ${EAction.actionDate}
+              }
+              ${EVehicle.fuels}{
+                ${EMain._id}
+                ${EAction.actionDate}
+              }
             }
           }
       `,

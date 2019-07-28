@@ -67,15 +67,16 @@ export class PersonResolver {
 
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Person)
   async createPerson(@Args() args: CreatePersonArgs, @Session() session: ISession) {
 
     const
       getId = property<Person, Person['_id']>(EMain._id),
       { callingCode, phone, language } = args,
-      { twilio, languageService } = this
+      { twilio, languageService } = this,
+      person = await Person.findOne({ callingCode, phone }) || await Person.create(args).save()
 
-    if (!session.personId) session.personId = getId(await Person.findOne({ callingCode, phone }, { select: [EMain._id] })) || getId(await Person.create(args).save())
+    if (!session.personId) session.personId = getId(person)
 
     session.verificationCode = numericCode()
 
@@ -91,7 +92,7 @@ export class PersonResolver {
       }),
     })
 
-    return !!session.personId
+    return person
 
   }
 

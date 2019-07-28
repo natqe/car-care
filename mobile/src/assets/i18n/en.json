@@ -32,6 +32,18 @@
     "Nov",
     "Dec"
   ],
+  "vehicleHand":[
+    "first",
+    "second",
+    "thirdly",
+    "fourth",
+    "fifth",
+    "Sixth",
+    "seventh",
+    "eighth",
+    "Ninth",
+    "tenth"
+  ],
   "VEHICLE": {
     "state": {
       "care": {
@@ -84,7 +96,7 @@
   },
   "VerificationCodePage": {
     "title": "Enter your PIN",
-    "note": "Sent to a phone number - {{ phone }}",
+    "note": "Sent to a phone number - ",
     "form_code_placeholder": ""
   },
   "FullNamePage": {
@@ -117,7 +129,16 @@
   },
   "VehiclePage": {
     "button_public": "Advertise your vehicle for sale",
-    "article_UpOnTheRoad_prefix": "Up on the road in "
+    "article_UpOnTheRoad_prefix": "Up on the road in ",
+    "article_UpOnTheRoad_desc_yearsAndMonths": "About- {{years}} years and - {{months}} months",
+    "article_UpOnTheRoad_desc_years": "About- {{years}} years",
+    "article_UpOnTheRoad_desc_months": "About- {{months}} months",
+    "details_Color":"color",
+    "details_Km":"km",
+    "details_hand":"hand",
+    "details_test":"test Valid until",
+    "details_last_care": "last care on date:",
+    "details_average_fuel":"Fueling average once every {{days}} days"
   },
   "VehicleMoreOptionsModalComponent": {
     "delete_subHeader": "You going to delete this vehicle",

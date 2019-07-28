@@ -6,8 +6,7 @@ import { Vehicle } from '../vehicle/vehicle.model'
 @Entity()
 @ObjectType()
 export class Fuel extends Action {
-  @Field(() => Vehicle)
-  @ManyToOne(() => Vehicle, { nullable: false })
+  @ManyToOne(() => Vehicle , { onDelete: 'CASCADE', nullable: false})
   readonly vehicle: Vehicle | Vehicle['_id']
 }
 

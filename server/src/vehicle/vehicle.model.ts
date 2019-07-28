@@ -1,4 +1,4 @@
-import { createUnionType, Field, Int, ObjectType } from 'type-graphql'
+import { createUnionType, Field, Int, ObjectType, ID } from 'type-graphql'
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm'
 import { Care } from '../care/care.model'
 import { Fuel } from '../fuel/fuel.model'
@@ -18,26 +18,26 @@ export class Vehicle extends WithImage {
   readonly sale?: Sale
 
   @Field(() => [Fuel])
-  @OneToMany(() => Fuel, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  @OneToMany(() => Fuel, ({ vehicle }) => vehicle, { eager: true })
   readonly fuels: Array<Fuel>
 
   @Field(() => [Wash])
-  @OneToMany(() => Wash, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  @OneToMany(() => Wash, ({ vehicle }) => vehicle, { eager: true })
   readonly washes: Array<Wash>
 
   @Field(() => [Care])
-  @OneToMany(() => Care, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  @OneToMany(() => Care, ({ vehicle }) => vehicle, { eager: true })
   readonly cares: Array<Care>
 
   @Field(() => [Test])
-  @OneToMany(() => Test, ({ vehicle }) => vehicle, { eager: true, cascade: true })
+  @OneToMany(() => Test, ({ vehicle }) => vehicle, { eager: true })
   readonly tests: Array<Test>
 
   @Field(() => [String])
   @Column(`text`, { array: true })
   readonly gallery: Array<this['image']>
 
-  @Field(() => String)
+  @Field(() => ID)
   @Column(`text`)
   readonly person: Person['_id']
 
