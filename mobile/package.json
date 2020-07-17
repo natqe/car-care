@@ -38,7 +38,7 @@
     "core-js": "3.1.4",
     "graphql": "14.4.2",
     "graphql-tag": "2.10.1",
-    "lodash": "4.17.14",
+    "lodash": "4.17.19",
     "moment": "2.24.0",
     "ngx-pipes": "2.5.1",
     "rxjs": "6.5.2",
