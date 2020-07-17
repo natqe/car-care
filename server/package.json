@@ -31,7 +31,7 @@
     "express-session": "^1.16.1",
     "graphql": "14.3.0",
     "graphql-subscriptions": "1.1.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "nodemon": "1.19.0",
     "pg": "7.11.0",
     "reflect-metadata": "0.1.13",
